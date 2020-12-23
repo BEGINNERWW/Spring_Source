@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
-	@Autowired
-	private MemberSV membersv;
-	
+
 	@RequestMapping(value = "/pw_find.me", method = RequestMethod.GET)
 	public String pw_find() {
 		
