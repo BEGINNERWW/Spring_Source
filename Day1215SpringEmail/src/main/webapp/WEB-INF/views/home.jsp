@@ -14,7 +14,7 @@
 			<tr>
 				<td align="center">
 					이메일 : <input type="email" name="email" placeholder="이메일 주소를 입력하세요" >
-					<button type-"submit" name ="submit">이메일 인증</button>
+					<button type="submit" name ="submit">이메일 인증</button>
 				</td>
 			</tr>
 		</div>
