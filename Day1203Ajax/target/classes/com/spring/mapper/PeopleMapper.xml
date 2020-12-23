@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+create table people(
+id varchar2(10) primary key,
+name varchar2(20),
+job varchar2(20),
+address varchar2(40),
+bloodtype varchar2(2)
+);
+
+select * from people;
+ -->
+<!-- namespace="com.spring.mapper.MemberMapper는 MemberMapper인퍼페이스(MemberMapper.class)의 이름을 사용한다. -->
+<mapper namespace="com.spring.mapper.PeopleMapper">
+
+<!-- id는 Mapper.java(여기선 MemberMapper.java)에 동일하게 사용해야된다 -->
+<select id="getPeopleList" resultType="PeopleVO">
+	select * from people order by id
+</select>
+
+<select id="selectPeople" parameterType="String" resultType="PeopleVO">
+	select * from people where id=#{id}
+</select>
+
+<insert id="insertPeople" parameterType="PeopleVO">
+	insert into people values (#{id},#{name},#{job},#{address},#{bloodtype})
+</insert>
+
+<delete id="deletePeople" parameterType="String">
+	delete from people where id=#{id}
+</delete>
+
+<update id="updatePeople" parameterType="PeopleVO">
+	update people set name=#{name}, job=#{job}, address=#{address}, bloodtype=#{bloodtype} where id=#{id}
+</update>
+</mapper>

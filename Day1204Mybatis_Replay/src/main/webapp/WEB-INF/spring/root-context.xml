@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Namespaces탭에서 mybatis-spring 체크해서 추가할것 -->
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<bean id ="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@Localhost:1521:orcl"/>
+		<property name="username" value="scott"/>
+		<property name="password" value="123456"/>
+	</bean>
+	
+	<!-- sqlSession 객체생성 / dataSource빈 참고하여 만들어짐-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	<!--  name="typeAliasesPackage" 
+	      mybatis 에서 resultType과 parameterType 사용시 bean 객체를 사용하려면 패키지 경로 및 bean 클래스명까지 입력해야 한다.
+	      하지만 alias 처리를 해주면 bean 클래스명만 입력하면된다. -->
+		<property name="typeAliasesPackage" value="com.spring.mb2replay"></property>
+	
+	<!-- mapper.xml 특정문서 직접 지정
+	<property name= "mapperLocations" value="classpath*:/com/spring/mapper/MemberMapper.xml"> </property> -->
+	<!-- mapper 관련 xml 문서(ex:MemberMapper.xml)의 위치 지정 : /**/ 서브패키지, 문서 등등 모두 포함해서!-->
+		<property name="mapperLocations" value="classpath*:/com/spring/mapper/**/*.xml"></property>
+	</bean>	
+
+	<!-- sqlSession 객체를 관리하기 위해 사용 /
+		constructor-arg : 클래스 생성자 설정 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+	<!-- mybatis mapper 설정 관련(사용시 Namespace 탭에서 mybatis-sping 추가하기) -->
+	<!-- mapper 관련 인터페이스(ex:MemberMapper.java)를 찾기 위한 패키지 경로 설정함 -->
+	<mybatis-spring:scan base-package="com.spring.mapper"/>
+		
+</beans>

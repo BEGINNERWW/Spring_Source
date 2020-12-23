@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="com.spring.mapper.MemberMapper는 MemberMapper인퍼페이스(MemberMapper.class)의 이름을 사용한다. -->
+<mapper namespace="com.project.mapper.MemberMapper">
+
+<!-- id는 Mapper.java(여기선 MemberMapper.java)에 동일하게 사용해야된다 -->
+<!-- 
+일반회원
+email / pw/ name/nick/phone/local/img/grade
+
+사업자 
+biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_coupon
+ -->
+<select id="selectMember" resultType="MemberVO">
+	select * from member_list
+</select>
+
+<!-- 회원정보수정 -->
+<update id = "updateMember" parameterType="MemberVO">
+	update member_list set #{pw},#{nick},#{phone},#{local} where email= #{email}
+</update>
+
+<update id = "updateBiz_Member" parameterType="Biz_memberVO">
+	update member_list set #{pw},#{nick},#{phone},#{local} where biz_email= #{biz_email}
+</update>
+
+<!-- 패스워드변경 -->
+<update id = "pwUpdate_M" parameterType="MemberVO">
+	update member_list set #{pw} where email= #{email}
+</update>
+
+<update id = "pwUpdate_BM" parameterType="Biz_memberVO">
+	update member_list set #{pw} where biz_email= #{biz_email}
+</update>
+
+<!-- 판매허가인증 확인 -->
+<select id ="check_auth" parameterType="Biz_memberVO" resultType="Biz_memberVO">
+ 	select biz_name from fulldata_animal where auth_no=#{biz_no};
+</select>
+
+</mapper>
