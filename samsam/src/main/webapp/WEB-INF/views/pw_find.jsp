@@ -238,7 +238,7 @@ width:310px;
   </div>
 </div>
  <br>
-   <input type="submit" id="check" type="button">비밀번호찾기</button>
+   <input type="submit" id="check" value="비밀번호찾기">
 </div>
 </form>
 </div>

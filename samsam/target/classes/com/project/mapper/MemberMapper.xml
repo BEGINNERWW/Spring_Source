@@ -13,8 +13,13 @@ email / pw/ name/nick/phone/local/img/grade
 사업자 
 biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_coupon
  -->
-<select id="selectMember" resultType="MemberVO">
-	select * from member_list
+<!-- 회원정보조회 -->
+<select id="selectMember" parameterType="String" resultType="MemberVO">
+	select * from member_list where email = #{email}
+</select>
+
+<select id="getMemberlist" resultType="MemberVO">
+	select * from member_list order by email
 </select>
 
 <!-- 회원정보수정 -->
@@ -36,7 +41,7 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 </update>
 
 <!-- 판매허가인증 확인 -->
-<select id ="check_auth" parameterType="Biz_memberVO" resultType="Biz_memberVO">
+<select id ="check_auth" parameterType="Biz_memberVO" resultType="String">
  	select biz_name from fulldata_animal where auth_no=#{biz_no};
 </select>
 
