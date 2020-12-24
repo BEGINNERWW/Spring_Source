@@ -15,9 +15,6 @@
 $(".textbox input").attr("value", "");
 $(".textbox input").attr("onkeyup", "this.setAttribute('value', this.value);");
 
-function check(){
-	
-}
 </script>
 <style>
 body, html {
@@ -139,14 +136,14 @@ input {
  </ul>
 </nav>
 </div>
-<form action="pw_auth.me" method="post">
+<form action="pw_new.me" method="post">
 	<input type="hidden" name ="num" value="${num }">
 <div class=content>
 	<div class="textbox">
 	<label>인증번호 </label>
 	<input type= "text" name="email_injeung" placeholder="인증번호를 입력하세요">
 	<br>
-	<input type="button" id="check" value="확인">
+	<input type="submit" value="확인">
 	</div>
 </div>
 </form>
