@@ -1,6 +1,17 @@
 <%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+
+<%@ page import="com.project.samsam.member.MemberVO" %>
+<%
+String id=null;
+
+if((session.getAttribute("id")==null)|| (!((String)session.getAttribute("id")).equals("admin"))) {
+	out.println("<script>");
+	out.println("location.href='loginform.me'");
+	out.println("</script>");
+}
+MemberVO vo= (MemberVO)request.getAttribute("memberVO");
+%>
 <!doctype html>
 <html>
 <head>
@@ -15,8 +26,17 @@
 $(".textbox input").attr("value", "");
 $(".textbox input").attr("onkeyup", "this.setAttribute('value', this.value);");
 
-function check(){
-	
+function isSame() {
+	console.log("pw:" + $('#pw').val() + "pw2:" + $('#pw2').val())
+	if ($('#pw').val() != '' && $('#pw2').val() != '') {
+		if ($('#pw').val() == $('#pw2').val()) {
+			$('#same').html('비밀번호가 일치합니다.');
+			$('#same').css("color", "blue");
+		} else {
+			$('#same').html('비밀번호가  일치하지 않습니다');
+			$('#same').css("color", "red");
+		}
+	}
 }
 </script>
 <style>
@@ -98,112 +118,23 @@ input {
   outline: 0;
   border: 0;
   display: block;
+  height : 40px;
+  font-size:1em;
 }
 .textbox {
   display: block;
-  max-height: 48px;
+  max-height: 60px;
   padding: 20px 8px 4px 8px;
   width: 264px;
-  height: 48px;
+  height: 60px;
   position: relative;
   align-self : center;
   
 }
-.textbox input[type="email"],
-.textbox input[type="password"] {
-  width: 256px;
-  padding: 8px 4px 6px 4px;
-  font-size: 1.2em;
-  background: rgba(0,0,0,0);
-  color: rgba(0,0,0,0.67);
-  border-bottom: 0px solid rgba(0,0,0,0.4);
+.textbox input:focus {
+border-bottom: solid 2px #bdbdbd;
 }
 
-.textbox input[type="email"]:disabled,
-.textbox input[type="password"]:disabled {
-  border-bottom: 2px dotted rgba(0,0,0,0.4);
-}
-
-.textbox input[type="email"]:disabled ~ label,
-.textbox input[type="password"]:disabled ~ label {
-  color: rgba(0,0,0,0.4);
-}
-
-.textbox input[type="email"] ~ label,
-.textbox input[type="password"] ~ label {
-  font-size: 1.2em;
-  color: rgba(0,0,0,0.67);
-  display: block;
-  position: absolute;
-  top: 24px;
-  left: 12px;
-  pointer-events: none;
-  margin-right: 12px;
-  transition: all 0.2s;
-}
-
-.textbox input[type="email"] ~ .error,
-.textbox input[type="password"] ~ .error {
-  position: absolute;
-  bottom: -5px;
-  left: 16px;
-  color: rgba(0,0,0,0);
-  font-size: 0.8em;
-  pointer-events: none;
-  transition: all 0.2s;
-}
-
-.textbox input[type="email"] ~ .error:before,
-.textbox input[type="password"] ~ .error:before {
-  content: '';
-  display: block;
-  width: 0;
-  height: 2px;
-  background: #2196f3;
-  position: absolute;
-  top: -3px;
-  left: -8px;
-  margin-left: 132px;
-  visibility: visible;
-  transition: all 0.2s;
-}
-
-.textbox input[type="email"]:not([value=""]) ~ label,
-.textbox input[type="password"]:not([value=""]) ~ label {
-  font-size: 0.8em;
-  top: 8px;
-}
-
-.textbox input[type="email"]:focus ~ label,
-.textbox input[type="password"]:focus ~ label {
-  font-size: 0.8em;
-  top: 8px;
-}
-
-.textbox input[type="email"]:focus ~ .error:before,
-.textbox input[type="password"]:focus ~ .error:before {
-  width: 264px;
-  margin: 0;
-}
-
-.textbox input[type="email"]:invalid:not(:focus):not([value=""]) ~ .error,
-.textbox input[type="password"]:invalid:not(:focus):not([value=""]) ~ .error {
-  color: #f44336;
-}
-
-.textbox input[type="email"]:invalid:not(:focus):not([value=""]) ~ .error:before,
-.textbox input[type="password"]:invalid:not(:focus):not([value=""]) ~ .error:before {
-  margin: 0;
-  width: 264px;
-  background: #f44336;
-}
-
-.textbox input[type="email"]:valid:not(:focus) ~ .error:before,
-.textbox input[type="password"]:valid:not(:focus) ~ .error:before {
-  margin: 0;
-  width: 264px;
-  background: #4caf50;
-}
 </style>
 </head>
 <body>
@@ -216,29 +147,38 @@ input {
 <nav class ="m_menu">
  <ul>
     <li><a href="#">책임분양관리</a></li>
-    <li><a href="#">회원정보</a></li>
+    <li><a href="myinfo_member.me">회원정보</a></li>
     <li><a href="#">작성글관리</a></li>
     <li><a href="#">판매허가번호인증</a></li>
  </ul>
 </nav>
 </div>
-<div class = "content">
+<form class = "content" action="myinfo_update.me" method="post">
 <div class="textbox">
-  <input id="email" required="/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)?$/i" type="email" />
-  <label for="email">아이디/이메일</label>
-  <div class="error">
-    Invalid email address
-  </div>
+<label>아이디/이메일</label>&nbsp;&nbsp;  
+<input id="email" name="email" type="text" autofocus/>
 </div>
 <div class="textbox">
-  <input id="password" required="" type="password" /><label for="password">비밀번호</label>
-  <div class="error">
-    Invalid password
-  </div>
- </div>
- <br>
-   <button id="check" type="button" onclick="javascript:check()">확인</button>
+<label>비밀번호</label>&nbsp;&nbsp;<input id="pw" name="pw" type="password">
 </div>
-  </div>
+<div class="textbox">
+<label>비밀번호확인</label>&nbsp;&nbsp;<input id="pw2" type="password" onchange="isSame();">
+<span id=same></span>
+</div>
+<div class="textbox">
+<label>이름</label>&nbsp;&nbsp;<input id="name" name="name" type="text" readonly>
+</div>
+<div class="textbox">
+<label>닉네임</label>&nbsp;&nbsp;<input id="nick" name="nick" type="text">
+</div>
+<div class="textbox">
+<label>휴대폰번호</label>&nbsp;&nbsp;<input id="phone" name="phone" type="text">
+</div>
+<div class="textbox">
+<label>지역</label>&nbsp;&nbsp;<input id="local" name="local" type="text">
+</div><br>
+<input type="submit" id="check" value="회원정보수정">
+</form>
+</div>
 </body>
 </html>

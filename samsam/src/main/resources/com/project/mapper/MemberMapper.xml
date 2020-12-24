@@ -33,11 +33,11 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 
 <!-- 패스워드변경 -->
 <update id = "pwUpdate_M" parameterType="MemberVO">
-	update member_list set #{pw} where email= #{email}
+	update member_list set pw=#{pw} where email= #{email}
 </update>
 
 <update id = "pwUpdate_BM" parameterType="Biz_memberVO">
-	update member_list set #{pw} where biz_email= #{biz_email}
+	update member_list set pw=#{pw} where biz_email= #{biz_email}
 </update>
 
 <!-- 판매허가인증 확인 -->
