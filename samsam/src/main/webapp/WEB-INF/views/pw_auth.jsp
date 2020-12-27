@@ -1,6 +1,5 @@
 <%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <!doctype html>
 <html>
 <head>
@@ -117,14 +116,13 @@ input {
   font-size:1em;
 }
 
-
 </style>
 </head>
 <body>
 <div class ="body_content">
 <div id="aside">
 <div class="box" style="background: #BDBDBD;">
-    <img class="profile" src="C:\Users\AIA\Downloads\Telegram Desktop\rabit.jpg">
+    <img class="profile" src="C:\Project\upload\rabit.jpg">
 </div>
 <div class ="name">이름/닉네임</div>
 <nav class ="m_menu">
@@ -136,14 +134,22 @@ input {
  </ul>
 </nav>
 </div>
+<<<<<<< HEAD
 <form action="pw_new.me" method="post">
+=======
+<form action="pw_set.me" method="post">
+>>>>>>> branch 'main' of https://github.com/BEGINNERWW/Spring_Source.git
 	<input type="hidden" name ="num" value="${num }">
 <div class=content>
 	<div class="textbox">
 	<label>인증번호 </label>
 	<input type= "text" name="email_injeung" placeholder="인증번호를 입력하세요">
 	<br>
+<<<<<<< HEAD
 	<input type="submit" value="확인">
+=======
+	<input type="submit" id="check" value="확인">
+>>>>>>> branch 'main' of https://github.com/BEGINNERWW/Spring_Source.git
 	</div>
 </div>
 </form>
