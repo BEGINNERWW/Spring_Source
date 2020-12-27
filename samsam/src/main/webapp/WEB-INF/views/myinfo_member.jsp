@@ -3,14 +3,15 @@
 
 <%@ page import="com.project.samsam.member.MemberVO" %>
 <%
-String id=null;
+String email=(String)session.getAttribute("email");
 
-if((session.getAttribute("id")==null)|| (!((String)session.getAttribute("id")).equals("admin"))) {
+if((session.getAttribute("email")==null)|| (((String)session.getAttribute("email")).equals("admin"))) {
 	out.println("<script>");
-	out.println("location.href='loginform.me'");
+	out.println("location.href='loginForm.me'");
 	out.println("</script>");
 }
-MemberVO vo= (MemberVO)request.getAttribute("memberVO");
+MemberVO vo= (MemberVO)request.getAttribute("MemberVO");
+System.out.println("vo.getName : " + vo.getName());
 %>
 <!doctype html>
 <html>
@@ -147,7 +148,7 @@ border-bottom: solid 2px #bdbdbd;
 <nav class ="m_menu">
  <ul>
     <li><a href="#">책임분양관리</a></li>
-    <li><a href="myinfo_member.me">회원정보</a></li>
+    <li><a href="#">회원정보</a></li>
     <li><a href="#">작성글관리</a></li>
     <li><a href="#">판매허가번호인증</a></li>
  </ul>
@@ -156,26 +157,26 @@ border-bottom: solid 2px #bdbdbd;
 <form class = "content" action="myinfo_update.me" method="post">
 <div class="textbox">
 <label>아이디/이메일</label>&nbsp;&nbsp;  
-<input id="email" name="email" type="text" autofocus/>
+<input id="email" name="email" type="text" readonly value =<%=email %>>
 </div>
 <div class="textbox">
-<label>비밀번호</label>&nbsp;&nbsp;<input id="pw" name="pw" type="password">
+<label>비밀번호</label>&nbsp;&nbsp;<input id="pw" name="pw" type="password" autofocus>
 </div>
 <div class="textbox">
 <label>비밀번호확인</label>&nbsp;&nbsp;<input id="pw2" type="password" onchange="isSame();">
 <span id=same></span>
 </div>
 <div class="textbox">
-<label>이름</label>&nbsp;&nbsp;<input id="name" name="name" type="text" readonly>
+<label>이름</label>&nbsp;&nbsp;<input id="name" name="name" type="text" value="<%=vo.getName()%>" readonly>
 </div>
 <div class="textbox">
-<label>닉네임</label>&nbsp;&nbsp;<input id="nick" name="nick" type="text">
+<label>닉네임</label>&nbsp;&nbsp;<input id="nick" name="nick" type="text" value=<%=vo.getNick()%>>
 </div>
 <div class="textbox">
-<label>휴대폰번호</label>&nbsp;&nbsp;<input id="phone" name="phone" type="text">
+<label>휴대폰번호</label>&nbsp;&nbsp;<input id="phone" name="phone" type="text" value=<%= vo.getPhone() %>>
 </div>
 <div class="textbox">
-<label>지역</label>&nbsp;&nbsp;<input id="local" name="local" type="text">
+<label>지역</label>&nbsp;&nbsp;<input id="local" name="local" type="text" value=<%=vo.getLocal() %>>
 </div><br>
 <input type="submit" id="check" value="회원정보수정">
 </form>

@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 String email = (String)session.getAttribute("email");
+System.out.println("email : "+ email);
+System.out.println("session email : "+ session.getAttribute("email"));
 
 if(session.getAttribute("email")!=null){
 	email=(String)session.getAttribute("email");

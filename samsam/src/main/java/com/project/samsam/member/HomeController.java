@@ -40,29 +40,33 @@ public class HomeController {
 		return "pw_find";
 	}
 
-	@RequestMapping(value = "/pw_auth.me", method = RequestMethod.POST)
-	public ModelAndView pw_auth(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	@RequestMapping(value = "/pw_auth.me")
+	public ModelAndView pw_auth(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String email = (String)request.getParameter("email");
+		String name = (String)request.getParameter("name");
+		System.out.println("request email : " + email);
+		System.out.println("request name : " + name);
 
-		System.out.println("request email : " + request.getParameter("email"));
-
-		MemberVO vo = memberSV.selectMember((String)request.getParameter("email"));
+		MemberVO vo = memberSV.selectMember(email);
 		System.out.println("회원 이메일 :" + vo.getEmail());
 		System.out.println("이름 : " + vo.getName());
 
 		Random r = new Random();
 		int num = r.nextInt(999999); // 이메일로 받는 인증코드 부분(난수)
 
-		if (vo.getName().equals((String) request.getParameter("name"))) {
+		if (vo.getName().equals(name)) {
+			session.setAttribute("email", vo.getEmail());
 
+			System.out.println("메일발송 to :" + (String)session.getAttribute("id") );
 			// String setfrom ="지메일 주소"; //gmail 사용시 gmail 주소, 다음시 다음 이메일주소
 			String setfrom = "ivedot@naver.com"; // naver 사용시(보내는 사람 이메일 주소)
-			String tomail = request.getParameter("email"); // 받는사람 이메일
+			String tomail = email; // 받는사람 이메일
 			String title = "비밀번호변경 인증 이메일 입니다"; // 제목
 			String content = System.getProperty("line.separator") + "안녕하세요 회원님" + System.getProperty("line.separator")
 					+ "삼삼하개 비밀번호찾기(변경) 인증번호는 " + num + "입니다" + System.getProperty("line.separator")
 					+ "받으신 인증번호를 입력해주세요"; // 내용
-			System.out.println("보낸사람 : " + setfrom + "받는사람: " + tomail + "제목 : "+ title);
-			
+		//	System.out.println("보낸사람 : " + setfrom + "받는사람: " + tomail + "제목 : "+ title);
+
 			try {
 				MimeMessage message = mailSender.createMimeMessage();
 				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
@@ -76,10 +80,16 @@ public class HomeController {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("pw_auth");
+			mv.addObject("num", num);
+			return mv;
+		}else {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("pw_find");
+			return mv;
 		}
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("pw_auth");
-		mv.addObject("num", num);
 
 		/*
 		 * response.setContentType("text/html; charset=utf-8"); PrintWriter writer =
@@ -88,9 +98,9 @@ public class HomeController {
 		 * writer.flush();
 		 * 
 		 */
-		return mv;
+
 	} //비밀번호 이메일인증
-	
+
 	@RequestMapping(value = "/pw_set.me", method = RequestMethod.POST)
 	public String pw_set(@RequestParam(value="email_injeung") String email_injeung,
 			@RequestParam(value = "num") String num) throws IOException{
@@ -117,7 +127,7 @@ public class HomeController {
 		}
 	}
 	
-	@RequestMapping(value = "/loginForm.me", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginForm.me")
 	public String login_Form() {
 
 		return "loginForm";
@@ -141,7 +151,7 @@ public class HomeController {
 			return "redirect:/loginForm.me";
 		}
 	}
-	@RequestMapping(value = "/myinfo_check.me", method = RequestMethod.GET)
+	@RequestMapping(value = "/myinfo_check.me")
 	public String myinfo_check() {
 
 		return "myinfo_check";
@@ -156,7 +166,7 @@ public class HomeController {
 		
 		if(res.getPw().equals(vo.getPw())) {
 			System.out.println("session id :" +session.getAttribute("id"));
-			System.out.println("session email :" +session.getAttribute("email"));
+			System.out.println("res.getName :" + res.getName());
 
 			model.addAttribute("MemberVO", res);
 			return "myinfo_member";
@@ -165,7 +175,7 @@ public class HomeController {
 		}
 	}	
 
-	@RequestMapping(value = "/myinfo_update.me", method = RequestMethod.GET)
+	@RequestMapping(value = "/myinfo_update.me")
 	public String myinfo_update() {
 
 		return "myinfo_member";

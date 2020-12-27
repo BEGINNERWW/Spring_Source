@@ -134,22 +134,14 @@ input {
  </ul>
 </nav>
 </div>
-<<<<<<< HEAD
-<form action="pw_new.me" method="post">
-=======
 <form action="pw_set.me" method="post">
->>>>>>> branch 'main' of https://github.com/BEGINNERWW/Spring_Source.git
 	<input type="hidden" name ="num" value="${num }">
 <div class=content>
 	<div class="textbox">
 	<label>인증번호 </label>
-	<input type= "text" name="email_injeung" placeholder="인증번호를 입력하세요">
+	<input type="text" name="email_injeung" placeholder="인증번호를 입력하세요">
 	<br>
-<<<<<<< HEAD
-	<input type="submit" value="확인">
-=======
 	<input type="submit" id="check" value="확인">
->>>>>>> branch 'main' of https://github.com/BEGINNERWW/Spring_Source.git
 	</div>
 </div>
 </form>
