@@ -139,7 +139,7 @@ input {
 <div class=content>
 	<div class="textbox">
 	<label>인증번호 </label>
-	<input type= "text" name="email_injeung" placeholder="인증번호를 입력하세요">
+	<input type="text" name="email_injeung" placeholder="인증번호를 입력하세요">
 	<br>
 	<input type="submit" id="check" value="확인">
 	</div>

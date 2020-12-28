@@ -1,14 +1,26 @@
 package com.project.samsam.member;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Biz_memberVO {
 	private String biz_email;
 	private String biz_no;
 	private String biz_com;
 	private String biz_name;
 	private String biz_add;
+	private MultipartFile file;
 	private String biz_img;
+	private int status;
 	private int free_coupon;
 	private int pay_coupon;
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public String getBiz_email() {
 		return biz_email;
@@ -48,6 +60,14 @@ public class Biz_memberVO {
 
 	public void setBiz_add(String biz_add) {
 		this.biz_add = biz_add;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 	public String getBiz_img() {

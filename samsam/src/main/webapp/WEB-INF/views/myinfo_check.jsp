@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 String email = (String)session.getAttribute("email");
+System.out.println("email : "+ email);
+System.out.println("session email : "+ session.getAttribute("email"));
 
 if(session.getAttribute("email")!=null){
 	email=(String)session.getAttribute("email");
@@ -23,12 +25,7 @@ if(session.getAttribute("email")!=null){
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script>
-$(".textbox input").attr("value", "");
-$(".textbox input").attr("onkeyup", "this.setAttribute('value', this.value);");
 
-function check(){
-	
-}
 </script>
 <style>
 body, html {
@@ -227,9 +224,9 @@ input {
 <nav class ="m_menu">
  <ul>
     <li><a href="#">책임분양관리</a></li>
-    <li><a href="myinfo_member.me">회원정보</a></li>
+    <li><a href="myinfo_check.me">회원정보</a></li>
     <li><a href="#">작성글관리</a></li>
-    <li><a href="#">판매허가번호인증</a></li>
+    <li><a href="myinfo_auth.me">판매허가번호인증</a></li>
  </ul>
 </nav>
 </div>
@@ -242,7 +239,7 @@ input {
   </div>
 </div>
 <div class="textbox">
-  <input id="password" name=pw required="" type="password" /><label for="password">비밀번호</label>
+  <input id="password" name=pw required="" type="password" autofocus/><label for="password">비밀번호</label>
   <div class="error">
     Invalid password
   </div>

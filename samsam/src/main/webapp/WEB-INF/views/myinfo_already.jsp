@@ -14,59 +14,8 @@
 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script>
 $(document).ready(function(){
-	   var fileTarget = $('.textbox .upload-hidden');
-
-	    fileTarget.on('change', function(){
-	        if(window.FileReader){
-	            // 파일명 추출
-	            var filename = $(this)[0].files[0].name;
-	        } 
-
-	        else {
-	            // Old IE 파일명 추출
-	            var filename = $(this).val().split('/').pop().split('\\').pop();
-	        };
-
-	        $(this).siblings('.upload-name').val(filename);
-	    });
-	});
-	
-$(document).ready(function() {
-	$(".check").click(function(event) { //정적데이터는 이벤트 처리를 바로 가능하나 동적이면 on을 사용하여 처리
-		var biz_no = $('#biz_no').val();
-		var biz_com= $('#biz_com').val();
-		console.log($('#biz_no').val());
-		jQuery.ajax({ // $.ajax 와 동일한 표현
-				url : '/samsam/biz_check.do',
-				type : 'POST',
-				data : {"biz_no" : biz_no,
-					"biz_com" : biz_com }, //서버로 보낼 데이터
-				/* (참고) 파일 첨부시 필요함
-				- cache : false 로 선언시 ajax로통신 중 cache가 남아서 갱신된 데이터를 받아오지 못할 경우를 대비
-				- contentType : false 로 선언시 content-Type 헤더가 multipart/form-data로 전송되게 함
-				- processData : false로 선언시 formData를 string으로 변환하지 않음
-				*/
-				dataType : 'json', //서버에서 보내줄 데이터 타입
-				contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-				success : function(result) {
-					    $('.error').text("")
-						if(result.res == "OK"){}
-						if (result.res == "dont") {
-							//데이터 성공일때 이벤트 작성
-							$('#modal').modal('show');
-						} else {
-							console.log("업데이트 실패!!");
-							$('.error').text("관리번호를 다시 확인해주세요")
-						}
-				},
-				error : function() {
-						alert("ajax 통신 실패!!!");
-				}
-		});
-		//기본 이벤트 제거
-		event.preventDefault();
-	});
-});
+	$('#modal').modal('show');
+})
 </script>
 <style>
 body, html {
@@ -244,13 +193,7 @@ input {
 }
 
 h6 {
-	padding-left: 110px;
-}
-.error{
-font-size: 0.8em;
-color : red;
-padding-left: 110px;
-
+	padding-left: 23px;
 }
 </style>
 </head>
@@ -271,32 +214,14 @@ padding-left: 110px;
 				</ul>
 			</nav>
 		</div>
-		<form class="content" method="post" enctype="multipart/form-data">
-			<div class="textbox">
-				<label>사업장명</label><input id="biz_com" name="biz_com" type="text">
-			</div>
-			<div class="textbox" name="button_1">
-				<label>관리번호</label> <input id="biz_no" name="biz_no" type="text">
-				<input type="button" class="check" value="확인">
-			</div>
-				<div class="error">
-  				</div>
-			<div class="textbox preview-image" name="button_1">
-				<label>허가증</label>&nbsp;&nbsp;&nbsp; <input class="upload-name"
-					name="biz_img" value="파일선택" disabled="disabled">
-				<label for="ex_filename">첨부</label> <input type="file"	id="biz_img" name="biz_img" class="upload-hidden">
-			</div>
-			<input class="auth" type="button" value="인증하기" onclick="">
-			<h6>*인증완료까지 최대 3영업일이 소요될수 있습니다.</h6>
-		</form>
-	</div>
 	<div class="modal fade" id="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<!-- header -->
 				<div class="modal-header">
 					<!-- header title -->
-					<h4 class="modal-title">사업장명 또는 관리번호가 일치하지 않습니다.</h4>
+					<h4 class="modal-title">판매관리번호 인증이 진행중입니다.</h4>
+					<h4 class="modal-title">인증 완료까지 최대 3영업일 소요될 수 있습니다.</h4>
 				</div>
 			</div>
 		</div>

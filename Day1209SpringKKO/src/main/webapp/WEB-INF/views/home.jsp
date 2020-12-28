@@ -29,6 +29,8 @@
 						     //카카오톡 계정
 						     document.getElementById("kakaoAccount").innerHTML = res.kakao_account;
 						     //닉네임
+						     document.getElementById("kakaoEmail").innerHTML = res.email;
+						     //이메일
 						     document.getElementById("kakaoNickName").innerHTML = res.properties.nickname;
 						     //프로필 이미지
 						     document.getElementById("kakaoProfileImg").src = res.properties.profile_image;
@@ -46,28 +48,29 @@
 				}
 			});//카카오로그인버튼
 		});//이벤트리스너 추가
-		document.on('click','#kakao-logout-btn',function(){
-			Kakao.init("4658e426b678bd2dd9ed7731ab1a1868"); // 내어플리케이션 클릭해서 앱 클릭 >> 자바스크립트 키 입력 
-			
-			if (!Kakao.Auth.getAccessToken()) {
-			  console.log('Not logged in.');
-			  return;
-			}
-			Kakao.Auth.logout(function() {
-			  console.log(Kakao.Auth.getAccessToken());
-			});
-		});
+	
+		  function kakaoLogout() {
+		    if (!Kakao.Auth.getAccessToken()) {
+		      alert('Not logged in.')
+		      return
+		    }
+		    Kakao.Auth.logout(function() {
+		      alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken())
+		    })
+		  }
+		
 	</script>
 </head>
 <body>
 
 <div> 카카오 아이디 : <span id="kakaoIdentity"></span></div> 
 <div> 카카오 계정 : <span id="kakaoAccount"></span></div> 
+<div> 이메일 : <span id="kakaoEmail"></span></div>
 <div> 닉네임 : <span id="kakaoNickName"></span></div>
 <div> 프로필 이미지 : <img id="kakaoProfileImg"></img></div>
 <div> 썸네일 이미지 : <img id="kakaoThumbnailImg"></img></div>
 <br/>
 <a id="kakao-login-btn"></a>
-<input type=button id="kakao-logout-btn"> 로그아웃</a>
+<button class="api-btn" onclick="kakaoLogout()">로그아웃</button>
 </body>
 </html>

@@ -3,7 +3,7 @@ CREATE TABLE member_list (
 	pw	varchar2(20)		NULL,
 	name	varchar2(20)		NULL,
 	nick	varchar2(50)		NULL,
-	phone	number		NULL,
+	phone	varchar2(20)		NULL,
 	local	varchar2(20)		NULL,
 	img	varchar2(2000)		NULL,
 	grade	varchar2(10)		NULL
@@ -21,6 +21,9 @@ CREATE TABLE biz_member (
 	pay_coupon	number		NULL
    );
    
+alter table biz_member modify free_coupon number default 5;
+alter table biz_member add status number default 1 not null;
+
 ALTER TABLE biz_member
 ADD CONSTRAINT biz_email FOREIGN KEY (biz_email)
 REFERENCES MEMBER_list(email)ON DELETE CASCADE;
@@ -82,3 +85,4 @@ select count(*) from fulldata_animal;
 select * from fulldata_animal;
 select * from fulldata_animal where no=26;
 delete from fulldata_animal where no='¹øÈ£';
+

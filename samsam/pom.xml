@@ -192,7 +192,7 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
-			<!-- 이메일 인증 관련정보 추가 시작 -->
+		<!-- 이메일 인증 관련정보 추가 시작 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -203,13 +203,13 @@
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.2</version>
-		</dependency>   
+		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
-		</dependency>        
-		<!-- 이메일 인증 관련정보 -->  
+		</dependency>
+		<!-- 이메일 인증 관련정보 -->
 	</dependencies>
 	<build>
 		<plugins>

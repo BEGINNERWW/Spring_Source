@@ -24,11 +24,11 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 
 <!-- 회원정보수정 -->
 <update id = "updateMember" parameterType="MemberVO">
-	update member_list set #{pw},#{nick},#{phone},#{local} where email= #{email}
+	update member_list set pw=#{pw},nick=#{nick},phone=#{phone},local=#{local} where email= #{email}
 </update>
 
 <update id = "updateBiz_Member" parameterType="Biz_memberVO">
-	update member_list set #{pw},#{nick},#{phone},#{local} where biz_email= #{biz_email}
+	update member_list set pw=#{pw},nick=#{nick},phone=#{phone},local=#{local} where biz_email= #{biz_email}
 </update>
 
 <!-- 패스워드변경 -->
@@ -42,7 +42,16 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 
 <!-- 판매허가인증 확인 -->
 <select id ="check_auth" parameterType="Biz_memberVO" resultType="String">
- 	select biz_name from fulldata_animal where auth_no=#{biz_no};
+ 	select biz_name from fulldata_animal where auth_no=#{biz_no} and status_no = 01
 </select>
 
+<!-- 사업자회원 추가(상태대기) -->
+<insert id ="pre_insertBiz" parameterType="Biz_memberVO">
+ 	insert into biz_member values(#{biz_email},#{biz_no}, #{biz_com}, #{biz_name}, #{biz_add}, #{biz_img})
+</insert>
+
+<!-- 사업자회원 조회 -->
+<select id="selectBizMember" parameterType="String" resultType="Biz_memberVO">
+	select * from biz_member where biz_email = #{biz_email}
+</select>
 </mapper>
