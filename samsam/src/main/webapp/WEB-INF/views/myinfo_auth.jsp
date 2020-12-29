@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <!doctype html>
 <html>
 <head>
@@ -12,6 +11,11 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
 <script>
 $(document).ready(function(){
 	   var fileTarget = $('.textbox .upload-hidden');
@@ -50,11 +54,14 @@ $(document).ready(function() {
 				contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 				success : function(result) {
 					    $('.error').text("")
-						if(result.res == "OK"){}
-						if (result.res == "dont") {
+						if(result.res == "OK"){
+						    $('.error').html("허가증을 업로드하고 인증하기를 클릭하세요")
+						}
+						else if (result.res == "dont") {
 							//데이터 성공일때 이벤트 작성
 							$('#modal').modal('show');
 						} else {
+							console.log(result.res);
 							console.log("업데이트 실패!!");
 							$('.error').text("관리번호를 다시 확인해주세요")
 						}
@@ -67,6 +74,22 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 });
+
+function formsubmit(){
+	if($("#biz_com").val() != "" && $("#biz_no").val() != "" && $("#ex_filename").val() !=""){
+		if($(".error").text() =="허가증을 업로드하고 인증하기를 클릭하세요"){
+			content.submit();
+		}
+		else{
+			console.log($("#biz_com").val() + "biz_no :" + $("#biz_no").val() + "file : "+ $("#ex_filename").val())
+			console.log($(".error").text())
+			$('#submit_modal').modal('show');
+			
+		}
+	}else{	
+		$('#submit_modal').modal('show');
+	}
+}
 </script>
 <style>
 body, html {
@@ -201,8 +224,22 @@ input {
 	border-bottom-color: #e2e2e2;
 	border-radius: .25em;
 }
-
-.textbox input[type="file"] {
+/*라벨디자인 첨부 */
+.textbox label[for="ex_filename"]{ 
+	display: inline-block;
+	padding: .5em .75em;
+	color: #999;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+/*파일필드 숨기기*/
+.textbox input[type="file"] { 
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -242,7 +279,11 @@ input {
 	border-radius: .25em;
 	appearance: none;
 }
-
+.textbox.bs3-primary label {
+  color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
 h6 {
 	padding-left: 110px;
 }
@@ -271,7 +312,7 @@ padding-left: 110px;
 				</ul>
 			</nav>
 		</div>
-		<form class="content" method="post" enctype="multipart/form-data">
+		<form class="content" name="content" action="pre_auth.me" method="post" enctype="multipart/form-data">
 			<div class="textbox">
 				<label>사업장명</label><input id="biz_com" name="biz_com" type="text">
 			</div>
@@ -284,9 +325,9 @@ padding-left: 110px;
 			<div class="textbox preview-image" name="button_1">
 				<label>허가증</label>&nbsp;&nbsp;&nbsp; <input class="upload-name"
 					name="biz_img" value="파일선택" disabled="disabled">
-				<label for="ex_filename">첨부</label> <input type="file"	id="biz_img" name="biz_img" class="upload-hidden">
+				<label for="ex_filename">첨부</label> <input type="file"	id="ex_filename" name="file" accept="image/*" class="upload-hidden">
 			</div>
-			<input class="auth" type="button" value="인증하기" onclick="">
+			<input class="auth" type="button" value="인증하기" onclick="javascript : formsubmit()" >
 			<h6>*인증완료까지 최대 3영업일이 소요될수 있습니다.</h6>
 		</form>
 	</div>
@@ -296,7 +337,18 @@ padding-left: 110px;
 				<!-- header -->
 				<div class="modal-header">
 					<!-- header title -->
-					<h4 class="modal-title">사업장명 또는 관리번호가 일치하지 않습니다.</h4>
+					<h4 class="modal-title">사업장명과 관리번호를 다시 확인해주세요.</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="submit_modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- header -->
+				<div class="modal-header">
+					<!-- header title -->
+					<h4 class="modal-title">모든 항목을 입력해주세요.</h4>
 				</div>
 			</div>
 		</div>

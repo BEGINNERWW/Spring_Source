@@ -1,6 +1,5 @@
 <%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <!doctype html>
 <html>
 <head>
@@ -145,7 +144,7 @@ input {
 <label>닉네임</label><input id="nick" type="text">
 <label>휴대폰번호</label><input id="phone" type="text">
 <label>지역</label><input id="local" type="text">
-<label>사업장명</label><input id = "biz_com" type="text" value ="자박" readonly>
+<label>사업장명</label><input id = "biz_com" type="text" value ="" readonly>
 <label>관리번호</label><input id="biz_no" type="text" readonly>
 <label>허가증</label><input id="biz_img" type="text" readonly>
 <input type = "button" id=check value="회원정보수정" onclick="javascript:find_pw()">

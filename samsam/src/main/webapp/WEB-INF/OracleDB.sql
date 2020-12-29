@@ -86,3 +86,45 @@ select * from fulldata_animal;
 select * from fulldata_animal where no=26;
 delete from fulldata_animal where no='번호';
 
+CREATE TABLE adopt_list (
+	adopt_no		number		NOT NULL primary key,
+	adopt_nick	varchar2(50)	NULL,
+	adopt_date	date		NULL,
+	adopt_readcount	number		NULL,
+	adopt_img	varchar2(2000)	NULL,
+	adopt_phone	varchar2(20)	NULL,
+	adopt_price	varchar2(20)	NULL,
+	adopt_title	varchar2(200)	NULL,
+	adopt_content	varchar2(10000)	NULL,
+	big_name		varchar2(10)	NULL,
+	kindof		varchar2(20)	NULL
+);
+
+CREATE TABLE adopt_reply (
+	adopt_cno	number		NOT NULL PRIMARY KEY,
+	adopt_no		number		NOT NULL,
+	adopt_cnick	varchar2(50)	NULL,
+	adopt_cdate	date		NULL,
+	adopt_ccontent	varchar2(400)	NULL,
+	adopt_csecret	number		NULL
+);
+
+CREATE SEQUENCE ADOPT_NO_SEQ
+INCREMENT BY 1 
+START WITH 1 ;
+
+CREATE SEQUENCE ADOPT_CNO_SEQ
+INCREMENT BY 1 
+START WITH 1 ;
+
+insert into adopt_list(adopt_no,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'한스' , '20201229', 300000, '01000000000', '귀여운 말티즈 분양해욤뇸뇸', '차므로 귀욥쥬?? 연락주세요~~');
+
+insert into adopt_list(adopt_no,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'한스' , '20201230', 300000, '01000000000', '끌올))) 귀여운 말티즈 분양해욤뇸뇸', '아이가 크고있어요 ㅜㅜ 연락주세요~~');
+
+insert into adopt_reply(adopt_cno,adopt_no,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,1,'한스' , '20201229','헉 너무 사랑스러운거 아닌가요??!!');
+
+select * from adopt_list;
+select * from adopt_reply;

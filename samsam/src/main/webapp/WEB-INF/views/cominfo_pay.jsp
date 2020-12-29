@@ -1,6 +1,22 @@
 <%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.project.samsam.member.MemberVO"%>
+<%@ page import="com.project.samsam.member.Biz_memberVO"%>
+<%@ page import="com.project.samsam.member.Adopt_BoardVO"%>
+
+<%
+	String email = (String) session.getAttribute("email");
+
+	if ((session.getAttribute("email") == null) || (((String) session.getAttribute("email")).equals("admin"))) {
+		out.println("<script>");
+		out.println("location.href='loginForm.me'");
+		out.println("</script>");
+	}
+	MemberVO vo = (MemberVO) request.getAttribute("MemberVO");
+	System.out.println("vo.getName : " + vo.getName());
+%>
 <!doctype html>
 <html>
 <head>
@@ -12,9 +28,6 @@
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script>
-$(".textbox input").attr("value", "");
-$(".textbox input").attr("onkeyup", "this.setAttribute('value', this.value);");
-
 function check(){
 	
 }
@@ -130,9 +143,9 @@ input {
 <div class ="name">이름/닉네임</div>
 <nav class ="m_menu">
  <ul>
-    <li><a href="#">회원정보</a></li>
+    <li><a href="cominfo_member.me">회원정보</a></li>
     <li><a href="#">작성글관리</a></li>
-    <li><a href="#">분양관리</a></li>
+    <li><a href="cominfo_main.me">분양관리</a></li>
  </ul>
 </nav>
 </div>
@@ -146,7 +159,7 @@ input {
 <input type="button" id="check" value="구매하기" onclick="javascript:pay()">
 <h3>분양글</h3>
 <table class = pay border="1">
-	<tr><td>제목</td><td>작성일</td><td>조회수</td></tr>
+	<tr><td>글번호</td><td>제목</td><td>작성일</td><td>조회수</td></tr>
 	<!-- 반복문 -->
 </table><br>
 </div>

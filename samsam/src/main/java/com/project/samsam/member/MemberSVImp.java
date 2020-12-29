@@ -90,4 +90,24 @@ public class MemberSVImp implements MemberSV {
 		
 		return vo;
 	}
+	@Override
+	public int selectBiz_no(String biz_no) {
+		int res = mapper.selectBiz_no(biz_no);
+		System.out.println("selectBiz_no : ¼º°ø" + res);
+		
+		return res;
+	}
+	@Override
+	public ArrayList<Adopt_BoardVO> getMyAdopt(String adopt_nick) {
+		ArrayList<Adopt_BoardVO> bvo = mapper.getMyAdopt(adopt_nick);
+	
+		return bvo;
+	}
+	
+	@Override
+	public int getMyAdoptReply(int adopt_no) {
+		int res = mapper.getMyAdoptReply(adopt_no);
+		
+		return res;
+	}
 }

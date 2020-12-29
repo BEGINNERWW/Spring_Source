@@ -13,4 +13,7 @@ public interface MemberSV {
 	public String check_auth(Biz_memberVO vo);
 	public int pre_insertBiz(Biz_memberVO vo);
 	public Biz_memberVO selectBizMember(String email);
+	public int selectBiz_no(String biz_no);
+	public ArrayList<Adopt_BoardVO> getMyAdopt(String adopt_nick);
+	public int getMyAdoptReply(int adopt_no);
 }
