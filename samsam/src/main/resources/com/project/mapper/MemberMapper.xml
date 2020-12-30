@@ -63,12 +63,26 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 
 <!-- 사업자회원 내가 작성한 분양글 -->
 <select id="getMyAdopt" parameterType="String" resultType="Adopt_BoardVO">
-	select adopt_title, adopt_date, adopt_readcount from adopt_list where adopt_nick = #{adopt_nick} order by adopt_date desc
+	select adopt_title, adopt_date, adopt_readcount from adopt_list where adopt_nick = #{adopt_email} order by adopt_date desc
 </select>
 
 <!-- 사업자회원 내가 작성한 글에 달린 댓글수 -->
 <select id="getMyAdoptReply" parameterType="String" resultType="int">
-	select count(*) from adopt_reply where adopt_no = #{adopt_no}
+	select count(*) from adopt_reply where adopt_cemail = #{adopt_cemail}
+</select>
+
+<!-- 내 작성글 리스트 -->
+<select id="getWriteList" parameterType="String" resultType="BoardlistVO">
+	select adopt_no as num, adopt_title as subject, adopt_date as write_date from adopt_list where adopt_email = #{email}
+	union all
+	select fdoc_no as num, fdoc_subject as subject, fdoc_date as write_date from free_doc where fdoc_email = #{email}
+</select>
+
+<!-- 내 댓글 리스트 -->
+<select id="getWriteComment" parameterType="String" resultType="CommentListVO">
+	select adopt_ccontent as content, adopt_cdate as write_date from adopt_reply where adopt_cemail = #{email}
+	union all
+	select fdoc_ccontent as content, fdoc_cdate as write_date from fdoc_reply where fdoc_cemail = #{email}
 </select>
 
 </mapper>

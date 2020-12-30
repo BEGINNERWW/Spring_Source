@@ -260,7 +260,7 @@ public class HomeController {
     		String originalFileExtension = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
     		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
             //mf.transferTo(new File(uploadPath+"/"+mf.getOriginalFilename()));     
-        	mf.transferTo(new File(uploadPath+mf.getOriginalFilename())); // 예외처리 기능 필요함. transferTo 실질적 업로드(서버로 전달)
+        	mf.transferTo(new File(uploadPath + mf.getOriginalFilename())); // 예외처리 기능 필요함. transferTo 실질적 업로드(서버로 전달)
         	biz.setBiz_img(mf.getOriginalFilename());
         	biz.setBiz_add(vo.getLocal());
         	biz.setBiz_name(vo.getName());
@@ -285,13 +285,12 @@ public class HomeController {
 			return "myinfo_auth";
 		}
 	} 
-	@RequestMapping(value = "/cominfo_main.me")
+	@RequestMapping(value = "/cominfo_list.me")
 	public String cominfo_main(HttpSession session, Model model) {
 		String email = (String)session.getAttribute("email");
 		
-		MemberVO mvo = memberSV.selectMember(email);
 		Biz_memberVO vo = memberSV.selectBizMember(email);
-		ArrayList<Adopt_BoardVO> bvo = memberSV.getMyAdopt(mvo.getNick());
+		ArrayList<Adopt_BoardVO> bvo = memberSV.getMyAdopt(email);
 		
 		ArrayList<Adopt_BoardVO> new_bvo = new ArrayList<Adopt_BoardVO>();
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -307,21 +306,43 @@ public class HomeController {
 			bo.setAdopt_phone(phone);
 			new_bvo.add(bo);
 			
-			int res = memberSV.getMyAdoptReply(bo.getAdopt_no());
+			int res = memberSV.getMyAdoptReply(email);
 			map.put(bo.getAdopt_no(), res);
 			}
 		
 		model.addAttribute("Biz_memberVO", vo);
-		model.addAttribute("MemberVO", mvo);
 		model.addAttribute("Adopt_list", new_bvo);
 		model.addAttribute("map_count", map);
 
 		return "cominfo_pay";
 	}
+	@RequestMapping(value = "/cominfo_main.me")
+	public String cominfo_list(HttpSession session, Model model) {
+		String email = (String)session.getAttribute("email");
+		System.out.println("email "+ email );
+		
+		ArrayList<BoardlistVO> b_list = new ArrayList<BoardlistVO>();
+		ArrayList<CommentListVO> c_list = new ArrayList<CommentListVO>();
+		b_list = memberSV.getWriteList(email);
+		c_list = memberSV.getWriteComment(email);
+		
+		model.addAttribute("b_list", b_list);
+		model.addAttribute("c_list", c_list);
+		
+		return "cominfo_write";
+	}
 	
 	@RequestMapping(value = "/cominfo_member.me")
-	public String cominfo_member() {
-
+	public String cominfo_member(HttpSession session, Model model) {
+		String email = (String)session.getAttribute("email");
+		
+		MemberVO vo = memberSV.selectMember(email);
+		Biz_memberVO bvo = memberSV.selectBizMember(email);
+		
+		model.addAttribute("MemberVO", vo);
+		model.addAttribute("Biz_memberVO", bvo);
+		
 		return "cominfo_member";
 	}
+	
 }

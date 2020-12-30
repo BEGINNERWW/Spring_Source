@@ -9,7 +9,7 @@
 <%
 	String email = (String) session.getAttribute("email");
 
-	if ((session.getAttribute("email") == null) || (((String) session.getAttribute("email")).equals("admin"))) {
+	if (session.getAttribute("email") == null){
 		out.println("<script>");
 		out.println("location.href='loginForm.me'");
 		out.println("</script>");
@@ -144,7 +144,7 @@ input {
 <nav class ="m_menu">
  <ul>
     <li><a href="cominfo_member.me">회원정보</a></li>
-    <li><a href="#">작성글관리</a></li>
+    <li><a href="cominfo_list.me">작성글관리</a></li>
     <li><a href="cominfo_main.me">분양관리</a></li>
  </ul>
 </nav>

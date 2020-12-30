@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.project.samsam.member.Adopt_BoardVO;
 import com.project.samsam.member.Biz_memberVO;
+import com.project.samsam.member.BoardlistVO;
+import com.project.samsam.member.CommentListVO;
 import com.project.samsam.member.MemberVO;
 
 public interface MemberMapper {
@@ -18,7 +20,10 @@ public interface MemberMapper {
 	public int pre_insertBiz(Biz_memberVO vo);
 	public Biz_memberVO selectBizMember(String email);
 	public int selectBiz_no(String biz_no);
-	public ArrayList<Adopt_BoardVO> getMyAdopt(String adopt_nick);
-	public int getMyAdoptReply(int adopt_no);
+	public ArrayList<Adopt_BoardVO> getMyAdopt(String adopt_email);
+	public int getMyAdoptReply(String adopt_cemail);
+	public ArrayList<BoardlistVO> getWriteList(String email);
+	public ArrayList<CommentListVO> getWriteComment(String email);
+	
 
 }

@@ -1,5 +1,6 @@
 package com.project.samsam.member;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.apache.ibatis.session.SqlSession;
@@ -98,16 +99,32 @@ public class MemberSVImp implements MemberSV {
 		return res;
 	}
 	@Override
-	public ArrayList<Adopt_BoardVO> getMyAdopt(String adopt_nick) {
-		ArrayList<Adopt_BoardVO> bvo = mapper.getMyAdopt(adopt_nick);
+	public ArrayList<Adopt_BoardVO> getMyAdopt(String adopt_email) {
+		ArrayList<Adopt_BoardVO> bvo = mapper.getMyAdopt(adopt_email);
 	
 		return bvo;
 	}
 	
 	@Override
-	public int getMyAdoptReply(int adopt_no) {
-		int res = mapper.getMyAdoptReply(adopt_no);
+	public int getMyAdoptReply(String adopt_cemail) {
+		int res = mapper.getMyAdoptReply(adopt_cemail);
 		
 		return res;
+	}
+	@Override
+	public ArrayList<BoardlistVO> getWriteList(String email) {
+		ArrayList<BoardlistVO> list = mapper.getWriteList(email);
+		if(list!=null) {
+		System.out.println("조회 끝 게시글");
+		}
+		return list;
+	}
+	@Override
+	public ArrayList<CommentListVO> getWriteComment(String email) {
+		ArrayList<CommentListVO> list = mapper.getWriteComment(email);
+		if(list!=null) {
+			System.out.println("조회 끝 댓글");
+			}
+		return list;
 	}
 }

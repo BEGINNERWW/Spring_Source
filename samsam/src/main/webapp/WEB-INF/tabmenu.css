@@ -1,0 +1,69 @@
+@charset "utf-8";
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../img/bg.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+#ud_tab {
+    max-width: 600px;
+    width: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    height: 300px;
+}
+#ud_tab input[type="radio"] {
+    display: none;
+}
+#ud_tab label {
+    display: block;
+    float: left;
+    width: 23.3333%;
+    color: #666;
+    font-size: 20px;
+    padding: 5%;
+    font-weight: normal;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    font-family: "Oswald", sans-serif;
+    background: #111;
+}
+#ud_tab .ud_content {
+    background: #fff;
+    width: 90%;
+    display: none;
+    padding: 5%;
+    float: left;
+}
+#ud_tab .ud_content h3 {
+    margin: 0;
+    padding: 0 0 5% 0;
+    font-family: "Oswald", sans-serif;
+}
+#ud_tab .ud_content p {
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+    color: #666;
+    line-height: 25px;
+    word-spacing: 3px;
+}
+
+#ud_tab [id^="tab"]:checked + label {
+    background: #ff6600;
+    color: #fff;
+}
+#tab1:checked ~ #ud_tab-content1,
+#tab2:checked ~ #ud_tab-content2,
+#tab3:checked ~ #ud_tab-content3 {
+    display: block;
+}
