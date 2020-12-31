@@ -6,25 +6,25 @@
 <head>
 	<meta charset="utf-8"/>
 	<script src ="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script src ="http://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script src ="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script>
 		function pay(){
-			var IMP = window.IMP;
-			var code = "imp70138110"; //가맹점 식별코드
-			IMP.init(code);
+		var IMP = window.IMP;
+		var code = "imp70138110"; //가맹점 식별코드
+		IMP.init(code);
 			
 			//결제요청
 			IMP.request_pay({
 				//name과 amout만있어도 결제 진행가능
-				pg : 'kakao', //pg사 선택 (kakao, kakaopay 둘다 가능)
+				//pg : 'kakao', //pg사 선택 (kakao, kakaopay 둘다 가능)
 				pay_method: 'card',
 				//merchant_uid : 'merchant_' + new Date().getTime();
-				merchant_uid : 'merchant_0', //주문번호
+				merchant_uid : 'merchant_1', //주문번호
 				name : '결제테스트', // 상품명
 				amount : 1,
 				buyer_email : 'ivedot@naver.com',
 				buyer_name : '한스',
-				buyer_tel : '010-0000-0000',
+				buyer_tel : '010-0000-0000', //필수항목
 				buyer_addr : '서울 중랑구',
 				buyer_postcode : '123-456',
 				//결제완료후 이동할 페이지 kko나 kkopay는 생략 가능
@@ -39,7 +39,7 @@
 				}
 				else{//결제 실패시
 					var msg = '결제에 실패했습니다';
-					rsp.error_msg
+					msg += '에러 : ' + rsp.error_msg
 				}
 				alert(msg);
 			});

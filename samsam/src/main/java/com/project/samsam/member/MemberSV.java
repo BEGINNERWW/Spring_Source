@@ -15,7 +15,7 @@ public interface MemberSV {
 	public Biz_memberVO selectBizMember(String email);
 	public int selectBiz_no(String biz_no);
 	public ArrayList<Adopt_BoardVO> getMyAdopt(String adopt_email);
-	public int getMyAdoptReply(String adopt_cemail);
+	public int getMyAdoptReply(int adopt_no);
 	public ArrayList<BoardlistVO> getWriteList(String email);
 	public ArrayList<CommentListVO> getWriteComment(String email);
 }

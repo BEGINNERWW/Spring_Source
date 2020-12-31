@@ -5,6 +5,7 @@ import java.util.Date;
 public class Adopt_BoardVO {
 	private int adopt_no;
 	private String adopt_nick;
+	private String adopt_email;
 	private Date adopt_date;
 	private int adopt_readcount;
 	private String adopt_img;
@@ -26,6 +27,12 @@ public class Adopt_BoardVO {
 	}
 	public void setAdopt_nick(String adopt_nick) {
 		this.adopt_nick = adopt_nick;
+	}
+	public String getAdopt_email() {
+		return adopt_email;
+	}
+	public void setAdopt_email(String adopt_email) {
+		this.adopt_email = adopt_email;
 	}
 	public Date getAdopt_date() {
 		return adopt_date;

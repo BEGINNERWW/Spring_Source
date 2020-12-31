@@ -6,6 +6,7 @@ public class Adopt_replyVO {
 	private int adopt_cno;
 	private int adopt_no;
 	private String adopt_cnick;
+	private String adopt_cemail;
 	private Date adopt_cdate;
 	private String adopt_ccontent;
 	private String adopt_csecret;
@@ -21,6 +22,12 @@ public class Adopt_replyVO {
 	}
 	public void setAdopt_no(int adopt_no) {
 		this.adopt_no = adopt_no;
+	}
+	public String getAdopt_cemail() {
+		return adopt_cemail;
+	}
+	public void setAdopt_cemail(String adopt_cemail) {
+		this.adopt_cemail = adopt_cemail;
 	}
 	public String getAdopt_cnick() {
 		return adopt_cnick;

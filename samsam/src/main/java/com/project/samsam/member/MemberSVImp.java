@@ -106,8 +106,8 @@ public class MemberSVImp implements MemberSV {
 	}
 	
 	@Override
-	public int getMyAdoptReply(String adopt_cemail) {
-		int res = mapper.getMyAdoptReply(adopt_cemail);
+	public int getMyAdoptReply(int adopt_no) {
+		int res = mapper.getMyAdoptReply(adopt_no);
 		
 		return res;
 	}

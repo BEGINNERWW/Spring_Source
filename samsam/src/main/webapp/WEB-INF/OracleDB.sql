@@ -148,6 +148,8 @@ CREATE SEQUENCE ADOPT_CNO_SEQ
 INCREMENT BY 1 
 START WITH 1 ;
 
+분양글 작업 
+
 insert into adopt_list(adopt_no,ADOPT_EMAIL,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
 values(ADOPT_NO_SEQ.nextval,'ivedot@naver.com','ManD' , '20201229', 300000, '01000000000', '귀여운 말티즈 분양해욤뇸뇸', '차므로 귀욥쥬?? 연락주세요~~');
 
@@ -174,3 +176,41 @@ values(ADOPT_cNO_SEQ.nextval,1,'ivedot@naver.com','ManD' , '20201229','헉 너무 �
 
 select * from adopt_list;
 select * from adopt_reply;
+
+댓글작업
+
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,8,'081749@naver.com','JangD' , '20201229','8-1우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,8,'081749@naver.com','JangD' , '20201229','8-2 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,6,'081749@naver.com','JangD' , '20201229','6-1 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,6,'081749@naver.com','JangD' , '20201229','6-2 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,6,'081749@naver.com','JangD' , '20201229','6-3 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,7,'081749@naver.com','JangD' , '20201229','7-1 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,11,'081749@naver.com','JangD' , '20201229','11-1 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-1 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-2 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-3 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-4 우와아ㅏㅏㅏ');
+
+
+이용권 결제내역
+
+CREATE TABLE payed_list (
+	imp_uid	varchar2(50)		NOT NULL PRIMARY KEY,
+	merchant_uid	varchar2(50)	NULL,
+	biz_email	 	varchar2(50)	NULL,
+	pay_date 	date		NULL,
+	amount		varchar2(20)	NULL,
+	card_no		varchar2(50)	NULL,
+	refund		varchar2(5)	NULL
+);

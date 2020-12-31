@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.samsam.simport.PaymentCheck;
+
 
 @Controller
 public class HomeController {
@@ -150,7 +152,7 @@ public class HomeController {
 			Biz_memberVO bo = memberSV.selectBizMember(vo.getEmail());
 			if(bo != null) {
 				if(bo.getStatus() == 0) {
-					return "redirect:/cominfo_main.me";
+					return "redirect:/cominfo_main.do";
 				}
 			}
 			return "redirect:/myinfo_check.me";
@@ -285,38 +287,35 @@ public class HomeController {
 			return "myinfo_auth";
 		}
 	} 
-	@RequestMapping(value = "/cominfo_list.me")
+	@RequestMapping(value = "/cominfo_main.do")
 	public String cominfo_main(HttpSession session, Model model) {
 		String email = (String)session.getAttribute("email");
 		
+		//이용권 갯수 가져오기, 분양글 가져오기
+		MemberVO mvo = memberSV.selectMember(email);
 		Biz_memberVO vo = memberSV.selectBizMember(email);
+		System.out.println("vo.getfree_coupon :" + vo.getFree_coupon());
 		ArrayList<Adopt_BoardVO> bvo = memberSV.getMyAdopt(email);
+		System.out.println("분양글oㅋ");
 		
 		ArrayList<Adopt_BoardVO> new_bvo = new ArrayList<Adopt_BoardVO>();
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		
+		//게시글번호에 대한 댓글 카운트 
 		for(Adopt_BoardVO bo : bvo) {
-			StringBuffer str = new StringBuffer(bo.getAdopt_phone());
-			str.insert(0, "0");
-					
-			String phone = str.substring(0);
-			if(phone.substring(0,2).equals("00")) {
-				phone = phone.substring(1);
-			}
-			bo.setAdopt_phone(phone);
-			new_bvo.add(bo);
-			
-			int res = memberSV.getMyAdoptReply(email);
+			int res = memberSV.getMyAdoptReply(bo.getAdopt_no());
 			map.put(bo.getAdopt_no(), res);
+			new_bvo.add(bo);
 			}
-		
+		model.addAttribute("MemberVO", mvo);
 		model.addAttribute("Biz_memberVO", vo);
 		model.addAttribute("Adopt_list", new_bvo);
 		model.addAttribute("map_count", map);
 
 		return "cominfo_pay";
 	}
-	@RequestMapping(value = "/cominfo_main.me")
+	
+	@RequestMapping(value = "/cominfo_list.me")
 	public String cominfo_list(HttpSession session, Model model) {
 		String email = (String)session.getAttribute("email");
 		System.out.println("email "+ email );
