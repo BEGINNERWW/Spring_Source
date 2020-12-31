@@ -41,7 +41,7 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 </update>
 
 <!-- 판매허가인증 확인 -->
-<select id ="check_auth" parameterType="Biz_memberVO" resultType="String">
+<select id ="check_auth" parameterType="Biz_memberVO" resultType="Biz_memberVO">
  	select biz_name from fulldata_animal where auth_no=#{biz_no} and status_no = 01
 </select>
 
