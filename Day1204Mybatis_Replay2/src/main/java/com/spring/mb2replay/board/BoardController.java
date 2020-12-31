@@ -84,6 +84,7 @@ public class BoardController {
 			vo.setUp_file("");
 		}
 		int res = boardService.boardInsert(vo);
+		System.out.println("vo.getSubject :"+vo.getSubject());
 		
 		return "redirect:/boardlist.bo";
 	} 

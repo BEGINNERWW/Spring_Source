@@ -103,7 +103,7 @@
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 				<Context docBase="C:/Project/upload" path="/springfileupload1/upload" reloadable="true"/>
 				<Context docBase="samsam" path="/samsam" reloadable="true" source="org.eclipse.jst.jee.server:Samsam2"/>
-			<Context docBase="Day1130Member_Board" path="/day1130_2" reloadable="true" source="org.eclipse.jst.jee.server:Day1130Member_Board"/><Context docBase="Day1204Mybatis_Replay2" path="/mb2replay" reloadable="true" source="org.eclipse.jst.jee.server:Day1204Mybatis_Replay2"/></Host>
+			<Context docBase="Day1214SpringImport" path="/springimport" reloadable="true" source="org.eclipse.jst.jee.server:Day1214SpringImport"/></Host>
 		</Engine>
 	</Service>
 </Server>

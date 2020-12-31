@@ -86,3 +86,131 @@ select * from fulldata_animal;
 select * from fulldata_animal where no=26;
 delete from fulldata_animal where no='번호';
 
+CREATE TABLE adopt_list (
+	adopt_no		number		NOT NULL primary key,
+	adopt_nick	varchar2(50)	NULL,
+	 ADOPT_EMAIL VARCHAR2(50)    NOT NULL,
+	adopt_date	date		NULL,
+	adopt_readcount	number		NULL,
+	adopt_phone	varchar2(20)	NULL,
+	adopt_price	varchar2(20)	NULL,
+	adopt_title	varchar2(200)	NULL,
+	adopt_content	varchar2(2000)	NULL,
+	big_name		varchar2(10)	NULL,
+	kindof		varchar2(20)	NULL
+);
+
+CREATE TABLE adopt_reply (
+	adopt_cno	number		NOT NULL PRIMARY KEY,
+	adopt_no		number		NOT NULL,
+	ADOPT_CEMAIL VARCHAR2(50)    NOT NULL,
+	adopt_cnick	varchar2(50)	NULL,
+	adopt_cdate	date		NULL,
+	adopt_ccontent	varchar2(400)	NULL,
+	adopt_csecret	number		NULL,
+	adopt_ref		number		null,
+	adopt_lev	number		null
+);
+
+CREATE TABLE free_doc (
+	fdoc_no		number		NOT NULL primary key,
+	fdoc_nick		varchar2(20)	NULL,
+	fdoc_email	VARCHAR2(50)    NOT NULL,
+	fdoc_date	date		NULL,
+	fdoc_readcount	number		NULL,
+	fdoc_expiry	number		NULL,
+	fdoc_code	varchar2(20)	NULL,
+	fdoc_price	varchar2(20)	NULL,
+	fdoc_subject	varchar2(150)	NULL,
+	fdoc_content	varchar2(2000)	NULL,
+	fdoc_big		varchar2(20)	NULL,
+	fdoc_kindof	varchar2(20)	NULL,
+	fdoc_thumbnail 	varchar2(200)	null,
+	fdoc_loc		varchar2(50)	null
+);
+
+CREATE TABLE fdoc_reply (
+	fdoc_cno		number		NOT NULL PRIMARY KEY,
+	fdoc_no		number		NOT NULL,
+	fdoc_cemail	VARCHAR2(50)     NOT NULL,
+	fdoc_cnick	varchar2(50)	NULL,
+	fdoc_cdate	date		NULL,
+	fdoc_ccontent	varchar2(2000)	NULL,
+	fdoc_csecret	number		NULL,
+	fdoc_ref		number		null,
+	fdoc_lev		number		null
+);
+CREATE SEQUENCE ADOPT_NO_SEQ
+INCREMENT BY 1 
+START WITH 1 ;
+
+CREATE SEQUENCE ADOPT_CNO_SEQ
+INCREMENT BY 1 
+START WITH 1 ;
+
+분양글 작업 
+
+insert into adopt_list(adopt_no,ADOPT_EMAIL,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'ivedot@naver.com','ManD' , '20201229', 300000, '01000000000', '귀여운 말티즈 분양해욤뇸뇸', '차므로 귀욥쥬?? 연락주세요~~');
+
+insert into adopt_list(adopt_no,ADOPT_EMAIL,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'ivedot@naver.com','ManD' , '20201230', 300000, '01000000000', '끌올))) 귀여운 말티즈 분양해욤뇸뇸', '아이가 크고있어요 ㅜㅜ 연락주세요~~');
+
+insert into adopt_list(adopt_no,ADOPT_EMAIL,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'ivedot@naver.com','ManD' , '20201230', 600000, '01000000000', '푸들 여아 분양해욤뇸뇸', '아이가 크고있어요 ㅜㅜ 연락주세요~~');
+
+insert into adopt_list(adopt_no,ADOPT_EMAIL,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'ivedot@naver.com','ManD' , '20201230', 600000, '01000000000', '끌올))) 귀여운 푸들 분양해욤뇸뇸', '아이가 크고있어요 ㅜㅜ 연락주세요~~');
+
+insert into adopt_list(adopt_no,ADOPT_EMAIL,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'ivedot@naver.com','ManD' , '20201230', 300000, '01000000000', '두번째 끌올))) 귀여운 말티즈 분양해욤뇸뇸', '아이가 크고있어요 ㅜㅜ 연락주세요~~');
+
+insert into adopt_list(adopt_no,ADOPT_EMAIL,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'ivedot@naver.com','ManD' , '20201230', 450000, '01000000000', '흰눈처럼 하얀 포메 분양해욤뇸뇸', '아이가 크고있어요 ㅜㅜ 연락주세요~~');
+
+insert into adopt_list(adopt_no,ADOPT_EMAIL,adopt_nick,adopt_date,adopt_price,adopt_phone,adopt_title,adopt_content) 
+values(ADOPT_NO_SEQ.nextval,'ivedot@naver.com','ManD' , '20201230', 100000, '01000000000', '사랑스러운 믹스견 분양해욤뇸뇸', '아이가 크고있어요 ㅜㅜ 연락주세요~~');
+
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,1,'ivedot@naver.com','ManD' , '20201229','헉 너무 사랑스러운거 아닌가요??!!');
+
+select * from adopt_list;
+select * from adopt_reply;
+
+댓글작업
+
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,8,'081749@naver.com','JangD' , '20201229','8-1우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,8,'081749@naver.com','JangD' , '20201229','8-2 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,6,'081749@naver.com','JangD' , '20201229','6-1 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,6,'081749@naver.com','JangD' , '20201229','6-2 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,6,'081749@naver.com','JangD' , '20201229','6-3 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,7,'081749@naver.com','JangD' , '20201229','7-1 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,11,'081749@naver.com','JangD' , '20201229','11-1 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-1 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-2 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-3 우와아ㅏㅏㅏ');
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-4 우와아ㅏㅏㅏ');
+
+
+이용권 결제내역
+
+CREATE TABLE payed_list (
+	imp_uid	varchar2(50)		NOT NULL PRIMARY KEY,
+	merchant_uid	varchar2(50)	NULL,
+	biz_email	 	varchar2(50)	NULL,
+	pay_date 	date		NULL,
+	amount		varchar2(20)	NULL,
+	card_no		varchar2(50)	NULL,
+	refund		varchar2(5)	NULL
+);

@@ -2,16 +2,11 @@ package com.project.samsam.member;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
-import java.util.UUID;
-
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.project.samsam.simport.PaymentCheck;
+
 
 @Controller
 public class HomeController {
@@ -149,7 +147,14 @@ public class HomeController {
 			session.setAttribute("email", res.getEmail());
 			System.out.println("session id :" +session.getAttribute("id"));
 			System.out.println("session email :" +session.getAttribute("email"));
-
+			
+			//사업자회원인지 확인
+			Biz_memberVO bo = memberSV.selectBizMember(vo.getEmail());
+			if(bo != null) {
+				if(bo.getStatus() == 0) {
+					return "redirect:/cominfo_main.do";
+				}
+			}
 			return "redirect:/myinfo_check.me";
 		}else {
 			return "redirect:/loginForm.me";
@@ -198,6 +203,7 @@ public class HomeController {
 	@RequestMapping(value = "/myinfo_auth.me")
 		public String myinfo_auth(HttpSession session) {
 			String biz_email = (String)session.getAttribute("email");
+			
 			if(memberSV.selectBizMember(biz_email) == null) {
 				System.out.println("bizcheck selectBizmemeber : " + null);
 				return "myinfo_auth";
@@ -210,15 +216,25 @@ public class HomeController {
 	public Map<String, String> biz_check(Biz_memberVO bo) {
 		Map<String, String> result = new HashMap<String, String>();
 		System.out.println("biz no : "+ bo.getBiz_no());
+		int res = 0;
 		try {
-				String biz_com = memberSV.check_auth(bo);
-				System.out.println("biz_com : "+ biz_com);
-				if(biz_com.equals(bo.getBiz_com())) {
+				String biz_com1 = memberSV.check_auth(bo);
+				String biz_com = bo.getBiz_com();
+				//입력한 사업장명과 로컬데이터상 허가번호로 조회했을때 확인되는 사업장명 일치하는지 확인
+				//입력된 허가번호로 인증된 db가 있는지 확인
+				if(biz_com1.equals(biz_com)) {
+					System.out.println("biz_com : "+ biz_com1 + "입력된 사업장명 :"+bo.getBiz_com());
+					res = memberSV.selectBiz_no(bo.getBiz_no());
+					if(res == 0) {
 					result.put("res", "OK");
+					}else {
+					result.put("res", "dont");
+					}
 				}
 				else {
 					result.put("res", "dont");
 				}
+								
 		}catch(Exception e) {
 			System.out.println("biz_check 에러 : " + e.getMessage());
 			result.put("res", "FAIL");
@@ -229,34 +245,103 @@ public class HomeController {
 }
 	@RequestMapping("/pre_auth.me") 
 	public String pre_auth(Biz_memberVO bo, HttpSession session) throws Exception {
+		try {
 		MultipartFile mf = bo.getFile();
-		bo.setBiz_email((String)session.getAttribute("email"));
-		MemberVO vo = memberSV.selectMember(bo.getBiz_email());
-		System.out.println("biz 이메일주소: " + bo.getBiz_email() + "허가번호 :" + bo.getBiz_no());
-		String uploadPath = "C:\\Project\\upload\\";
 		
+		Biz_memberVO biz = new Biz_memberVO();
+		biz.setBiz_com(bo.getBiz_com());
+		biz.setBiz_no(bo.getBiz_no());
+		biz.setBiz_email((String)session.getAttribute("email"));
+
+		MemberVO vo = memberSV.selectMember(biz.getBiz_email());
+		
+		String uploadPath = "C:\\Project\\upload\\";
 		//지정한주소에 파일 저장        
-        if(mf.getSize() != 0) {//첨부된 파일 있을때
+		if(mf.getSize() != 0) {//첨부된 파일 있을때
         	// 파일 확장자를 추출하는 과정
     		String originalFileExtension = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
     		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
             //mf.transferTo(new File(uploadPath+"/"+mf.getOriginalFilename()));     
-        	mf.transferTo(new File(uploadPath+mf.getOriginalFilename())); // 예외처리 기능 필요함. transferTo 실질적 업로드(서버로 전달)
-        	bo.setBiz_img(mf.getOriginalFilename());
-        	bo.setBiz_add(vo.getLocal());
-        	bo.setBiz_name(vo.getName());
-        	bo.setStatus(1);
-        	int result = memberSV.pre_insertBiz(bo);
+        	mf.transferTo(new File(uploadPath + mf.getOriginalFilename())); // 예외처리 기능 필요함. transferTo 실질적 업로드(서버로 전달)
+        	biz.setBiz_img(mf.getOriginalFilename());
+        	biz.setBiz_add(vo.getLocal());
+        	biz.setBiz_name(vo.getName());
+        	biz.setStatus(1);
+
+        	int result = memberSV.pre_insertBiz(biz);
+    		System.out.println("form 데이터 확인 : 파일 " + biz.getBiz_img() + "사업자명 : " + biz.getBiz_com()+"허가번호 : "+ biz.getBiz_no()+ "이메일 : "+ biz.getBiz_email());
+
         	if(result == 1) {
-        		return "myinfo_check";
+        		return "myinfo_already";
         	}else {
         		return "myinfo_auth";
         	}
-        	
 		}else { //첨부된 파일이 없을때
 			System.out.println("pre_auth : 첨부파일없음");  
 			
         	return "myinfo_auth";
 		}
+		
+		}catch(Exception e) {
+			System.out.println("pre_auth 에러: 파일없음" + e.getMessage());
+			return "myinfo_auth";
+		}
 	} 
+	@RequestMapping(value = "/cominfo_main.do")
+	public String cominfo_main(HttpSession session, Model model) {
+		String email = (String)session.getAttribute("email");
+		
+		//이용권 갯수 가져오기, 분양글 가져오기
+		MemberVO mvo = memberSV.selectMember(email);
+		Biz_memberVO vo = memberSV.selectBizMember(email);
+		System.out.println("vo.getfree_coupon :" + vo.getFree_coupon());
+		ArrayList<Adopt_BoardVO> bvo = memberSV.getMyAdopt(email);
+		System.out.println("분양글oㅋ");
+		
+		ArrayList<Adopt_BoardVO> new_bvo = new ArrayList<Adopt_BoardVO>();
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		
+		//게시글번호에 대한 댓글 카운트 
+		for(Adopt_BoardVO bo : bvo) {
+			int res = memberSV.getMyAdoptReply(bo.getAdopt_no());
+			map.put(bo.getAdopt_no(), res);
+			new_bvo.add(bo);
+			}
+		model.addAttribute("MemberVO", mvo);
+		model.addAttribute("Biz_memberVO", vo);
+		model.addAttribute("Adopt_list", new_bvo);
+		model.addAttribute("map_count", map);
+
+		return "cominfo_pay";
+	}
+	
+	@RequestMapping(value = "/cominfo_list.me")
+	public String cominfo_list(HttpSession session, Model model) {
+		String email = (String)session.getAttribute("email");
+		System.out.println("email "+ email );
+		
+		ArrayList<BoardlistVO> b_list = new ArrayList<BoardlistVO>();
+		ArrayList<CommentListVO> c_list = new ArrayList<CommentListVO>();
+		b_list = memberSV.getWriteList(email);
+		c_list = memberSV.getWriteComment(email);
+		
+		model.addAttribute("b_list", b_list);
+		model.addAttribute("c_list", c_list);
+		
+		return "cominfo_write";
+	}
+	
+	@RequestMapping(value = "/cominfo_member.me")
+	public String cominfo_member(HttpSession session, Model model) {
+		String email = (String)session.getAttribute("email");
+		
+		MemberVO vo = memberSV.selectMember(email);
+		Biz_memberVO bvo = memberSV.selectBizMember(email);
+		
+		model.addAttribute("MemberVO", vo);
+		model.addAttribute("Biz_memberVO", bvo);
+		
+		return "cominfo_member";
+	}
+	
 }

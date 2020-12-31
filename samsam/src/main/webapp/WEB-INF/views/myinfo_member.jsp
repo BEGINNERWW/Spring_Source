@@ -31,10 +31,6 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 <script>
-	$(".textbox input").attr("value", "");
-	$(".textbox input").attr("onkeyup",
-			"this.setAttribute('value', this.value);");
-
 	function isSame() {
 		console.log("pw:" + $('#pw').val() + "pw2:" + $('#pw2').val())
 		if ($('#pw').val() != '' && $('#pw2').val() != '') {
