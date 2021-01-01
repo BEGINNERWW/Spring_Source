@@ -19,6 +19,7 @@ CREATE TABLE biz_member (
 	biz_img	varchar2(2000)		NULL,
 	free_coupon	number		NULL,
 	pay_coupon	number		NULL
+	status		number  		not null
    );
    
 alter table biz_member modify free_coupon number default 5;
@@ -39,6 +40,9 @@ values('081749@naver.com', 'han1004', 'Àå½º', 'Jang', 01076420000, '¼­¿ï');
 
 insert into member_list(email,pw,name,nick,phone,local) 
 values('hongmandang@naver.com', 'han1004', 'È«½º', 'Hongmd', 01000000000, '¼­¿ï');
+
+insert into member_list(email,pw,name,nick,phone,local) 
+values('admin', '1234', '»ï»ï', 'SamSam', 01043140000, '´ë±¸');
 
 select * from member_list;
 
@@ -214,3 +218,5 @@ CREATE TABLE payed_list (
 	card_no		varchar2(50)	NULL,
 	refund		varchar2(5)	NULL
 );
+
+alter table payed_list modify refund varchar2(10) default 'payed';

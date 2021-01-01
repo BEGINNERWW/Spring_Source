@@ -37,20 +37,7 @@
 $(document).ready(function(){
    var pay = <%=bvo.getPay_coupon() %>;
    console.log(pay);
-   
-   var today = new Date();   
-   var year = today.getFullYear(); // 년도
-   var month = today.getMonth() + 1;  // 월
-   var date = today.getDate();  // 날짜
-   var day = today.getDay();  // 요일
-	
-   //주문번호 생성
-   var today_uuid = String(year) + String(month) + String(date) + String(day) 
-   var random = Math.random().toString(36).substr(2,11);
-   var newID = today_uuid + random;
-
-   console.log(newID);
-	  
+   	  
 	var IMP = window.IMP;
 	var code = "imp70138110"; //가맹점 식별코드
 	IMP.init(code);
@@ -61,8 +48,7 @@ $(document).ready(function(){
 			//name과 amout만있어도 결제 진행가능
 			//pg : 'kakao', //pg사 선택 (kakao, kakaopay 둘다 가능)
 			pay_method: 'card',
-			//merchant_uid : 'merchant_' + new Date().getTime();
-			merchant_uid : newID, //주문번호
+			merchant_uid : 'merchant_' + new Date().getTime(),
 			name : '결제테스트', // 상품명
 			amount : 1,
 			buyer_email : '<%=email%>',
@@ -76,51 +62,54 @@ $(document).ready(function(){
 				var result = {
 				"imp_uid" : rsp.imp_uid,
 				"merchant_uid" : rsp.merchant_uid,
-				"biz_email" : <%=email%>,
-				"pay_date" : today,
+				"biz_email" : '<%=email%>',
+				"pay_date" : new Date().getTime(),
 				"amount" : rsp.paid_amount,
 				"card_no" : rsp.apply_num,
-				"refund" : 0
+				"refund" : 'payed'
 				}
-				
+				console.log("결제성공 " + msg);
 				$.ajax({
 					url : '/samsam/insertPayCoupon.do', 
 			        type :'POST',
-			        data : result, //서버로 보낼 데이터
-			        contentType:'application/x-www-form-urlencoded;charset=utf-8',
+			        data : JSON.stringify(result,
+			        		['imp_uid', 'merchant_uid', 'biz_email', 
+			        			'pay_date', 'amount', 'card_no', 'refund']),
+			        contentType:'application/json;charset=utf-8',
 			        dataType: 'json', //서버에서 보내줄 데이터 타입
-			        success: function(retVal){
+			        success: function(res){
 			        			        	
-			          if(retVal.res =="OK"){
-			            //데이터 성공일때 이벤트 작성
-			            selectData();
-			            //초기화
-			           
+			          if(res == 1){
+						 console.log("추가성공");	
+						 pay += 5;
+						 $('#pay_coupon').html(pay);			           
 			          }else{
-			            alert("Insert Fail!!!");
+			             console.log("Insert Fail!!!");
 			          }
 			        },
 			        error:function(){
 			          alert("Insert ajax 통신 실패!!!");
 			        }
 				}) //ajax
+				
 			}
 			else{//결제 실패시
 				var msg = '결제에 실패했습니다';
 				msg += '에러 : ' + rsp.error_msg
 			}
-			alert(msg);
+			console.log(msg);
 		});//pay
 	}); //check1 클릭 이벤트
 	 
 	$("#check2").click(function(e){
+		if(<%=bvo.getPay_coupon() %> >= 5){
 		$.ajax({
 				url: "/samsam/coupon_cancel.do",
 				type:"post",
 				//datatype:"json",
 				contentType : 'application/x-www-form-urlencoded; charset = utf-8',
 				data : {
-					"merchant_uid" : newID // 주문번호
+					"biz_email" : '<%=email%>' // 주문번호
 					//"cancle_request_amount" : 2000, //환불금액
 					//"reason": "테스트 결제 환불", //환불사유
 					//"refund_holder": "홍길동", //[가상계좌 환불시 필수입력] 환불 가상계좌 예금주
@@ -128,11 +117,15 @@ $(document).ready(function(){
 					//"refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 가상계좌 번호
 				}
 			}).done(function(result){ //환불 성공
+				 pay -= 5;
+				 $('#pay_coupon').html(pay);	
 				alert("환불 성공 : "+ result);
 			}).fail(function(error){
 				alert("환불 실패 : "+ error);
 			});//ajax
-		
+		} else{
+			alert("환불 실패 : 남은 결제권 환불 불가");
+		}
 	}); //check2 클릭
 	
 }); //doc.ready
@@ -259,7 +252,7 @@ input {
 <h3>이용권</h3>
 <table class = pay border="1">
 	<tr><td rowspan="2">이용권</td><td>월 기본 제공 </td><td><%=bvo.getFree_coupon() %>/5</td></tr>
-	<tr><td>남은 이용권 횟수</td><td id = "pay_coupon"> <%=bvo.getPay_coupon() %>/5</td></tr>
+	<tr><td>남은 구매 이용권 횟수</td><td id = "pay_coupon"><%=bvo.getPay_coupon() %> </td></tr>
 </table><br>
 <input type="button" id="check1" value="구매">
 <input type="button" id="check2" value="환불">

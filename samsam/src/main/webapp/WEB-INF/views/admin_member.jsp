@@ -154,9 +154,6 @@ $(document).ready(function(){
 	}); 
 }); //달력끝
 
-$(".textbox input").attr("value", "");
-$(".textbox input").attr("onkeyup", "this.setAttribute('value', this.value);");
-
 //투두리스트
 $(document).ready(function(){
 $(".txt").on("keyup",function(e){
@@ -344,26 +341,6 @@ html, body {
   border: 1px solid #ddd;
   cursor: default;
 }
-.my-calendar .clicked-date {
-  border-radius: 25px;
-  margin-top: 36px;
-  float: left;
-  width: 42%;
-  padding: 46px 0 26px;
-  background: #ddd;
-}
-.my-calendar .calendar-box {
-  float: right;
-  width: 58%;
-  padding-left: 30px;
-}
-
-.clicked-date .cal-day {
-  font-size: 24px;
-}
-.clicked-date .cal-date {
-  font-size: 130px;
-}
 
 .ctr-box {
   padding: 0 16px;
@@ -475,10 +452,6 @@ html, body {
 <div class="right-container">
 <!-- 달력 -->
   <div class="my-calendar clearfix">
-    <div class="clicked-date">
-      <div class="cal-day"></div>
-      <div class="cal-date"></div>
-    </div>
     <div class="calendar-box">
       <div class="ctr-box clearfix">
         <button type="button" title="prev" class="btn-cal prev">

@@ -11,7 +11,7 @@
 email / pw/ name/nick/phone/local/img/grade
 
 사업자 
-biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_coupon
+biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_coupon / status
  -->
 <!-- 회원정보조회 -->
 <select id="selectMember" parameterType="String" resultType="MemberVO">
@@ -84,5 +84,34 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 	union all
 	select fdoc_ccontent as content, fdoc_cdate as write_date from fdoc_reply where fdoc_cemail = #{email}
 </select>
+
+<!-- 이용권 결제내역 추가 -->
+<insert id ="insert_pay" parameterType="Payed_listVO">
+ 	insert into payed_list
+ 	values(#{imp_uid},#{merchant_uid}, #{biz_email}, #{pay_date}, #{amount}, #{card_no}, #{refund})
+</insert>
+
+<!-- 이용권 결제내역 조회 -->
+<select id="recentlyPay" parameterType="String" resultType="Payed_listVO">
+	select imp_uid, merchant_uid, biz_email, pay_date, amount, card_no, refund from 
+	(select rownum, imp_uid, merchant_uid, biz_email, pay_date, amount, card_no, refund from 
+	(select * from payed_list where biz_email = #{biz_email})where refund ='payed' order by pay_date)
+	where rownum = 1
+</select>
+
+<!-- 이용권 결제 사업자에 반영 -->
+<update id="updateBiz_pay" parameterType="String">
+	update biz_member set pay_coupon = pay_coupon+5 where biz_email = #{biz_email}
+</update>
+
+<!-- 이용권 환불 사업자에 반영 -->
+<update id="updateBiz_refund" parameterType="String">
+	update biz_member set pay_coupon = pay_coupon-5 where biz_email = #{biz_email}
+</update>
+
+<!-- 이용권 결제내역 환불 -->
+<update id="refund_pay" parameterType="String">
+	update payed_list set refund = 'refund' where merchant_uid = #{merchant_uid}
+</update>
 
 </mapper>
