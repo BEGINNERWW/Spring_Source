@@ -2,6 +2,7 @@ package com.project.mapper;
 
 import java.util.ArrayList;
 
+import com.project.samsam.admin.Search_paramsVO;
 import com.project.samsam.member.Adopt_BoardVO;
 import com.project.samsam.member.Biz_memberVO;
 import com.project.samsam.member.BoardlistVO;
@@ -33,5 +34,9 @@ public interface MemberMapper {
 	public int updateBiz_refund(String email);
 	public int refund_pay(String merchant_uid);
 
+	//admin
+	public ArrayList<MemberVO> serach_member(Search_paramsVO svo);
+	public int 	auth_confirm(String email);
+	public int 	auth_return(String email);
 
 }

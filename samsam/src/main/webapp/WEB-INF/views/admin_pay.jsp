@@ -1,6 +1,22 @@
 <%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.project.samsam.member.MemberVO"%>
+<%
+	String email = (String) session.getAttribute("email");
+
+	if (session.getAttribute("email") == null){
+		out.println("<script>");
+		out.println("location.href='loginForm.me'");
+		out.println("</script>");
+	}
+	
+	MemberVO mvo = (MemberVO) request.getAttribute("MemberVO");
+		
+%>
+
 <!doctype html>
 <html>
 <head>

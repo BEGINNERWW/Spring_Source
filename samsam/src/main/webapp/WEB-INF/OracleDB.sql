@@ -24,6 +24,8 @@ CREATE TABLE biz_member (
    
 alter table biz_member modify free_coupon number default 5;
 alter table biz_member add status number default 1 not null;
+alter table member_list add signdate date;
+alter table member_list add wcount number;
 
 ALTER TABLE biz_member
 ADD CONSTRAINT biz_email FOREIGN KEY (biz_email)
@@ -220,3 +222,17 @@ CREATE TABLE payed_list (
 );
 
 alter table payed_list modify refund varchar2(10) default 'payed';
+
+alter table member_list add signdate date;
+alter table member_list add wcount number;
+commit;
+
+update member_list set wcount = 3 where email = 'hongmandang@naver.com';
+update member_list set wcount = 1 where email = 'ivedot@naver.com';
+update member_list set signdate = '20201201' where email = 'ivedot@naver.com';
+update member_list set signdate = '20210101' where email = '081749@naver.com';
+update member_list set grade = '사업자' where email = 'ivedot@naver.com';
+update member_list set grade = '일반' where email = '081749@naver.com';
+update member_list set grade = '대기' where email = 'hongmandang@naver.com';
+
+commit;
