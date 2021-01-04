@@ -140,11 +140,15 @@ public class HomeController {
 		System.out.println("로그인 이메일 "+vo.getEmail());
 		System.out.println("로그인 비밀번호 "+vo.getPw());
 		
-		MemberVO res = memberSV.selectMember(vo.getEmail());
-
 		if(vo.getEmail().equals("admin")) {
+			session.setAttribute("id", vo.getEmail());
+			session.setAttribute("email", vo.getEmail());
+			
 			return "redirect:/admin_main.me";
 		}
+		
+		MemberVO res = memberSV.selectMember(vo.getEmail());
+		
 		if(res.getPw().equals(vo.getPw())) {
 			session.setAttribute("id", res.getEmail());
 			session.setAttribute("email", res.getEmail());

@@ -38,5 +38,6 @@ public interface MemberMapper {
 	public ArrayList<MemberVO> serach_member(Search_paramsVO svo);
 	public int 	auth_confirm(String email);
 	public int 	auth_return(String email);
+	public ArrayList<Payed_listVO> 	getPay_list();
 
 }

@@ -28,10 +28,10 @@ $(document).ready(function() {
 		if($('#toDate').val() != null) { 
 			 $('#toDate').val('')
 		}
-		if(temp != null) { 
+		var temp = $('input:checkbox[class="member_grade"]:checked').val();
+		if(temp == null) { 
 			 $('input:checkbox[class="member_grade"]:checked').val('대기')
 		}
-		var temp = $('input:checkbox[class="member_grade"]:checked').val();
 		var data = {
 			"fromDate" : $('#fromDate').val(),
 			"toDate" : $('#toDate').val(),
@@ -82,8 +82,61 @@ function member_detail(obj) {
 		dataType : 'json', //서버에서 보내줄 데이터 타입
 		contentType : 'application/json;charset=utf-8',
 		success : function(map) {
+			console.log("map : " + map)
+			$('input').val("");
+			$('.w-table').empty();
+			$('.b-table').empty();
+			$('.c-table').empty();
+			$('#biz_com').empty("");
+			$('#biz_no').empty(""); 
+			$('#biz_img').empty("");
 			
-			$.each(map, function(index, item){
+			$('#email').val(map.MemberVO.email);
+			$('#nick').val(map.MemberVO.nick);
+			$('#phone').val(map.MemberVO.phone);
+			$('#local').val(map.MemberVO.local);
+			$('#grade').val(map.MemberVO.grade);
+			$('#wcount').val(map.MemberVO.wcount);
+			
+			if(map.Biz_memberVO != null){
+			$('#biz_com').html(map.Biz_memberVO.biz_com);
+			$('#biz_no').html(map.Biz_memberVO.biz_no);
+			$('#biz_img').html(map.Biz_memberVO.biz_img);
+						
+			if(map.Biz_memberVO.status == 0){
+				console.log("map.Biz_membeerVO.status : " + map.Biz_memberVO.status )
+				$('.status').val("완료");
+				fieldsetDisable();
+			}
+			else if($('#biz_com').val() == "" && $('#biz_no').val() == "" && $('#biz_img').val() ==""){
+				$('.status').val("미제출");
+				fieldsetDisable();
+			}
+			}else{
+				$('.status').val("미제출");
+				fieldsetDisable();
+			}
+			
+			if(map.Boardlist != null){
+			$.each(map.Boardlist, function(index, item){
+				console.log("map.Boardlist : " + map.Boardlist);
+				$('.b-table').html($('.b-table').html()+'<div class="result-table-row"><div class="result-table-cell">'+ item.num+'</div><div class="result-table-cell"><a href="#">' + item.subject+'</a></div><div class="result-table-cell">' + item.write_date +'</div>')
+			});//map.Boardlist each
+			}else{
+				$('.b-table').html($('.b-table').html()+'<div class="result-table-row"><div class="result-table-cell">작성글이 없습니다</div></div>')	
+			}
+			
+			if(map.Commentlist != null){
+			$.each(map.Commentlist, function(index, item){
+				$('.c-table').html($('.c-table').html()+'<div class="result-table-row"><div class="result-table-cell"><a href="#">'+ item.content+'</a></div><div class="result-table-cell">' + item.write_date+'</div>')
+			}); //map.Commentlist each
+			}else{
+				$('.c-table').html($('.c-table').html()+'<div class="result-table-row"><div class="result-table-cell">작성댓글이 없습니다</div></div>')	
+			}
+			$('#detail-form').modal('show');
+			
+			/*$.each(map, function(index, item){
+				console.log(index)
 				console.log(item)
 				if(item.email != null || item.biz_email != null || item.content != null || item.no != null){
 					$('#email').val(item.email);
@@ -106,13 +159,19 @@ function member_detail(obj) {
 						$('.status').val("미제출");
 						fieldsetDisable();
 					}
-					$('.b-table').html($('.b-table').html()+'<div class="result-table-row">'+ item.num+'<div class="result-table-cell"><a href="#">' + item.subject+'</a></div><div class="result-table-cell">' + item.write_date +'</div>')
-					
-					$('.c-table').html($('.c-table').html()+'<div class="result-table-row"><a href="#">'+ item.content+'</a><div class="result-table-cell">' + item.write_date+'</div>')
+					console.log("어레이 인덱스 :" + index + " map.item :" + item)
 				}
 				$('#detail-form').modal('show');
-				
+			//	})//each
 			});//each
+			$.each(map.Boardlist, function(index){
+				console.log(map.Boardlist)
+				$('.b-table').html($('.b-table').html()+'<div class="result-table-row">'+ index.num+'<div class="result-table-cell"><a href="#">' + index.subject+'</a></div><div class="result-table-cell">' + index.write_date +'</div>')
+			})
+			$.each(map.Commentlist, function(index){
+				console.log(map.Commentlist)
+				$('.c-table').html($('.c-table').html()+'<div class="result-table-row"><a href="#">'+ index.content+'</a><div class="result-table-cell">' + index.write_date+'</div>')
+			})		*/	
 		},
 		error : function() {
 				alert("ajax 통신 실패!!!");
@@ -596,8 +655,8 @@ html, body {
 <nav class ="m_menu">
  <ul>
     <li><a href="#">게시물관리</a></li>
-    <li><a href="#">회원관리</a></li>
-    <li><a href="#">이용권관리</a></li>
+    <li><a href="admin_main.me">회원관리</a></li>
+    <li><a href="admin_pay.me">이용권관리</a></li>
     <li><a href="#">책임분양</a></li>
  </ul>
 </nav>
@@ -722,19 +781,19 @@ html, body {
 		<div class ="warning">
 			<h3>신고목록</h3>
 			<div class="w-table">
-			반복문
+			
 			</div>
 		</div>
 		<div class ="boardlist">
 			<h3>최근게시글</h3>
 			<div class="b-table">
-			반복문
+			
 			</div>
 		</div>
 		<div class ="commentlist">
 			<h3>최근댓글</h3>
 			<div class="c-table">
-			반복문
+			
 			</div>
 		</div>
 	</div>

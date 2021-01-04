@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import com.project.samsam.member.BoardlistVO;
 import com.project.samsam.member.CommentListVO;
 import com.project.samsam.member.MemberSV;
 import com.project.samsam.member.MemberVO;
+import com.project.samsam.simport.Payed_listVO;
 
 @Controller
 public class AdminController {
@@ -91,5 +93,14 @@ public class AdminController {
 		map.put("result", res);
 		
 		return map;
+	}
+	
+	@RequestMapping(value = "/admin_pay.me")
+	public String admin_pay(Model model) {
+		ArrayList<Payed_listVO> plist = adminSV.getPay_list();
+		
+		model.addAttribute("Pay_list", plist);
+		
+		return "admin_pay";
 	}
 }

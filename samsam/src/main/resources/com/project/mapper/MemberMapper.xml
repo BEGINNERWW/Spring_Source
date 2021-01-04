@@ -132,4 +132,8 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 	DELETE FROM biz_member WHERE biz_email = #{email}
 </delete>
 
+<!-- 어드민 이용권 결제내역 조회 -->
+<select id="getPay_list" resultType = "Payed_listVO">
+	select merchant_uid, biz_email, refund, pay_date from payed_list order by pay_date
+</select>
 </mapper>
