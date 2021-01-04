@@ -25,8 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.samsam.simport.PaymentCheck;
-
 
 @Controller
 public class HomeController {

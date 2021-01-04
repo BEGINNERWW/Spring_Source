@@ -1,5 +1,6 @@
 package com.project.samsam.admin;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,9 +37,7 @@ public class AdminController {
 	@RequestMapping(value = "/search_member.do" , produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public ArrayList<MemberVO> search_member(@RequestBody Search_paramsVO svo) {
-		
 		ArrayList<MemberVO> mvo = adminSV.serach_member(svo);
-		System.out.println("svo.getMember_grade : " + svo.getMember_grade());
 		
 		return mvo;
 	}

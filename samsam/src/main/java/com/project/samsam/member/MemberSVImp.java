@@ -1,6 +1,5 @@
 package com.project.samsam.member;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.apache.ibatis.session.SqlSession;

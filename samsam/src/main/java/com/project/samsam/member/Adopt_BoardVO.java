@@ -6,7 +6,7 @@ public class Adopt_BoardVO {
 	private int adopt_no;
 	private String adopt_nick;
 	private String adopt_email;
-	private Date adopt_date;
+	private String adopt_date;
 	private int adopt_readcount;
 	private String adopt_img;
 	private String adopt_phone;
@@ -34,10 +34,10 @@ public class Adopt_BoardVO {
 	public void setAdopt_email(String adopt_email) {
 		this.adopt_email = adopt_email;
 	}
-	public Date getAdopt_date() {
+	public String getAdopt_date() {
 		return adopt_date;
 	}
-	public void setAdopt_date(Date adopt_date) {
+	public void setAdopt_date(String adopt_date) {
 		this.adopt_date = adopt_date;
 	}
 	public int getAdopt_readcount() {

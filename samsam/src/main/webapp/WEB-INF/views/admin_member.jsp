@@ -1,5 +1,8 @@
 <%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+
 <!doctype html>
 <html>
 <head>
@@ -47,11 +50,12 @@ $(document).ready(function() {
 				dataType : 'json', //서버에서 보내줄 데이터 타입
 				contentType : 'application/json;charset=utf-8',
 				success : function(mvo) {
-					
 					$.each(mvo, function(index, item){
-						$('#result').html($('#result').html()+'<tr><td>' + item.grade+'</td><td class="email"><a href="#detail-form" rel="modal:open">' + item.email +'</td></a><td>' + item.nick +'</td><td>' + item.local + '</td><td>' + item.signdate + '</td><td>' + item.wcount +"</td></tr>")
-						$('.result-table').html($('.result-table').html()+'<div class="result-table-row"><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'"><div class="result-table-cell">' + item.grade+'</div><div class="result-table-cell" id="detail_email">' + item.email +'</div><div class="result-table-cell">' + item.nick +'</div><div class="result-table-cell">' + item.local + '</div><div class="result-table-cell">' + item.signdate + '</div><div class="result-table-cell">' + item.wcount +"</div></a></div>")
-
+						console.log(item.signdate);
+						$('#result').html($('#result').html()+'<tr><td>' + item.grade+'</td><td class="email"><a href="#detail-form" rel="modal:open">' + item.email +'</td></a><td>' + item.nick +'</td><td>' + item.local + '</td><td>'
+								 + item.signdate + '</td><td>' + item.wcount +'</td></tr>')
+						$('.result-table').html($('.result-table').html()+'<div class="result-table-row"><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'"><div class="result-table-cell">' + item.grade+'</div><div class="result-table-cell" id="detail_email">' + item.email +'</div><div class="result-table-cell">' + item.nick +'</div><div class="result-table-cell">' + item.local + 
+						'</div><div class="result-table-cell">' + item.signdate + '</div><div class="result-table-cell">' + item.wcount +"</div></a></div>")
 					});
 				},
 				error : function() {
@@ -686,7 +690,9 @@ html, body {
 </form>
 <div class = "member_list-table">
 <div class = "ml-table-row">
+<table>
 <td>분류</td><td>아이디</td><td>닉네임</td><td>지역</td><td>가입일</td><td>신고횟수</td>
+</table>
 </div>
 </div>
 <table>
