@@ -23,7 +23,7 @@ public class MemberSVImp implements MemberSV {
 	public MemberVO selectMember(String email) {
 		System.out.println(email);
 		MemberVO bo = mapper.selectMember(email);
-		
+		System.out.println("¼¿·º¸â¹ö : " + bo.getPhone());
 		StringBuffer str = new StringBuffer(bo.getPhone());
 		str.insert(0, "0");
 				
@@ -75,6 +75,7 @@ public class MemberSVImp implements MemberSV {
 
 	@Override
 	public String check_auth(Biz_memberVO vo) {
+		System.out.println("check_auth biz_no : "+ vo.getBiz_no());
 		String bvo = mapper.check_auth(vo); 
 		System.out.println("check_auth : bvo(biz_name)" + bvo);
 		return bvo;

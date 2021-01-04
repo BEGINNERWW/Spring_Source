@@ -19,10 +19,13 @@ CREATE TABLE biz_member (
 	biz_img	varchar2(2000)		NULL,
 	free_coupon	number		NULL,
 	pay_coupon	number		NULL
+	status		number  		not null
    );
    
 alter table biz_member modify free_coupon number default 5;
 alter table biz_member add status number default 1 not null;
+alter table member_list add signdate date;
+alter table member_list add wcount number;
 
 ALTER TABLE biz_member
 ADD CONSTRAINT biz_email FOREIGN KEY (biz_email)
@@ -39,6 +42,9 @@ values('081749@naver.com', 'han1004', '장스', 'Jang', 01076420000, '서울');
 
 insert into member_list(email,pw,name,nick,phone,local) 
 values('hongmandang@naver.com', 'han1004', '홍스', 'Hongmd', 01000000000, '서울');
+
+insert into member_list(email,pw,name,nick,phone,local) 
+values('admin', '1234', '삼삼', 'SamSam', 01043140000, '대구');
 
 select * from member_list;
 
@@ -214,3 +220,19 @@ CREATE TABLE payed_list (
 	card_no		varchar2(50)	NULL,
 	refund		varchar2(5)	NULL
 );
+
+alter table payed_list modify refund varchar2(10) default 'payed';
+
+alter table member_list add signdate date;
+alter table member_list add wcount number;
+commit;
+
+update member_list set wcount = 3 where email = 'hongmandang@naver.com';
+update member_list set wcount = 1 where email = 'ivedot@naver.com';
+update member_list set signdate = '20201201' where email = 'ivedot@naver.com';
+update member_list set signdate = '20210101' where email = '081749@naver.com';
+update member_list set grade = '사업자' where email = 'ivedot@naver.com';
+update member_list set grade = '일반' where email = '081749@naver.com';
+update member_list set grade = '대기' where email = 'hongmandang@naver.com';
+
+commit;

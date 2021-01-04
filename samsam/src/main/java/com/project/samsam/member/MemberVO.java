@@ -1,5 +1,7 @@
 package com.project.samsam.member;
 
+import java.util.Date;
+
 public class MemberVO {
 	private String email;
 	private String pw;
@@ -9,7 +11,23 @@ public class MemberVO {
 	private String local;
 	private String img;
 	private String grade;
+	private Date signdate;
+	private int wcount;
+
 	
+	
+	public Date getSigndate() {
+		return signdate;
+	}
+	public void setSigndate(Date signdate) {
+		this.signdate = signdate;
+	}
+	public int getWcount() {
+		return wcount;
+	}
+	public void setWcount(int wcount) {
+		this.wcount = wcount;
+	}
 	public String getEmail() {
 		return email;
 	}

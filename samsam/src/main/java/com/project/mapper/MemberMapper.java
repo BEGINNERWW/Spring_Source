@@ -2,11 +2,13 @@ package com.project.mapper;
 
 import java.util.ArrayList;
 
+import com.project.samsam.admin.Search_paramsVO;
 import com.project.samsam.member.Adopt_BoardVO;
 import com.project.samsam.member.Biz_memberVO;
 import com.project.samsam.member.BoardlistVO;
 import com.project.samsam.member.CommentListVO;
 import com.project.samsam.member.MemberVO;
+import com.project.samsam.simport.Payed_listVO;
 
 public interface MemberMapper {
 
@@ -25,5 +27,16 @@ public interface MemberMapper {
 	public ArrayList<BoardlistVO> getWriteList(String email);
 	public ArrayList<CommentListVO> getWriteComment(String email);
 	
+	//pay
+	public int insert_pay(Payed_listVO pvo);
+	public Payed_listVO recentlyPay(String email);
+	public int updateBiz_pay(String email);
+	public int updateBiz_refund(String email);
+	public int refund_pay(String merchant_uid);
+
+	//admin
+	public ArrayList<MemberVO> serach_member(Search_paramsVO svo);
+	public int 	auth_confirm(String email);
+	public int 	auth_return(String email);
 
 }

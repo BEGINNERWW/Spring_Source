@@ -1,6 +1,5 @@
 <%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <!doctype html>
 <html>
 <head>
@@ -13,8 +12,160 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<!-- 달력 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+<!-- 모달 플러그인 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script>
+
+	
+$(document).ready(function() {
+
+	$("#check").click(function(event) { //정적데이터는 이벤트 처리를 바로 가능하나 동적이면 on을 사용하여 처리
+		$('#result').empty();
+		if($('#fromDate').val() != null) { 
+			 $('#fromDate').val('')
+		}
+		if($('#toDate').val() != null) { 
+			 $('#toDate').val('')
+		}
+		if(temp != null) { 
+			 $('input:checkbox[class="member_grade"]:checked').val('대기')
+		}
+		var temp = $('input:checkbox[class="member_grade"]:checked').val();
+		var data = {
+			"fromDate" : $('#fromDate').val(),
+			"toDate" : $('#toDate').val(),
+			"member_grade" : temp,
+			"keyword" : $('#keyword').val()
+		}
+		var params = $("#content").serialize(); // .serialize() : 주어진 데이터를 키, 밸류 값을 짝지어(직렬화) 가져온다
+		console.log(params);
+		jQuery.ajax({ // $.ajax 와 동일한 표현
+				url : '/samsam/search_member.do',
+				type : 'POST',
+				data : JSON.stringify(data), //서버로 보낼 데이터
+				dataType : 'json', //서버에서 보내줄 데이터 타입
+				contentType : 'application/json;charset=utf-8',
+				success : function(mvo) {
+					
+					$.each(mvo, function(index, item){
+						$('#result').html($('#result').html()+'<tr><td>' + item.grade+'</td><td class="email"><a href="#detail-form" rel="modal:open">' + item.email +'</td></a><td>' + item.nick +'</td><td>' + item.local + '</td><td>' + item.signdate + '</td><td>' + item.wcount +"</td></tr>")
+						$('.result-table').html($('.result-table').html()+'<div class="result-table-row"><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'"><div class="result-table-cell">' + item.grade+'</div><div class="result-table-cell" id="detail_email">' + item.email +'</div><div class="result-table-cell">' + item.nick +'</div><div class="result-table-cell">' + item.local + '</div><div class="result-table-cell">' + item.signdate + '</div><div class="result-table-cell">' + item.wcount +"</div></a></div>")
+
+					});
+				},
+				error : function() {
+						alert("ajax 통신 실패!!!");
+				}
+		});
+		//기본 이벤트 제거
+		event.preventDefault();
+	});
+	
+}); //레디
+
+function member_detail(obj) {
+	
+	function fieldsetDisable()  {
+		  const fieldset = document.getElementById('btn_fieldset');
+		  if($('.status').val() == "완료" || $('.status').val() == "미제출" ){
+		  fieldset.disabled = true;
+		  }
+	}
+	
+	var email = $(obj).attr('value');
+	console.log("제발 " + email)
+	$.ajax({
+		url : '/samsam/member_detail.do',
+		type : 'POST',
+		data : JSON.stringify(email), //서버로 보낼 데이터
+		dataType : 'json', //서버에서 보내줄 데이터 타입
+		contentType : 'application/json;charset=utf-8',
+		success : function(map) {
+			
+			$.each(map, function(index, item){
+				console.log(item)
+				if(item.email != null || item.biz_email != null || item.content != null || item.no != null){
+					$('#email').val(item.email);
+					$('#nick').val(item.nick);
+					$('#phone').val(item.phone);
+					$('#local').val(item.local);
+					console.log(item.local + item.grade)
+					$('#grade').val(item.grade);
+					$('#wcount').val(item.wcount);
+					
+					$('#biz_com').html(item.biz_com);
+					$('#biz_no').html(item.biz_no);
+					$('#biz_img').html(item.biz_img);
+					
+					if(item.status == "0"){
+						$('.status').val("완료");
+						fieldsetDisable();
+					}
+					if($('#biz_com').val() == "" && $('#biz_no').val() == "" && $('#biz_img').val() ==""){
+						$('.status').val("미제출");
+						fieldsetDisable();
+					}
+					$('.b-table').html($('.b-table').html()+'<div class="result-table-row">'+ item.num+'<div class="result-table-cell"><a href="#">' + item.subject+'</a></div><div class="result-table-cell">' + item.write_date +'</div>')
+					
+					$('.c-table').html($('.c-table').html()+'<div class="result-table-row"><a href="#">'+ item.content+'</a><div class="result-table-cell">' + item.write_date+'</div>')
+				}
+				$('#detail-form').modal('show');
+				
+			});//each
+		},
+		error : function() {
+				alert("ajax 통신 실패!!!");
+		}
+	})//ajax
+}//회원상세
+$(document).on("click", ".auth_confirm", function(event){
+	var email = $('#email').val();
+	$.ajax({
+		url : '/samsam/auth_confirm.do',
+		type : 'POST',
+		data : JSON.stringify(email), //서버로 보낼 데이터
+		dataType : 'json', //서버에서 보내줄 데이터 타입
+		contentType : 'application/json;charset=utf-8',
+		success : function(result) {
+			if(result.res == 1){
+				$('.status').val("완료");
+			}
+			else{
+				$('.status').val("업데이트실패");
+			}
+				
+		},
+		error : function() {
+				alert("ajax 통신 실패!!!");
+		}
+	})//ajax
+	
+}) //모달 완료 버튼
+$(document).on("click", ".auth_return", function(event){
+	var email = $('#email').val();
+	$.ajax({
+		url : '/samsam/auth_return.do',
+		type : 'POST',
+		data : JSON.stringify(email), //서버로 보낼 데이터
+		dataType : 'json', //서버에서 보내줄 데이터 타입
+		contentType : 'application/json;charset=utf-8',
+		success : function(result) {
+			if(result.res == 1){
+				$('.status').val("반려");
+			}
+			else{
+				$('.status').val("삭제실패");
+			}
+		},
+		error : function() {
+				alert("ajax 통신 실패!!!");
+		}
+	})//ajax
+		
+}) //모달 반려 버튼
+
+</script>
 <script>
 //달력
 $(document).ready(function(){
@@ -153,9 +304,6 @@ $(document).ready(function(){
 	  }
 	}); 
 }); //달력끝
-
-$(".textbox input").attr("value", "");
-$(".textbox input").attr("onkeyup", "this.setAttribute('value', this.value);");
 
 //투두리스트
 $(document).ready(function(){
@@ -344,26 +492,6 @@ html, body {
   border: 1px solid #ddd;
   cursor: default;
 }
-.my-calendar .clicked-date {
-  border-radius: 25px;
-  margin-top: 36px;
-  float: left;
-  width: 42%;
-  padding: 46px 0 26px;
-  background: #ddd;
-}
-.my-calendar .calendar-box {
-  float: right;
-  width: 58%;
-  padding-left: 30px;
-}
-
-.clicked-date .cal-day {
-  font-size: 24px;
-}
-.clicked-date .cal-date {
-  font-size: 130px;
-}
 
 .ctr-box {
   padding: 0 16px;
@@ -438,6 +566,27 @@ html, body {
   height: 4px;
   background: #FFC107;
 }
+
+/* 인증/반려 버튼 */
+.auth_confirm,
+.auth_return {
+    width:100px;
+    background-color: #f8585b;
+    border: none;
+    color:#fff;
+    padding: 15px 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+}
+
+
+
+출처: https://nimolove.tistory.com/44 [Chaeni_vlog 🌈]
+
 </style>
 </head>
 <body>
@@ -455,30 +604,47 @@ html, body {
 </div>
 
 <div class=content>
+<form id="content" name="content" action="search_member.do" method="post">
 <div class="search">
-일자 <!-- 달력 --><br>
-<div class="member">
-분류<label><input type="checkbox" name ="dept_no" value="사업자">사업자</label>&nbsp;&nbsp;
-<label><input type="checkbox" name ="dept_no" value="개인">개인</label>&nbsp;&nbsp;
-<label><input type="checkbox" name ="dept_no" value="대기" checked>대기</label><br>
+	<div class = "condition">
+	<div class="date">
+	일자 <input id="fromDate" type="text"> - 	<input id="toDate" type="text">
+	</div>
+	<div class="member">
+	분류<label><input type="checkbox" class="member_grade" value="사업자">사업자</label>&nbsp;&nbsp;
+		<label><input type="checkbox" class="member_grade" value="개인">개인</label>&nbsp;&nbsp;
+		<label><input type="checkbox"class="member_grade" value="대기" checked>대기</label>
+	</div>
+	<div class="keyword">
+	검색<input type="text" id= "keyword" name = "keyword" value = "" placeholder
+	="아이디/닉네임 을 입력하세요">
+	</div> 
+	</div>
+	<div class = "submit_btn">
+	<input type="button" id ="check" value="조회">
+	</div>
+</div> <!-- search -->
+</form>
+<div class = "member_list-table">
+<div class = "ml-table-row">
+<td>분류</td><td>아이디</td><td>닉네임</td><td>지역</td><td>가입일</td><td>신고횟수</td>
 </div>
-검색<input type="text" name = "search" placeholder="아이디/닉네임 을 입력하세요"><br> 
 </div>
 <table>
-<tr>
-<td>분류</td><td>아이디</td><td>닉네임</td><td>지역</td><td>날짜</td><td>신고횟수</td>
-</tr>
-<!-- 반복문 -->
+<tbody id="result">
+
+</tbody>
 </table>
+<div class = "result-table">
+
 </div>
+<!-- 반복문 -->
+
+</div> <!-- content -->
 
 <div class="right-container">
 <!-- 달력 -->
   <div class="my-calendar clearfix">
-    <div class="clicked-date">
-      <div class="cal-day"></div>
-      <div class="cal-date"></div>
-    </div>
     <div class="calendar-box">
       <div class="ctr-box clearfix">
         <button type="button" title="prev" class="btn-cal prev">
@@ -520,5 +686,59 @@ html, body {
     </div>
 <!-- 방문자 -->
 </div>
+<form id= "detail-form" class="modal">
+<div class = "member">
+	<h3>회원정보</h3>
+	<div class = "member_tab">
+		<label>아이디</label><input type="text" id = "email" readonly>
+		<label>닉네임</label><input type="text" id = "nick" readonly>
+		<label>전화번호</label><input type="text" id = "phone" readonly>
+		<label>주소</label><input type="text" id = "local" readonly>
+		<label>분류</label><input type="text" id = "grade" readonly>
+		<label>신고횟수</label><input type="text" id = "wcount" readonly>
+	</div>
+	<div class = "auth">
+		<div class="auth_status">
+		<h3>판매허가내역확인</h3>
+		<fieldset id ="btn_fieldset">
+		<button class ="auth_confirm">완료</button> <button class="auth_return">반려</button>
+		</fieldset>
+		<input type="text" class = "status" value ="미확인" readonly>
+		</div>
+		<div class = "auth_detail-table">
+			<div class ="ad-table-row">
+				<div class ="ad-table-cell">사업장명</div>
+				<div class ="ad-table-cell" id = "biz_com"></div>
+			</div>
+			<div class ="ad-table-row">
+				<div class ="ad-table-cell">관리번호</div>
+				<div class ="ad-table-cell" id = "biz_no"></div>
+			</div>
+			<div class ="ad-table-row">
+				<div class ="ad-table-cell">허가증</div>
+				<div class ="ad-table-cell" id = "biz_img"></div>
+			</div>
+		</div>
+		<div class ="warning">
+			<h3>신고목록</h3>
+			<div class="w-table">
+			반복문
+			</div>
+		</div>
+		<div class ="boardlist">
+			<h3>최근게시글</h3>
+			<div class="b-table">
+			반복문
+			</div>
+		</div>
+		<div class ="commentlist">
+			<h3>최근댓글</h3>
+			<div class="c-table">
+			반복문
+			</div>
+		</div>
+	</div>
+</div>
+</form>
 </body>
 </html>

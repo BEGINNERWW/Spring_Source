@@ -142,6 +142,9 @@ public class HomeController {
 		
 		MemberVO res = memberSV.selectMember(vo.getEmail());
 
+		if(vo.getEmail().equals("admin")) {
+			return "redirect:/admin_main.me";
+		}
 		if(res.getPw().equals(vo.getPw())) {
 			session.setAttribute("id", res.getEmail());
 			session.setAttribute("email", res.getEmail());

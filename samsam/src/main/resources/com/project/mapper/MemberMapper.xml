@@ -11,7 +11,7 @@
 email / pw/ name/nick/phone/local/img/grade
 
 사업자 
-biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_coupon
+biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_coupon / status
  -->
 <!-- 회원정보조회 -->
 <select id="selectMember" parameterType="String" resultType="MemberVO">
@@ -41,7 +41,7 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 </update>
 
 <!-- 판매허가인증 확인 -->
-<select id ="check_auth" parameterType="Biz_memberVO" resultType="String">
+<select id ="check_auth" parameterType="Biz_memberVO" resultType="Biz_memberVO">
  	select biz_name from fulldata_animal where auth_no=#{biz_no} and status_no = 01
 </select>
 
@@ -84,5 +84,52 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 	union all
 	select fdoc_ccontent as content, fdoc_cdate as write_date from fdoc_reply where fdoc_cemail = #{email}
 </select>
+
+<!-- 이용권 결제내역 추가 -->
+<insert id ="insert_pay" parameterType="Payed_listVO">
+ 	insert into payed_list
+ 	values(#{imp_uid},#{merchant_uid}, #{biz_email}, #{pay_date}, #{amount}, #{card_no}, #{refund})
+</insert>
+
+<!-- 이용권 결제내역 조회 -->
+<select id="recentlyPay" parameterType="String" resultType="Payed_listVO">
+	select imp_uid, merchant_uid, biz_email, pay_date, amount, card_no, refund from 
+	(select rownum, imp_uid, merchant_uid, biz_email, pay_date, amount, card_no, refund from 
+	(select * from payed_list where biz_email = #{biz_email})where refund ='payed' order by pay_date)
+	where rownum = 1
+</select>
+
+<!-- 이용권 결제 사업자에 반영 -->
+<update id="updateBiz_pay" parameterType="String">
+	update biz_member set pay_coupon = pay_coupon+5 where biz_email = #{biz_email}
+</update>
+
+<!-- 이용권 환불 사업자에 반영 -->
+<update id="updateBiz_refund" parameterType="String">
+	update biz_member set pay_coupon = pay_coupon-5 where biz_email = #{biz_email}
+</update>
+
+<!-- 이용권 결제내역 환불 -->
+<update id="refund_pay" parameterType="String">
+	update payed_list set refund = 'refund' where merchant_uid = #{merchant_uid}
+</update>
+
+<!-- 어드민 회원 조회 -->
+<!-- 분류 / 아이디 / 닉네임 / 지역 / 가입일 / 신고횟수   -->
+<select id="serach_member" parameterType="Search_paramsVO" resultType="MemberVO">
+	select grade, email, nick, local, signdate, wcount from member_list 
+	where signdate between #{fromDate} and #{toDate} or grade = #{member_grade} 
+	or email like '%' || #{keyword}|| '%' or nick like '%' || #{keyword}|| '%' 
+</select>
+
+<!-- 어드민 사업자인증 완료 -->
+<update id="auth_confirm" parameterType="String">
+	update biz_member set status = 0 where biz_email = #{email}
+</update>
+
+<!-- 어드민 사업자인증 완료 -->
+<delete id="auth_return" parameterType="String">
+	DELETE FROM biz_member WHERE biz_email = #{email}
+</delete>
 
 </mapper>
