@@ -25,24 +25,43 @@ $(document).ready(function() {
 
 	$("#check").click(function(event) { //정적데이터는 이벤트 처리를 바로 가능하나 동적이면 on을 사용하여 처리
 		$('#result').empty();
-		if($('#fromDate').val() != null) { 
+		if($('#fromDate').val() == null) { 
 			 $('#fromDate').val('')
 		}
-		if($('#toDate').val() != null) { 
+		if($('#toDate').val() == null) { 
 			 $('#toDate').val('')
 		}
-		var temp = $('input:checkbox[class="member_grade"]:checked').val();
-		if(temp == null) { 
-			 $('input:checkbox[class="member_grade"]:checked').val('대기')
+		var temp ="";
+		var temp1 ="";
+		var temp2 ="";
+		var temp3 ="";
+		
+		//체크박스 체크확인
+		if($('input:checkbox[name="member_grade1"]').is(":checked") ==  true){
+			temp1 = $('input:checkbox[name="member_grade1"]').val();	
+		};
+		if($('input:checkbox[name="member_grade2"]').is(":checked") ==  true){
+			temp2 = $('input:checkbox[name="member_grade2"]').val();
+		};	
+		if($('input:checkbox[name="member_grade3"]').is(":checked") ==  true){
+			temp3 = $('input:checkbox[name="member_grade3"]').val();
+		};
+		if(temp1 == null && temp2 == null && temp3 == null) { 
+			temp = "대기";
 		}
+		
 		var data = {
 			"fromDate" : $('#fromDate').val(),
 			"toDate" : $('#toDate').val(),
 			"member_grade" : temp,
+			"member_grade1" : temp1,
+			"member_grade2" : temp2,
+			"member_grade3" : temp3,
 			"keyword" : $('#keyword').val()
 		}
 		var params = $("#content").serialize(); // .serialize() : 주어진 데이터를 키, 밸류 값을 짝지어(직렬화) 가져온다
-		console.log(params);
+		console.log(data);
+		console
 		jQuery.ajax({ // $.ajax 와 동일한 표현
 				url : '/samsam/search_member.do',
 				type : 'POST',
@@ -674,9 +693,9 @@ html, body {
 	일자 <input id="fromDate" type="text"> - 	<input id="toDate" type="text">
 	</div>
 	<div class="member">
-	분류<label><input type="checkbox" class="member_grade" value="사업자">사업자</label>&nbsp;&nbsp;
-		<label><input type="checkbox" class="member_grade" value="개인">개인</label>&nbsp;&nbsp;
-		<label><input type="checkbox"class="member_grade" value="대기" checked>대기</label>
+	분류<label><input type="checkbox" name="member_grade1" value="사업자">사업자</label>&nbsp;&nbsp;
+		<label><input type="checkbox" name="member_grade2" value="일반">개인</label>&nbsp;&nbsp;
+		<label><input type="checkbox"name="member_grade3" value="대기" checked>대기</label>
 	</div>
 	<div class="keyword">
 	검색<input type="text" id= "keyword" name = "keyword" value = "" placeholder

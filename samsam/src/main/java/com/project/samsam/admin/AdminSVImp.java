@@ -23,7 +23,7 @@ public class AdminSVImp implements AdminSV {
 	@Override
 	public ArrayList<MemberVO> serach_member(Search_paramsVO svo) {
 		ArrayList<MemberVO> mvo = mapper.serach_member(svo);
-		
+				
 		return mvo;
 	}
 	
@@ -33,6 +33,14 @@ public class AdminSVImp implements AdminSV {
 		
 		return res;
 	}
+	
+	@Override
+	public int 	update_confirm(String email) {
+		int res = mapper.update_confirm(email);
+		
+		return res;
+	}
+
 	@Override
 	public int 	auth_return(String email) {
 		int res = mapper.auth_return(email);

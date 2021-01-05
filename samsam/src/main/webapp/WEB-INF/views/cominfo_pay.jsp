@@ -88,7 +88,7 @@ $(document).ready(function(){
 			          }
 			        },
 			        error:function(){
-			          alert("Insert ajax 통신 실패!!!");
+			          console.log("Insert ajax 통신 실패!!!");
 			        }
 				}) //ajax
 				
@@ -119,12 +119,12 @@ $(document).ready(function(){
 			}).done(function(result){ //환불 성공
 				 pay -= 5;
 				 $('#pay_coupon').html(pay);	
-				alert("환불 성공 : "+ result);
+				console.log("환불 성공 : "+ result);
 			}).fail(function(error){
-				alert("환불 실패 : "+ error);
+				console.log("환불 실패 : "+ error);
 			});//ajax
 		} else{
-			alert("환불 실패 : 남은 결제권 환불 불가");
+			console.log("환불 실패 : 남은 결제권 환불 불가");
 		}
 	}); //check2 클릭
 	

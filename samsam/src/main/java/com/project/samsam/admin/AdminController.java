@@ -37,6 +37,9 @@ public class AdminController {
 	@RequestMapping(value = "/search_member.do" , produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public ArrayList<MemberVO> search_member(@RequestBody Search_paramsVO svo) {
+		System.out.println("date:" + svo.getFromDate() + "to" + svo.getToDate());
+		System.out.println("분류1:" + svo.getMember_grade() + "분류2:" + svo.getMember_grade1() + svo.getMember_grade2()+svo.getMember_grade3());
+		System.out.println("keyword:"+svo.getKeyword());
 		ArrayList<MemberVO> mvo = adminSV.serach_member(svo);
 		
 		return mvo;
@@ -74,7 +77,8 @@ public class AdminController {
 		String email = Jemail.substring(Jemail.indexOf("\"")+1, Jemail.lastIndexOf("\""));
 		System.out.println("전달받은 email : "+ email);
 		
-		Map<String,Integer> map = new HashMap<String, Integer>(); 
+		Map<String,Integer> map = new HashMap<String, Integer>();
+		int mem_update = adminSV.update_confirm(email);
 		int res = adminSV.auth_confirm(email);
 		map.put("result", res);
 		

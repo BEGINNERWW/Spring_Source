@@ -17,6 +17,13 @@ public class MemberSVImp implements MemberSV {
 	public MemberSVImp(SqlSession sqlSession) {
 	     this.mapper = sqlSession.getMapper(MemberMapper.class);
 	}
+	//회원가입
+	@Override
+	public int joinMember(MemberVO mvo) {
+		int res = mapper.joinMember(mvo);
+		
+		return res;
+	}
 	
 	@Override
 	public MemberVO selectMember(String email) {
@@ -85,6 +92,13 @@ public class MemberSVImp implements MemberSV {
 		
 		return result;
 	}
+	@Override
+	public int pre_updateBiz(String vo) {
+		int res = mapper.pre_updateBiz(vo);
+		
+		return res;
+	}
+
 	@Override
 	public Biz_memberVO selectBizMember(String email) {
 		Biz_memberVO vo = mapper.selectBizMember(email);

@@ -13,6 +13,12 @@ email / pw/ name/nick/phone/local/img/grade
 사업자 
 biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_coupon / status
  -->
+<!-- 회원가입 -->
+<insert id = "joinMember" parameterType="MemberVO">
+	insert into member_list (email, pw, name,nick,phone,local,img, signdate)
+	values (#{email}, #{pw}, #{name}, #{nick}, #{phone}, #{local}, #{img}, sysdate)
+</insert>
+
 <!-- 회원정보조회 -->
 <select id="selectMember" parameterType="String" resultType="MemberVO">
 	select * from member_list where email = #{email}
@@ -50,6 +56,10 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
  	insert into biz_member(biz_email, biz_no, biz_com, biz_name, biz_add, biz_img)
  	values(#{biz_email},#{biz_no}, #{biz_com}, #{biz_name}, #{biz_add}, #{biz_img})
 </insert>
+
+<update id ="pre_updateBiz" parameterType="String">
+	update member_list set grade = '대기' where email = #{email}
+</update>
 
 <!-- 사업자회원 조회(이메일) -->
 <select id="selectBizMember" parameterType="String" resultType="Biz_memberVO">
@@ -100,13 +110,13 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 </select>
 
 <!-- 이용권 결제 사업자에 반영 -->
-<update id="updateBiz_pay" parameterType="String">
-	update biz_member set pay_coupon = pay_coupon+5 where biz_email = #{biz_email}
+<update id="updateBiz_pay" parameterType="Biz_MemberVO">
+	update biz_member set pay_coupon = #{pay_coupon} where biz_email = #{biz_email}
 </update>
 
 <!-- 이용권 환불 사업자에 반영 -->
-<update id="updateBiz_refund" parameterType="String">
-	update biz_member set pay_coupon = pay_coupon-5 where biz_email = #{biz_email}
+<update id="updateBiz_refund" parameterType="Biz_MemberVO">
+	update biz_member set pay_coupon = #{pay_coupon} where biz_email = #{biz_email}
 </update>
 
 <!-- 이용권 결제내역 환불 -->
@@ -118,8 +128,17 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 <!-- 분류 / 아이디 / 닉네임 / 지역 / 가입일 / 신고횟수   -->
 <select id="serach_member" parameterType="Search_paramsVO" resultType="MemberVO">
 	select grade, email, nick, local, signdate, wcount from member_list 
-	where signdate between #{fromDate} and #{toDate} or grade = #{member_grade} 
-	or email like '%' || #{keyword}|| '%' or nick like '%' || #{keyword}|| '%' 
+	<where>
+		<if test ="fromDate != null and toDate != null">
+			signdate between TO_DATE(#{fromDate},'YYYYMMDD') and TO_DATE(#{toDate},'YYYYMMDD')+0.9999
+		</if>
+		<if test = "member_grade != null or member_grade1 != null or member_grade2 or member_grade3">
+			AND grade in(#{member_grade}, #{member_grade1}, #{member_grade2}, #{member_grade3})
+		</if>
+		<if test = "keyword != null">
+			 AND email like '%' || #{keyword} || '%' or nick like '%' || #{keyword} || '%'
+		</if>
+	</where> 
 </select>
 
 <!-- 어드민 사업자인증 완료 -->
@@ -127,7 +146,11 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 	update biz_member set status = 0 where biz_email = #{email}
 </update>
 
-<!-- 어드민 사업자인증 완료 -->
+<update id ="update_confirm" parameterType="String">
+	update member_list set grade = '사업자' where email = #{email}
+</update>
+
+<!-- 어드민 사업자인증 반려 -->
 <delete id="auth_return" parameterType="String">
 	DELETE FROM biz_member WHERE biz_email = #{email}
 </delete>

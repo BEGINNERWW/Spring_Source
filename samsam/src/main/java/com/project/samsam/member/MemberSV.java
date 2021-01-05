@@ -12,10 +12,14 @@ public interface MemberSV {
 	public int pwUpdate_BM(Biz_memberVO vo);
 	public String check_auth(Biz_memberVO vo);
 	public int pre_insertBiz(Biz_memberVO vo);
+	public int pre_updateBiz(String vo);
 	public Biz_memberVO selectBizMember(String email);
 	public int selectBiz_no(String biz_no);
 	public ArrayList<Adopt_BoardVO> getMyAdopt(String adopt_email);
 	public int getMyAdoptReply(int adopt_no);
 	public ArrayList<BoardlistVO> getWriteList(String email);
 	public ArrayList<CommentListVO> getWriteComment(String email);
+	
+	//회원가입
+	public int joinMember(MemberVO mvo);
 }
