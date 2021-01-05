@@ -3,17 +3,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="com.project.samsam.member.MemberVO"%>
+<%@ page import="com.project.samsam.simport.Payed_listVO"%>
 <%
 	String email = (String) session.getAttribute("email");
-
-	if (session.getAttribute("email") == null){
+	System.out.println("session email :" +session.getAttribute("email"));
+	
+	if (session.getAttribute("email") == null && session.getAttribute("email") != "admin"){
 		out.println("<script>");
 		out.println("location.href='loginForm.me'");
 		out.println("</script>");
 	}
 	
-	MemberVO mvo = (MemberVO) request.getAttribute("MemberVO");
+	ArrayList<Payed_listVO> plist = (ArrayList<Payed_listVO>) request.getAttribute("Pay_list");
 		
 %>
 
@@ -463,8 +464,8 @@ html, body {
 <nav class ="m_menu">
  <ul>
     <li><a href="#">게시물관리</a></li>
-    <li><a href="#">회원관리</a></li>
-    <li><a href="#">이용권관리</a></li>
+    <li><a href="admin_main.me">회원관리</a></li>
+    <li><a href="admin_pay.me">이용권관리</a></li>
     <li><a href="#">책임분양</a></li>
  </ul>
 </nav>
@@ -475,6 +476,23 @@ html, body {
 <tr>
 <td>번호</td><td>아이디</td><td>결제상태</td><td>결제일</td>
 </tr>
+<%
+System.out.println("plist :" + plist);
+if(!plist.isEmpty()){
+	for(Payed_listVO pay : plist){
+		if(pay.getMerchant_uid() == null){
+%>
+<tr><td colspan = 4> 전체 조회결과, 결제내역이 존재하지 않습니다 </td></tr>
+<% } %>
+<tr>
+	<td><%=pay.getMerchant_uid() %></td>
+	<td><%=pay.getBiz_email() %></td>
+	<td><%=pay.getRefund() %></td>
+	<td><%=pay.getPay_date() %></td>
+</tr>
+<% }} else{%>
+<tr><td colspan = "4"> 전체 조회결과, 결제내역이 존재하지 않습니다 </td></tr>
+<% } %>
 </table>
 </div>
 

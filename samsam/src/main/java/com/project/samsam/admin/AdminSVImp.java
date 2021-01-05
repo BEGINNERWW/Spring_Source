@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.mapper.MemberMapper;
 import com.project.samsam.member.MemberVO;
+import com.project.samsam.simport.Payed_listVO;
 
 @Service
 public class AdminSVImp implements AdminSV {
@@ -22,7 +23,7 @@ public class AdminSVImp implements AdminSV {
 	@Override
 	public ArrayList<MemberVO> serach_member(Search_paramsVO svo) {
 		ArrayList<MemberVO> mvo = mapper.serach_member(svo);
-		
+				
 		return mvo;
 	}
 	
@@ -32,11 +33,26 @@ public class AdminSVImp implements AdminSV {
 		
 		return res;
 	}
+	
+	@Override
+	public int 	update_confirm(String email) {
+		int res = mapper.update_confirm(email);
+		
+		return res;
+	}
+
 	@Override
 	public int 	auth_return(String email) {
 		int res = mapper.auth_return(email);
 		
 		return res;
+	}
+
+	@Override
+	public ArrayList<Payed_listVO> getPay_list(){
+		ArrayList<Payed_listVO> plist = mapper.getPay_list();
+		
+		return plist;
 	}
 
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.mapper.MemberMapper;
+import com.project.samsam.member.Biz_memberVO;
 
 @Service
 public class PaySVImp implements PaySV {
@@ -30,15 +31,15 @@ public class PaySVImp implements PaySV {
 	}
 	
 	@Override
-	public int updateBiz_pay(String email) {
-		int res = mapper.updateBiz_pay(email);
+	public int updateBiz_pay(Biz_memberVO vo) {
+		int res = mapper.updateBiz_pay(vo);
 		
 		return res;
 	}
 	
 	@Override
-	public int updateBiz_refund(String email) {
-		int res = mapper.updateBiz_refund(email);
+	public int updateBiz_refund(Biz_memberVO vo) {
+		int res = mapper.updateBiz_refund(vo);
 		
 		return res;
 	}

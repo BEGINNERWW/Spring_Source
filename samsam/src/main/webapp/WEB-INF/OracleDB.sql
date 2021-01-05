@@ -26,6 +26,7 @@ alter table biz_member modify free_coupon number default 5;
 alter table biz_member add status number default 1 not null;
 alter table member_list add signdate date;
 alter table member_list add wcount number;
+alter table member_list modify grade varchar2(20) default '일반' not null;
 
 ALTER TABLE biz_member
 ADD CONSTRAINT biz_email FOREIGN KEY (biz_email)
@@ -207,7 +208,8 @@ insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,
 values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-3 우와아ㅏㅏㅏ');
 insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
 values(ADOPT_cNO_SEQ.nextval,5,'081749@naver.com','JangD' , '20201229','5-4 우와아ㅏㅏㅏ');
-
+insert into adopt_reply(adopt_cno,adopt_no,ADOPT_CEMAIL,adopt_cnick,adopt_cdate,adopt_ccontent) 
+values(ADOPT_cNO_SEQ.nextval,1,'ivedot@naver.com','ManD' , '20201229','헉 너무 사랑스러운거 아닌가요??!!');
 
 이용권 결제내역
 
@@ -232,7 +234,7 @@ update member_list set wcount = 1 where email = 'ivedot@naver.com';
 update member_list set signdate = '20201201' where email = 'ivedot@naver.com';
 update member_list set signdate = '20210101' where email = '081749@naver.com';
 update member_list set grade = '사업자' where email = 'ivedot@naver.com';
-update member_list set grade = '일반' where email = '081749@naver.com';
+update member_list set grade = '일반' where email = 'ivedot@nate.com';
 update member_list set grade = '대기' where email = 'hongmandang@naver.com';
 
 commit;

@@ -24,8 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.project.samsam.simport.PaymentCheck;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -135,16 +134,60 @@ public class HomeController {
 		return "loginForm";
 	}
 	
+	//카카오로그인
+	@RequestMapping(value = "/kkoLogin.me")
+	public String kko_Join(MemberVO mvo, Model model, RedirectAttributes redi_attr) {
+		System.out.println("이메일: " + mvo.getEmail() + "닉네임 : " + mvo.getNick());
+		
+		if(memberSV.selectMember(mvo.getEmail()) == null) {
+			mvo.setGrade("카카오");
+			model.addAttribute("MemberVO", mvo);
+			return "joinForm";
+		}
+		else {
+			redi_attr.addAttribute("email", mvo.getEmail());
+			System.out.println("리다이렉트 :"+ redi_attr.getAttribute("email"));
+			return "redirect:/login.me";
+			}
+	}
+	
+	//카카오계정 회원가입
+	@RequestMapping(value = "/kkoJoin.me")
+	public String kko_joinProcess(MemberVO mvo) {
+		System.out.println("카카오회원가입" + mvo.getGrade());
+		int res = memberSV.joinMember(mvo);
+		if(res == 1) {
+			return "loginForm";
+		}
+		else {
+			return "joinForm";
+		}
+	}
+	
 	@RequestMapping(value = "/login.me")
-	public String userCheck(MemberVO vo, HttpSession session) throws Exception {
+	public String userCheck(@RequestParam("email") String email, MemberVO vo, HttpSession session) throws Exception {
 		System.out.println("로그인 이메일 "+vo.getEmail());
 		System.out.println("로그인 비밀번호 "+vo.getPw());
 		
-		MemberVO res = memberSV.selectMember(vo.getEmail());
-
 		if(vo.getEmail().equals("admin")) {
+			session.setAttribute("id", vo.getEmail());
+			session.setAttribute("email", vo.getEmail());
+			
 			return "redirect:/admin_main.me";
 		}
+		
+		MemberVO res = memberSV.selectMember(vo.getEmail());
+		if(res.getGrade().equals("카카오")) {
+			session.setAttribute("email", res.getEmail());
+			Biz_memberVO bo = memberSV.selectBizMember(vo.getEmail());
+			if(bo != null) {
+				if(bo.getStatus() == 0) {
+					return "redirect:/cominfo_main.do";
+				}
+			}
+			return "redirect:/myinfo_check.me";
+		}
+		
 		if(res.getPw().equals(vo.getPw())) {
 			session.setAttribute("id", res.getEmail());
 			session.setAttribute("email", res.getEmail());
@@ -272,8 +315,9 @@ public class HomeController {
         	biz.setStatus(1);
 
         	int result = memberSV.pre_insertBiz(biz);
+        	int res = memberSV.pre_updateBiz(biz.getBiz_email());
     		System.out.println("form 데이터 확인 : 파일 " + biz.getBiz_img() + "사업자명 : " + biz.getBiz_com()+"허가번호 : "+ biz.getBiz_no()+ "이메일 : "+ biz.getBiz_email());
-
+    		
         	if(result == 1) {
         		return "myinfo_already";
         	}else {

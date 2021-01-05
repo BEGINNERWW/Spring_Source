@@ -7,7 +7,7 @@ public class Adopt_replyVO {
 	private int adopt_no;
 	private String adopt_cnick;
 	private String adopt_cemail;
-	private Date adopt_cdate;
+	private String adopt_cdate;
 	private String adopt_ccontent;
 	private String adopt_csecret;
 	
@@ -35,10 +35,10 @@ public class Adopt_replyVO {
 	public void setAdopt_cnick(String adopt_cnick) {
 		this.adopt_cnick = adopt_cnick;
 	}
-	public Date getAdopt_cdate() {
+	public String getAdopt_cdate() {
 		return adopt_cdate;
 	}
-	public void setAdopt_cdate(Date adopt_cdate) {
+	public void setAdopt_cdate(String adopt_cdate) {
 		this.adopt_cdate = adopt_cdate;
 	}
 	public String getAdopt_ccontent() {

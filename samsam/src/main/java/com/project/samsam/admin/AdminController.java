@@ -1,11 +1,13 @@
 package com.project.samsam.admin;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +17,7 @@ import com.project.samsam.member.BoardlistVO;
 import com.project.samsam.member.CommentListVO;
 import com.project.samsam.member.MemberSV;
 import com.project.samsam.member.MemberVO;
+import com.project.samsam.simport.Payed_listVO;
 
 @Controller
 public class AdminController {
@@ -34,9 +37,10 @@ public class AdminController {
 	@RequestMapping(value = "/search_member.do" , produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public ArrayList<MemberVO> search_member(@RequestBody Search_paramsVO svo) {
-		
+		System.out.println("date:" + svo.getFromDate() + "to" + svo.getToDate());
+		System.out.println("분류1:" + svo.getMember_grade() + "분류2:" + svo.getMember_grade1() + svo.getMember_grade2()+svo.getMember_grade3());
+		System.out.println("keyword:"+svo.getKeyword());
 		ArrayList<MemberVO> mvo = adminSV.serach_member(svo);
-		System.out.println("svo.getMember_grade : " + svo.getMember_grade());
 		
 		return mvo;
 	}
@@ -73,7 +77,8 @@ public class AdminController {
 		String email = Jemail.substring(Jemail.indexOf("\"")+1, Jemail.lastIndexOf("\""));
 		System.out.println("전달받은 email : "+ email);
 		
-		Map<String,Integer> map = new HashMap<String, Integer>(); 
+		Map<String,Integer> map = new HashMap<String, Integer>();
+		int mem_update = adminSV.update_confirm(email);
 		int res = adminSV.auth_confirm(email);
 		map.put("result", res);
 		
@@ -91,5 +96,14 @@ public class AdminController {
 		map.put("result", res);
 		
 		return map;
+	}
+	
+	@RequestMapping(value = "/admin_pay.me")
+	public String admin_pay(Model model) {
+		ArrayList<Payed_listVO> plist = adminSV.getPay_list();
+		
+		model.addAttribute("Pay_list", plist);
+		
+		return "admin_pay";
 	}
 }

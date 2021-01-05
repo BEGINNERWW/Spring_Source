@@ -1,6 +1,5 @@
 <%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,9 +26,9 @@
 						     //아이디
 						     document.getElementById("kakaoIdentity").innerHTML = res.id;
 						     //카카오톡 계정
-						     document.getElementById("kakaoAccount").innerHTML = res.kakao_account;
+						     document.getElementById("kakaoAccount").innerHTML = res.kakao_account.email;
 						     //닉네임
-						     document.getElementById("kakaoEmail").innerHTML = res.email;
+						     document.getElementById("kakaoEmail").innerHTML = res.account_email;
 						     //이메일
 						     document.getElementById("kakaoNickName").innerHTML = res.properties.nickname;
 						     //프로필 이미지

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.samsam.member.Biz_memberVO;
 import com.project.samsam.member.MemberSV;
 
 @Controller
@@ -23,8 +24,11 @@ public class ImportController {
 		System.out.println("pvo.getMerchant_uid : " + pvo.getMerchant_uid());
 		int res = paySV.insert_pay(pvo);
 		if(res == 1) {
-			res = paySV.updateBiz_pay(pvo.getBiz_email());
-			if(res ==1)
+			Biz_memberVO bvo = memberSV.selectBizMember(pvo.getBiz_email());
+			bvo.setPay_coupon(bvo.getPay_coupon()+5);
+			System.out.println("paycoupon: " + bvo.getPay_coupon());
+			res = paySV.updateBiz_pay(bvo);
+			if(res == 1)
 				System.out.println("biz_member pay coupon 업데이트 완료");
 		}
 		
@@ -42,7 +46,10 @@ public class ImportController {
 		int res = obj.cancelPayment(token, pvo.getMerchant_uid());
 		
 		if(res == 1) {
-			res = paySV.updateBiz_refund(biz_email);
+			Biz_memberVO bvo = memberSV.selectBizMember(pvo.getBiz_email());
+			bvo.setPay_coupon(bvo.getPay_coupon()-5);
+			System.out.println("paycoupon: " + bvo.getPay_coupon());
+			res = paySV.updateBiz_refund(bvo);
 			if(res ==1) {
 				res = paySV.refund_pay(pvo.getMerchant_uid());
 				if(res ==1) { return "Success";}
