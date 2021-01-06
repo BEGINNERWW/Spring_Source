@@ -15,8 +15,8 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
  -->
 <!-- 회원가입 -->
 <insert id = "joinMember" parameterType="MemberVO">
-	insert into member_list (email, pw, name,nick,phone,local,img, signdate)
-	values (#{email}, #{pw}, #{name}, #{nick}, #{phone}, #{local}, #{img}, sysdate)
+	insert into member_list (email, pw, name,nick,phone,local,img, grade, signdate)
+	values (#{email}, #{pw}, #{name}, #{nick}, #{phone}, #{local}, #{img}, #{grade}, sysdate)
 </insert>
 
 <!-- 회원정보조회 -->
@@ -128,17 +128,17 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 <!-- 분류 / 아이디 / 닉네임 / 지역 / 가입일 / 신고횟수   -->
 <select id="serach_member" parameterType="Search_paramsVO" resultType="MemberVO">
 	select grade, email, nick, local, signdate, wcount from member_list 
-	<where>
-		<if test ="fromDate != null and toDate != null">
-			signdate between TO_DATE(#{fromDate},'YYYYMMDD') and TO_DATE(#{toDate},'YYYYMMDD')+0.9999
+	where 1 = 1
+		<if test ="fromDate != null and fromDate != '' and toDate != null and toDate !=''">
+			and signdate between TO_DATE(#{fromDate},'YYYYMMDD') and TO_DATE(#{toDate},'YYYYMMDD')+0.9999
 		</if>
-		<if test = "member_grade != null or member_grade1 != null or member_grade2 or member_grade3">
+		<if test = "(member_grade != null and member_grade != '') or (member_grade1 != null and member_grade1 !='' )or (member_grade2 != null and member_grade2 !='' )or (member_grade3 != null and member_grade3 !='')">
 			AND grade in(#{member_grade}, #{member_grade1}, #{member_grade2}, #{member_grade3})
 		</if>
-		<if test = "keyword != null">
+		<if test = "keyword != null and keyword != ''">
 			 AND email like '%' || #{keyword} || '%' or nick like '%' || #{keyword} || '%'
 		</if>
-	</where> 
+	 
 </select>
 
 <!-- 어드민 사업자인증 완료 -->

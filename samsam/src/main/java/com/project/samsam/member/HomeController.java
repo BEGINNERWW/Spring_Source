@@ -138,21 +138,23 @@ public class HomeController {
 	@RequestMapping(value = "/kkoLogin.me")
 	public String kko_Join(MemberVO mvo, Model model, RedirectAttributes redi_attr) {
 		System.out.println("이메일: " + mvo.getEmail() + "닉네임 : " + mvo.getNick());
-		MemberVO vo = memberSV.selectMember(mvo.getEmail());
-		if(vo == null) {
+		
+		if(memberSV.selectMember(mvo.getEmail()) == null) {
+			mvo.setGrade("카카오");
 			model.addAttribute("MemberVO", mvo);
 			return "joinForm";
 		}
 		else {
-			redi_attr.addAttribute("email", vo.getEmail());
+			redi_attr.addAttribute("email", mvo.getEmail());
 			System.out.println("리다이렉트 :"+ redi_attr.getAttribute("email"));
 			return "redirect:/login.me";
-		}
+			}
 	}
+	
 	//카카오계정 회원가입
 	@RequestMapping(value = "/kkoJoin.me")
 	public String kko_joinProcess(MemberVO mvo) {
-		
+		System.out.println("카카오회원가입" + mvo.getGrade());
 		int res = memberSV.joinMember(mvo);
 		if(res == 1) {
 			return "loginForm";
@@ -175,6 +177,16 @@ public class HomeController {
 		}
 		
 		MemberVO res = memberSV.selectMember(vo.getEmail());
+		if(res.getGrade().equals("카카오")) {
+			session.setAttribute("email", res.getEmail());
+			Biz_memberVO bo = memberSV.selectBizMember(vo.getEmail());
+			if(bo != null) {
+				if(bo.getStatus() == 0) {
+					return "redirect:/cominfo_main.do";
+				}
+			}
+			return "redirect:/myinfo_check.me";
+		}
 		
 		if(res.getPw().equals(vo.getPw())) {
 			session.setAttribute("id", res.getEmail());

@@ -14,6 +14,7 @@
 </head>
 <body>
 <form name = "joinform" action = "kkoJoin.me" method ="post">
+<input type="hidden" name = "grade" value =<%=vo.getGrade() %>>
 <center>
 <table border= 1>
 	<tr>

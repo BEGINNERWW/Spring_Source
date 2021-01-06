@@ -29,6 +29,7 @@ public class MemberSVImp implements MemberSV {
 	public MemberVO selectMember(String email) {
 		System.out.println(email);
 		MemberVO bo = mapper.selectMember(email);
+		if(bo != null) {
 		System.out.println("¼¿·º¸â¹ö : " + bo.getPhone());
 		StringBuffer str = new StringBuffer(bo.getPhone());
 		str.insert(0, "0");
@@ -40,6 +41,8 @@ public class MemberSVImp implements MemberSV {
 		bo.setPhone(phone);
 		
 		System.out.println("¼¼ÆÃ Æù : " + bo.getPhone());
+		}
+		System.out.println(bo);
 		return bo;
 	}
 

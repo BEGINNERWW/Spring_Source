@@ -61,7 +61,6 @@ $(document).ready(function() {
 		}
 		var params = $("#content").serialize(); // .serialize() : 주어진 데이터를 키, 밸류 값을 짝지어(직렬화) 가져온다
 		console.log(data);
-		console
 		jQuery.ajax({ // $.ajax 와 동일한 표현
 				url : '/samsam/search_member.do',
 				type : 'POST',
@@ -69,6 +68,9 @@ $(document).ready(function() {
 				dataType : 'json', //서버에서 보내줄 데이터 타입
 				contentType : 'application/json;charset=utf-8',
 				success : function(mvo) {
+					$('#result').empty();
+					$('.result-table').empty();
+					
 					$.each(mvo, function(index, item){
 						console.log(item.signdate);
 						$('#result').html($('#result').html()+'<tr><td>' + item.grade+'</td><td class="email"><a href="#detail-form" rel="modal:open">' + item.email +'</td></a><td>' + item.nick +'</td><td>' + item.local + '</td><td>'
