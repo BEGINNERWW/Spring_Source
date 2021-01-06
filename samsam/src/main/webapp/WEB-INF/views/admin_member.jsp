@@ -2,16 +2,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat" %>
-
+<%
+	String email = (String) session.getAttribute("email");
+%>
 <!doctype html>
 <html>
 <head>
 	<meta charset="utf-8"/>
 <title>Insert title here</title>
+<!-- font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<!-- sidebar -->
+<link href="resources/css/admin_sidebar.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
@@ -19,8 +22,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script>
-
-	
 $(document).ready(function() {
 
 	$("#check").click(function(event) { //정적데이터는 이벤트 처리를 바로 가능하나 동적이면 on을 사용하여 처리
@@ -427,68 +428,17 @@ $(".txt").on("keyup",function(e){
 });//투두리스트끝
 </script>
 <style>
-body, html {
-	margin: 0;
-	font-family: 'Noto Serif KR', serif;
-}
-  .body_content{
-  	margin : 0;
-  	height:100vh;
-    display : flex;
-	justify-content: center;
-  }
-  #aside{
-  	width : 250px;
-    flex-direction:column;
-    justify-content: space-around;
-  }
-  .box .name .m_menu{
-    align-self: auto;
-  }
-  .name {
-    margin-right : 50px;
-    padding : 0;
-    text-align:center;
-  }
-.box {
-	margin : 30px;
-	padding: 0;
-    width: 150px;
-    height: 150px; 
-    border-radius: 70%;
-    overflow: hidden;
-}
-.profile {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-ul{
-padding:0;
-margin-top:30px;
-}
-li{
-width: 100%;
-height : 48px;
-list-style-type:none;
-display:flex;
-justify-content: flex-start;
-}
-a{
-color : black;
-text-decoration:none;
-}
-.content{
-	margin-top:100px;
-	width : 550px;
+.right-container, .content{
+    margin-top:100px;
+    width : 37%;
     display : flex;
     flex-direction: column;
     justify-content : flex-start;
 }
 
 #check{
-width : 500px;
-height : 48px;
+width : 80px;
+height : 50px;
 border : 1px solid skyblue;
 background-color : rgba(0,0,0,0);
 color : skyblue;
@@ -525,11 +475,6 @@ input {
   height : 40px;
   font-size:1em;
 }
-#admin{
-margin-top:50px;
-margin-right : 80px;
-text-align:right;
-}
 
 .task{
   width:100%;
@@ -548,17 +493,8 @@ text-align:right;
   background: rgba(0,0,0,0.5);
   color : #fff;
 }
-
 /* ======== Calendar ======== */
-html, body {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
 .clearfix:after {
   content: '';
   display: block;
@@ -652,40 +588,75 @@ html, body {
 }
 
 /* 인증/반려 버튼 */
+
+.auth_confirm {
+	border: 1px solid #22B24C;
+	color:#22B24C;
+}
+.auth_confirm:hover{
+	color : #fff;
+	background-color:#22B24C;
+	border-color:#22B24C;
+}
+
+.auth_return{
+	border: 1px solid #f8585b;
+	color:#f8585b;
+}
+.auth_return:hover{
+	color : #fff;
+	background-color:#f8585b;
+	border-color:#f8585b;
+}
+
 .auth_confirm,
 .auth_return {
-    width:100px;
-    background-color: #f8585b;
-    border: none;
-    color:#fff;
+    width:80px;
+    height : 30px;
+    background-color: white;
+    border: 1px solid #f8585b;
+    color:#f8585b;
     padding: 15px 0;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 15px;
     margin: 4px;
-    cursor: pointer;
 }
-
-
-
-출처: https://nimolove.tistory.com/44 [Chaeni_vlog 🌈]
 
 </style>
 </head>
 <body>
-<h3 id = admin><i class="far fa-user-circle"></i>&nbsp;ADMIN</h4>
 <div class ="body_content">
-<div id="aside">
-<nav class ="m_menu">
- <ul>
-    <li><a href="#">게시물관리</a></li>
-    <li><a href="admin_main.me">회원관리</a></li>
-    <li><a href="admin_pay.me">이용권관리</a></li>
-    <li><a href="#">책임분양</a></li>
- </ul>
-</nav>
+<header id = "header">
+	<div class="d-flex flex-column">
+		<div class ="profile">
+			<img src = "주소" alt class = "img-fluid rounded-circle">
+			<h1 class = "text-light">
+				<a href = "#" class = "onMember"> <%= email%> </a>
+			</h1>
+			<div class ="admin_inout">
+				<button type="button" class ="grade">ADMIN</button>
+				<button type="button" class ="grade" onclick="location.href='loginForm.me'">LOGOUT</button>
+			</div>
+						
+			<ul class = "nav-menu">
+				<li class="active">
+					<a href = "#" class = "nav-menu"><i class= "far fa-clipboard menu"></i><span> 게시물관리</span></a>
+				</li>
+				<li>
+					<a href="admin_main.me" class = "nav-menu"><i class = "fas fa-users menu"></i><span> 회원관리</span></a>
+				</li>
+				<li>
+					<a href="admin_pay.me" class = "nav-menu"><i class = "fas fa-ticket-alt menu"></i><span> 이용권관리</span></a>
+				</li>
+				<li>
+					<a href="#" class = "nav-menu"><i class = "fas fa-dog menu"></i><span> 책임분양</span></a>
+				</li>
+			</ul>
+
 </div>
+</header>
 
 <div class=content>
 <form id="content" name="content" action="search_member.do" method="post">
@@ -826,5 +797,10 @@ html, body {
 	</div>
 </div>
 </form>
+
+<!-- pageup button -->
+<div class ="back-to-top">
+<a href="#"><i class = "fas fa-angle-up"></i></a>
+</div>
 </body>
 </html>

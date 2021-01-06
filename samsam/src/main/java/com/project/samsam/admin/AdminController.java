@@ -27,6 +27,12 @@ public class AdminController {
 	@Autowired
 	private MemberSV memberSV;
 	
+	//TEST PAGE
+	@RequestMapping(value = "/test.me")
+	public String test() {
+		
+		return "NewFile";
+	}
 
 	@RequestMapping(value = "/admin_main.me")
 	public String admin_main() {

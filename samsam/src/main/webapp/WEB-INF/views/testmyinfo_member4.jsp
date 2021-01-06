@@ -249,10 +249,10 @@ width:310px;
 <div class ="name">이름/닉네임</div>
 <nav class ="m_menu">
  <ul>
-    <li><a href="#">책임분양관리</a></li>
-    <li><a href="#">회원정보</a></li>
-    <li><a href="#">작성글관리</a></li>
-    <li><a href="#">판매허가번호인증</a></li>
+    <li><a href="#">게시물관리</a></li>
+    <li><a href="admin_main.me">회원관리</a></li>
+    <li><a href="admin_pay.me">이용권관리</a></li>
+    <li><a href="#">책임분양</a></li>
  </ul>
 </nav>
 </div>
