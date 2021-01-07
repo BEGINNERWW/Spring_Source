@@ -3,6 +3,7 @@ package com.project.mapper;
 import java.util.ArrayList;
 
 import com.project.samsam.admin.Search_paramsVO;
+import com.project.samsam.admin.Todo_listVO;
 import com.project.samsam.member.Adopt_BoardVO;
 import com.project.samsam.member.Biz_memberVO;
 import com.project.samsam.member.BoardlistVO;
@@ -41,7 +42,12 @@ public interface MemberMapper {
 	public int 	update_confirm(String email);
 	public int 	auth_return(String email);
 	public ArrayList<Payed_listVO> 	getPay_list();
-
+	
+	//todolist
+	public int insert_todo(Todo_listVO todo);
+	public int update_todo(Todo_listVO todo);
+	public int delete_todo(Todo_listVO todo);
+	public ArrayList<Todo_listVO> select_todo();
 	
 	//회원가입
 	public int joinMember(MemberVO mvo);

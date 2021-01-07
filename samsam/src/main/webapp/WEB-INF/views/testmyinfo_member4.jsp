@@ -12,12 +12,68 @@
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script>
-$(".textbox input").attr("value", "");
-$(".textbox input").attr("onkeyup", "this.setAttribute('value', this.value);");
-
-function check(){
-	
+//달력
+var today = new Date();
+var finall = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+if (today.getFullYear() % 4 == 0 && (today.getFullYear() % 100 != 0 || today.getFullYear() % 400 == 0)) {
+  finall = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 }
+function prev() {
+  today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+  makeArray();
+}
+function next() {
+  today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+  makeArray();
+}
+function makeArray() {
+  var first = new Date(today.getFullYear(), today.getMonth(), 1);
+  var day = 1;
+  var cal = new Array(6);
+  cal.fill(" ");
+  var j = first.getDay();
+  for (let i = 0; i < 6; i++) {
+   	 cal[i] = new Array(7);
+     cal[i].fill(" ");
+    for (j; j < 7; j++) {
+     cal[i][j] = day++;
+     if (day > finall[today.getMonth()] + 1) cal[i][j] = " ";
+    }
+    j = 0;
+  }
+  arrayToTable(cal);
+}
+
+function arrayToTable(arr) {
+	  document.getElementById("monthTable").innerHTML =
+	    "<span>" +
+	    today.getFullYear() +
+	    "</span> " +
+	    "<span style='font-weight:800; color:#cc3300'>" +
+	    (today.getMonth() < 9 ? "0" + (((today.getMonth() - 1) % 12) + 2) : ((today.getMonth() - 1) % 12) + 2) +
+	    "</span> ";
+	  var calendar = document.getElementById("calendar").getElementsByTagName("tbody")[0];
+	  if (calendar.rows.length > 2)
+	    for (let i = 0; i < 6; i++) {
+	      calendar.deleteRow(-1);
+	    }
+	  for (let i = 0; i < 6; i++) {
+	    var row = calendar.insertRow();
+	    for (let j = 0; j < 7; j++) {
+	      cell = row.insertCell();
+	      if (arr[i][j] != undefined) {
+	        if (today.getMonth() == new Date().getMonth() && today.getFullYear() == new Date().getFullYear() && arr[i][j] == today.getDate()) {
+	          cell.innerHTML = '<span style="color:#cc3300; font-weight:700;">' + arr[i][j] + "</span>";
+	        } else {
+	          cell.innerHTML = arr[i][j];
+	        }
+	      }
+	    }
+	  }
+	}
+</script>
+<script>
+
 $(".txt").on("keyup",function(e){
     if(e.keyCode == 13 && $(".txt").val() != ""){
       //Task에 입력 값 넣기
@@ -56,6 +112,39 @@ body, html {
 	margin: 0;
 	font-family: 'Noto Serif KR', serif;
 }
+/* 달력  */
+.no-drag {
+-ms-user-select: none;
+-moz-user-select: -moz-none; 
+-webkit-user-select: none; 
+-khtml-user-select: none; 
+user-select:none;
+}
+ 
+#calendar {
+	text-align: center;
+}
+#calendar thead {
+	font-size: 16px;
+	font-weight: 700;
+	text-align: center;
+}
+#calendar td {
+	text-align: center;
+}
+#calendar tbody td {
+	width: 10px;
+	height: 10px;
+	padding: 5px;
+	font-size: 12px;
+	font-weight: 400;
+}
+#dateHead {
+	font-size: 12px;
+	font-weight: 700;
+	text-align: center;
+}
+/* 달력 끝 */
   .body_content{
   	margin : 0;
   	height:100vh;
@@ -249,15 +338,39 @@ width:310px;
 <div class ="name">이름/닉네임</div>
 <nav class ="m_menu">
  <ul>
-    <li><a href="#">책임분양관리</a></li>
-    <li><a href="#">회원정보</a></li>
-    <li><a href="#">작성글관리</a></li>
-    <li><a href="#">판매허가번호인증</a></li>
+    <li><a href="#">게시물관리</a></li>
+    <li><a href="admin_main.me">회원관리</a></li>
+    <li><a href="admin_pay.me">이용권관리</a></li>
+    <li><a href="#">책임분양</a></li>
  </ul>
 </nav>
 </div>
 <div class="container">
 <!-- 달력 -->
+<widget class="no-drag">
+  <table id="calendar">
+    <thead>
+      <tr height="35px">
+        <td><label onclick="prev()" style="color: #ccc;"><</label></td>
+        <td colspan="5" id="monthTable"></td>
+        <td><label onclick="next()" style="color: #ccc;">></label></td>
+      </tr>
+      <tr id="dateHead">
+        <td>S</td>
+        <td>M</td>
+        <td>T</td>
+        <td>W</td>
+        <td>T</td>
+        <td>F</td>
+        <td>S</td>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script>
+    makeArray();
+  </script>
+</widget>
 <!-- 투두리스트 -->
 	<!-- 입력 -->
       <input type="text" placeholder="Add A Task" class ="txt"> 

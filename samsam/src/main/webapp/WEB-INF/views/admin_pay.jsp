@@ -23,10 +23,11 @@
 <head>
 	<meta charset="utf-8"/>
 <title>Insert title here</title>
+<!-- font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<!-- sidebar -->
+<link href="resources/css/admin_sidebar.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
@@ -171,9 +172,6 @@ $(document).ready(function(){
 	}); 
 }); //달력끝
 
-$(".textbox input").attr("value", "");
-$(".textbox input").attr("onkeyup", "this.setAttribute('value', this.value);");
-
 //투두리스트
 $(document).ready(function(){
 $(".txt").on("keyup",function(e){
@@ -212,60 +210,9 @@ $(".txt").on("keyup",function(e){
 });//투두리스트끝
 </script>
 <style>
-body, html {
-	margin: 0;
-	font-family: 'Noto Serif KR', serif;
-}
-  .body_content{
-  	margin : 0;
-  	height:100vh;
-    display : flex;
-	justify-content: center;
-  }
-  #aside{
-  	width : 250px;
-    flex-direction:column;
-    justify-content: space-around;
-  }
-  .box .name .m_menu{
-    align-self: auto;
-  }
-  .name {
-    margin-right : 50px;
-    padding : 0;
-    text-align:center;
-  }
-.box {
-	margin : 30px;
-	padding: 0;
-    width: 150px;
-    height: 150px; 
-    border-radius: 70%;
-    overflow: hidden;
-}
-.profile {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-ul{
-padding:0;
-margin-top:30px;
-}
-li{
-width: 100%;
-height : 48px;
-list-style-type:none;
-display:flex;
-justify-content: flex-start;
-}
-a{
-color : black;
-text-decoration:none;
-}
-.content{
+.right-container, .content{
 	margin-top:100px;
-	width : 550px;
+	width : 37%;
     display : flex;
     flex-direction: column;
     justify-content : flex-start;
@@ -310,11 +257,6 @@ input {
   height : 40px;
   font-size:1em;
 }
-#admin{
-margin-top:50px;
-margin-right : 80px;
-text-align:right;
-}
 
 .task{
   width:100%;
@@ -335,15 +277,7 @@ text-align:right;
 }
 
 /* ======== Calendar ======== */
-html, body {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
 .clearfix:after {
   content: '';
   display: block;
@@ -353,7 +287,7 @@ html, body {
 
 /* ======== Calendar ======== */
 .my-calendar {
-  width: 400px;
+  width: 15%;
   margin: 30px;
   padding: 20px 20px 10px;
   text-align: center;
@@ -458,20 +392,38 @@ html, body {
 </style>
 </head>
 <body>
-<h3 id = admin><i class="far fa-user-circle"></i>&nbsp;ADMIN</h4>
 <div class ="body_content">
-<div id="aside">
-<nav class ="m_menu">
- <ul>
-    <li><a href="#">게시물관리</a></li>
-    <li><a href="admin_main.me">회원관리</a></li>
-    <li><a href="admin_pay.me">이용권관리</a></li>
-    <li><a href="#">책임분양</a></li>
- </ul>
-</nav>
-</div>
+<header id = "header">
+	<div class="d-flex flex-column">
+		<div class ="profile">
+			<img src = "주소" alt class = "img-fluid rounded-circle">
+			<h1 class = "text-light">
+				<a href = "#"> ADMIN </a>
+			</h1>
+			<div class ="admin_inout">
+				<button type="button" class ="grade">ADMIN</button>
+				<button type="button" class ="grade">LOGOUT</button>
+			</div>
+						
+			<ul class = "nav-menu">
+				<li class="active">
+					<a href = "#"><i class= "far fa-clipboard menu"></i><span> 게시물관리</span></a>
+				</li>
+				<li>
+					<a href="admin_main.me"><i class = "fas fa-users menu"></i><span> 회원관리</span></a>
+				</li>
+				<li>
+					<a href="admin_pay.me"><i class = "fas fa-ticket-alt menu"></i><span> 이용권관리</span></a>
+				</li>
+				<li>
+					<a href="#"><i class = "fas fa-dog menu"></i><span> 책임분양</span></a>
+				</li>
+			</ul>
 
-<div class=content>
+</div>
+</header>
+
+<div class="content">
 <table>
 <tr>
 <td>번호</td><td>아이디</td><td>결제상태</td><td>결제일</td>
@@ -543,6 +495,11 @@ if(!plist.isEmpty()){
       </div>
     </div>
 <!-- 방문자 -->
+
+<!-- pageup button -->
+<div class ="back-to-top">
+<a href="#"><i class = "fas fa-angle-up"></i></a>
+</div>
 </div>
 </body>
 </html>

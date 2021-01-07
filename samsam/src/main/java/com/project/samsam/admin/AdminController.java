@@ -1,6 +1,5 @@
 package com.project.samsam.admin;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.samsam.member.Biz_memberVO;
@@ -27,7 +27,68 @@ public class AdminController {
 	@Autowired
 	private MemberSV memberSV;
 	
-
+	//TEST PAGE
+	@RequestMapping(value = "/test.me")
+	public String test() {
+		
+		return "NewFile";
+	}
+	
+	@RequestMapping(value = "/todo_select.do", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public Map<String, Object> todo_select() {
+		Map<String, Object> map = new HashMap<String,Object>();
+		ArrayList<Todo_listVO> todolist = adminSV.select_todo();
+		
+		if(todolist != null) {
+			map.put("todolist", todolist);
+		}
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/todo_insert.do", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public Map<String, String> todo_insert(@RequestBody Todo_listVO todo) {
+		System.out.println("todo:" + todo.getTo_do());	
+		Map<String, String> map = new HashMap<String,String>();
+		int res = adminSV.insert_todo(todo);
+		if(res == 1) {
+			map.put("result", "success");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	@RequestMapping(value = "/todo_update.do", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public Map<String, String> todo_update(@RequestBody Todo_listVO todo) {
+		System.out.println("todo:" + todo.getTo_do());	
+		Map<String, String> map = new HashMap<String,String>();
+		int res = adminSV.update_todo(todo);
+		if(res == 1) {
+			map.put("result", "success");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	@RequestMapping(value = "/todo_delete.do", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public Map<String, String> todo_delete(@RequestBody Todo_listVO todo) {
+		System.out.println("todo:" + todo);	
+		Map<String, String> map = new HashMap<String,String>();
+		int res = adminSV.delete_todo(todo);
+		if(res == 1) {
+			map.put("result", "success");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
 	@RequestMapping(value = "/admin_main.me")
 	public String admin_main() {
 		

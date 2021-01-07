@@ -54,5 +54,31 @@ public class AdminSVImp implements AdminSV {
 		
 		return plist;
 	}
+	//todolist
+	@Override
+	public int insert_todo(Todo_listVO todo) {
+		int res = mapper.insert_todo(todo);
+		
+		return res;
+	}
+	@Override
+	public int update_todo(Todo_listVO todo) {
+		int res = mapper.update_todo(todo);
+		
+		return res;
+	}
 
+	@Override
+	public int delete_todo(Todo_listVO todo) {
+		int res= mapper.delete_todo(todo);
+		
+		return res;
+	}
+	@Override
+	public ArrayList<Todo_listVO> select_todo(){
+		ArrayList<Todo_listVO> todolist = mapper.select_todo();
+				
+		return todolist;
+	}
+	
 }

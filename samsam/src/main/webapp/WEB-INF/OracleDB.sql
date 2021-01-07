@@ -238,3 +238,13 @@ update member_list set grade = '일반' where email = 'ivedot@nate.com';
 update member_list set grade = '대기' where email = 'hongmandang@naver.com';
 
 commit;
+
+CREATE TABLE todo_list (
+	to_do_no varchar2(50)		NOT NULL primary key,
+	to_do 	varchar2(200)		not null,
+	status 	varchar2(15)		DEFAULT 'MustDo'
+);
+
+CREATE SEQUENCE todo_SEQ
+INCREMENT BY 1 
+START WITH 1 ;
