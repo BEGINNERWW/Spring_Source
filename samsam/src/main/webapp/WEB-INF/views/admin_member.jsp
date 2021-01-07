@@ -464,7 +464,7 @@ background-color:skyblue;
  }
  
 input {
-  font-family: 'Noto Serif KR', serif;
+  font-family: 'Nanum Gothic Coding', monospace;
   outline: 0;
   border: 1px solid #eeeeee;
   border-radius : 5px;
@@ -590,38 +590,37 @@ input {
 /* 인증/반려 버튼 */
 
 .auth_confirm {
-	border: 1px solid #22B24C;
-	color:#22B24C;
+	border: 1px solid #00BCD4;
+	color:#00BCD4;
 }
 .auth_confirm:hover{
 	color : #fff;
-	background-color:#22B24C;
-	border-color:#22B24C;
+	background-color:#00BCD4;
+	border-color:#00BCD4;
 }
 
 .auth_return{
-	border: 1px solid #f8585b;
-	color:#f8585b;
+	border: 1px solid #E91E63;
+	color:#E91E63;
 }
 .auth_return:hover{
 	color : #fff;
-	background-color:#f8585b;
-	border-color:#f8585b;
+	background-color:#E91E63;
+	border-color:#E91E63;
 }
 
 .auth_confirm,
 .auth_return {
-    width:80px;
+	margin: 4px;
+    width:60px;
     height : 30px;
     background-color: white;
-    border: 1px solid #f8585b;
-    color:#f8585b;
-    padding: 15px 0;
+    padding: 0;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 15px;
-    margin: 4px;
+    border-radius : 10px;
 }
 
 </style>

@@ -12,4 +12,9 @@ public interface AdminSV {
 	public int 	auth_return(String email);
 	public ArrayList<Payed_listVO> 	getPay_list();
 
+	//todolist
+	public int insert_todo(Todo_listVO todo);
+	public int update_todo(Todo_listVO todo);
+	public int delete_todo(Todo_listVO todo);
+	public ArrayList<Todo_listVO> select_todo();
 }

@@ -159,4 +159,25 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 <select id="getPay_list" resultType = "Payed_listVO">
 	select merchant_uid, biz_email, refund, pay_date from payed_list order by pay_date
 </select>
+
+<!-- 투두리스트 추가 -->
+<insert id ="insert_todo" parameterType="Todo_listVO">
+ 	insert into todo_list (to_do_no, to_do)
+ 	values(todo_SEQ.nextval,#{to_do})
+</insert>
+
+<!-- 투두리스트 DONE  -->
+<update id="update_todo" parameterType="Todo_listVO">
+	update todo_list set status = 'Done' where to_do = #{to_do}
+</update>
+
+<!-- 투두리스트 삭제 -->
+<delete id="delete_todo" parameterType="Todo_listVO">
+	DELETE FROM todo_list WHERE to_do = #{to_do}
+</delete>
+
+<!-- 투두리스트 조회 -->
+<select id="select_todo" resultType = "Todo_listVO">
+	select to_do, status from todo_list order by to_do_no
+</select>
 </mapper>
