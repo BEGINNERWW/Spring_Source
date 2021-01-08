@@ -92,7 +92,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin_main.me")
 	public String admin_main() {
 		
-		return "admin_member";
+		return "NewFile";
 	}
 	
 	@RequestMapping(value = "/search_member.do" , produces="application/json; charset=UTF-8")

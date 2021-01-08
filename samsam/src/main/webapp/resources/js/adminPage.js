@@ -25,22 +25,9 @@ $(document).ready(function(){
 			//Task에 입력 값 넣기
 			   var task = $("<div class='task'></div>").text(item.to_do);
 			//삭제버튼
-			   var del = $("<i class='fas fa-trash-alt'></i>").click(function(){
-			   var p = $(this).parent();
-			       p.fadeOut(function(){
-			       p.remove();
-			       })
-			   });
+			   var del = "<i class='fas fa-trash-alt'></i>"
 			//체크 버튼
-			   var check = $("<i class='fas fa-check'></i>").click(function(){
-			   var p = $(this).parent();
-			       p.fadeOut(function(){
-			         $(".done").append(p);
-			         p.fadeIn();
-			       })
-			        
-			        $(this).remove();
-			      });
+			   var check = "<i class='fas fa-check'></i>"
 			      
 			      //Task에 삭제 & 체크 버튼 추가하기
 			      task.append(del,check)
@@ -82,22 +69,10 @@ $(".txt").on("keyup",function(e){
       //Task에 입력 값 넣기
       var task = $("<div class='task'></div>").text($(".txt").val());
       //삭제버튼
-      var del = $("<i class='fas fa-trash-alt'></i>").click(function(){
-        var p = $(this).parent();
-        p.fadeOut(function(){
-          p.remove();
-        })
-      });
+      var del = "<i class='fas fa-trash-alt'></i>"
       
       //체크 버튼
-      var check = $("<i class='fas fa-check'></i>").click(function(){
-        var p = $(this).parent();
-        p.fadeOut(function(){
-          $(".done").append(p);
-        	p.fadeIn();
-        })
-        $(this).remove();
-      });
+      var check = "<i class='fas fa-check'></i>"
       
       //Task에 삭제 & 체크 버튼 추가하기
       task.append(del,check)
@@ -110,10 +85,10 @@ $(".txt").on("keyup",function(e){
     }
   });
   
-  $(document).on('click', '.fas fa-check', function(e){
-  	console.log($(this).parent());
+  $(document).on('click', '.fa-check', function(e){
+  	console.log($(this).parent('.task').text())
   	var data = {
-        		"to_do" : $(this).parent('div').text(),
+        		"to_do" : $(this).parent('.task').text(),
         	 	}
         	console.log(data);
         	jQuery.ajax({ // $.ajax 와 동일한 표현
@@ -128,13 +103,21 @@ $(".txt").on("keyup",function(e){
         		error : function() {
         			console.log("todo done ajax실패!!!");
         		}
-        	});	
+        	});
+    console.log("체크 p : " + $(this).parent());
+
+     var p = $(this).parent();
+		 p.fadeOut(function(){
+		       $(".done").append(p);
+		       p.fadeIn();
+		 })
+		 $(this).remove();
   })//체크클릭
   
-  $(document).on('click', '.fas fa-trash-alt', function(e){
-   	console.log($(this).parent());
+  $(document).on('click', '.fa-trash-alt', function(e){
+   	$(this).parent('.task').text()
   	var data = {
-          		"to_do" : $(this).parent('div').text(),
+          		"to_do" : $(this).parent('.task').text(),
           		}
           	console.log(data);
           	jQuery.ajax({ // $.ajax 와 동일한 표현
@@ -150,6 +133,11 @@ $(".txt").on("keyup",function(e){
           			console.log("todo delete ajax실패!!!");
           		}
           	});	
+    console.log("삭제 p : " + $(this).parent());
+    var p = $(this).parent();
+	    p.fadeOut(function(){
+	     p.remove();
+	    })
   })//삭제클릭
   
 });//투두리스트끝
