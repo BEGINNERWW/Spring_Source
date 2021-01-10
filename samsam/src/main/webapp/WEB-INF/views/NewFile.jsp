@@ -4,6 +4,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
 	String email = (String) session.getAttribute("email");
+	//email.toUpperCase();
 %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,7 @@
 		<div class ="profile">
 			<img src = "resources/img/samsam2.png" alt class = "img-circle">
 			<h1 class = "text-light">
-				<a href = "#" class = "onMember">  <%= email%> </a>
+				<a href = "#" class = "onMember">  <%= email.toUpperCase()%> </a>
 			</h1>
 		</div>
 		<div class ="admin_inout">
@@ -60,6 +61,7 @@
 <div>
 
 </div>
+</div><!-- 메인컨텐트 -->
 
 <!-- right-sidebar -->
 <div class="right-container">
@@ -109,7 +111,6 @@
 </a>
 </div>
 </div><!-- right-sidebar -->
-</div><!-- 메인컨텐트 -->
 </div><!-- 바디컨텐트 -->
 </body>
 </html>

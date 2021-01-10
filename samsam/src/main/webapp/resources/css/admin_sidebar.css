@@ -40,6 +40,7 @@ body::-webkit-scrollbar { display:none; }
 a{
 	display : block;
 	text-decoration : none;
+	color : black;
 }
 span {
 	display:
@@ -146,6 +147,7 @@ border-color:#f57a00
   background: rgba(0,0,0,0.5);
   color : #fff;
 }
+
 /* to do list */
 /* 달력  */
 .no-drag {
