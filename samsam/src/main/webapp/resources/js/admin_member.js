@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 
 	$("#check").click(function(event) { //정적데이터는 이벤트 처리를 바로 가능하나 동적이면 on을 사용하여 처리
