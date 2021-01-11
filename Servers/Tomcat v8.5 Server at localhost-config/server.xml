@@ -103,7 +103,8 @@
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 				<Context docBase="C:/Project/upload" path="/springfileupload1/upload" reloadable="true"/>
 				<Context docBase="samsam" path="/samsam" reloadable="true" source="org.eclipse.jst.jee.server:Samsam2"/>
-			<Context docBase="Day1214SpringImport" path="/springimport" reloadable="true" source="org.eclipse.jst.jee.server:Day1214SpringImport"/><Context docBase="Day1209SpringKKO" path="/kakaologin" reloadable="true" source="org.eclipse.jst.jee.server:Day1209SpringKKO"/></Host>
+			<Context docBase="Day1214SpringImport" path="/springimport" reloadable="true" source="org.eclipse.jst.jee.server:Day1214SpringImport"/><Context docBase="Day1209SpringKKO" path="/kakaologin" reloadable="true" source="org.eclipse.jst.jee.server:Day1209SpringKKO"/>
+			<Context docBase="samsam-merge" path="/samsam-merge" reloadable="true" source="org.eclipse.jst.jee.server:samsam-merge"/></Host>
 		</Engine>
 	</Service>
 </Server>

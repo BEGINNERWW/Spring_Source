@@ -33,7 +33,7 @@ public class HomeController {
 	@Autowired
 	private MemberSV memberSV;
 	@Autowired
-	JavaMailSender mailSender; // ¸ŞÀÏ ¼­ºñ½º¸¦ »ç¿ëÇÏ±â À§ÇØ ÀÇÁ¸¼º ÁÖÀÔ
+	JavaMailSender mailSender; 
 
 	@RequestMapping(value = "/pw_find.me", method = RequestMethod.GET)
 	public String pw_find() {
@@ -49,33 +49,30 @@ public class HomeController {
 		System.out.println("request name : " + name);
 
 		MemberVO vo = memberSV.selectMember(email);
-		System.out.println("È¸¿ø ÀÌ¸ŞÀÏ :" + vo.getEmail());
-		System.out.println("ÀÌ¸§ : " + vo.getName());
+		System.out.println("È¸ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ :" + vo.getEmail());
+		System.out.println("ï¿½Ì¸ï¿½ : " + vo.getName());
 
 		Random r = new Random();
-		int num = r.nextInt(999999); // ÀÌ¸ŞÀÏ·Î ¹Ş´Â ÀÎÁõÄÚµå ºÎºĞ(³­¼ö)
+		int num = r.nextInt(999999); // ëœë¤ë‚œìˆ˜ì„¤ì •
 
 		if (vo.getName().equals(name)) {
 			session.setAttribute("email", vo.getEmail());
 
-			System.out.println("¸ŞÀÏ¹ß¼Û to :" + (String)session.getAttribute("id") );
-			// String setfrom ="Áö¸ŞÀÏ ÁÖ¼Ò"; //gmail »ç¿ë½Ã gmail ÁÖ¼Ò, ´ÙÀ½½Ã ´ÙÀ½ ÀÌ¸ŞÀÏÁÖ¼Ò
-			String setfrom = "ivedot@naver.com"; // naver »ç¿ë½Ã(º¸³»´Â »ç¶÷ ÀÌ¸ŞÀÏ ÁÖ¼Ò)
-			String tomail = email; // ¹Ş´Â»ç¶÷ ÀÌ¸ŞÀÏ
-			String title = "ºñ¹Ğ¹øÈ£º¯°æ ÀÎÁõ ÀÌ¸ŞÀÏ ÀÔ´Ï´Ù"; // Á¦¸ñ
-			String content = System.getProperty("line.separator") + "¾È³çÇÏ¼¼¿ä È¸¿ø´Ô" + System.getProperty("line.separator")
-					+ "»ï»ïÇÏ°³ ºñ¹Ğ¹øÈ£Ã£±â(º¯°æ) ÀÎÁõ¹øÈ£´Â " + num + "ÀÔ´Ï´Ù" + System.getProperty("line.separator")
-					+ "¹ŞÀ¸½Å ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä"; // ³»¿ë
-		//	System.out.println("º¸³½»ç¶÷ : " + setfrom + "¹Ş´Â»ç¶÷: " + tomail + "Á¦¸ñ : "+ title);
+			System.out.println("ï¿½ï¿½ï¿½Ï¹ß¼ï¿½ to :" + (String)session.getAttribute("id") );
+			String setfrom = "ivedot@naver.com"; // naver 
+			String tomail = email; //ë°›ëŠ”ì‚¬ëŒ
+			String title = "[ì‚¼ì‚¼í•˜ê°œ] ë¹„ë°€ë²ˆí˜¸ë³€ê²½ ì¸ì¦ ì´ë©”ì¼ ì…ë‹ˆë‹¤"; 
+			String content = System.getProperty("line.separator") + "ì•ˆë…•í•˜ì„¸ìš” íšŒì›ë‹˜" + System.getProperty("line.separator")
+					+ "ì‚¼ì‚¼í•˜ê°œ ë¹„ë°€ë²ˆí˜¸ì°¾ê¸°(ë³€ê²½) ì¸ì¦ë²ˆí˜¸ëŠ” " + num + " ì…ë‹ˆë‹¤." + System.getProperty("line.separator"); // 
 
 			try {
 				MimeMessage message = mailSender.createMimeMessage();
 				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
 
-				messageHelper.setFrom(setfrom); // º¸³»´Â »ç¶÷ »ı·«½Ã ÀÛµ¿ ¾ÈÇÔ
-				messageHelper.setTo(tomail); // ¹Ş´Â»ç¶÷ ÀÌ¸ŞÀÏ
-				messageHelper.setSubject(title); // ¸ŞÀÏ Á¦¸ñÀº »ı·« °¡´É
-				messageHelper.setText(content); // ³»¿ë
+				messageHelper.setFrom(setfrom); 
+				messageHelper.setTo(tomail); 
+				messageHelper.setSubject(title);
+				messageHelper.setText(content); 
 
 				mailSender.send(message);
 			} catch (Exception e) {
@@ -95,12 +92,12 @@ public class HomeController {
 		/*
 		 * response.setContentType("text/html; charset=utf-8"); PrintWriter writer =
 		 * response.getWriter();
-		 * writer.println("<script>alert('ÀÌ¸ŞÀÏÀÌ ¹ß¼ÛµÇ¾ú½À´Ï´Ù. ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä'); </script>");
+		 * writer.println("<script>alert('ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¼ÛµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½'); </script>");
 		 * writer.flush();
 		 * 
 		 */
 
-	} //ºñ¹Ğ¹øÈ£ ÀÌ¸ŞÀÏÀÎÁõ
+	} //ë¹„ë°€ë²ˆí˜¸ ë©”ì¼ì¸ì¦
 
 	@RequestMapping(value = "/pw_set.me", method = RequestMethod.POST)
 	public String pw_set(@RequestParam(value="email_injeung") String email_injeung,
@@ -123,7 +120,7 @@ public class HomeController {
 			return "loginForm";
 		}
 		else {
-			System.out.println("ºñ¹øº¯°æ½ÇÆĞ"+ result);
+			System.out.println("pw_update"+ result);
 			return "pw_new";
 		}
 	}
@@ -134,27 +131,27 @@ public class HomeController {
 		return "loginForm";
 	}
 	
-	//Ä«Ä«¿À·Î±×ÀÎ
+	//ì¹´ì¹´ì˜¤ë¡œê·¸ì¸
 	@RequestMapping(value = "/kkoLogin.me")
 	public String kko_Join(MemberVO mvo, Model model, RedirectAttributes redi_attr) {
-		System.out.println("ÀÌ¸ŞÀÏ: " + mvo.getEmail() + "´Ğ³×ÀÓ : " + mvo.getNick());
+		System.out.println("k email: " + mvo.getEmail() + "k nick : " + mvo.getNick());
 		
 		if(memberSV.selectMember(mvo.getEmail()) == null) {
-			mvo.setGrade("Ä«Ä«¿À");
+			mvo.setGrade("ì¹´ì¹´ì˜¤");
 			model.addAttribute("MemberVO", mvo);
 			return "joinForm";
 		}
 		else {
 			redi_attr.addAttribute("email", mvo.getEmail());
-			System.out.println("¸®´ÙÀÌ·ºÆ® :"+ redi_attr.getAttribute("email"));
+			System.out.println("k email :"+ redi_attr.getAttribute("email"));
 			return "redirect:/login.me";
 			}
 	}
 	
-	//Ä«Ä«¿À°èÁ¤ È¸¿ø°¡ÀÔ
+	//ì¹´ì¹´ì˜¤ íšŒì›ê°€ì…
 	@RequestMapping(value = "/kkoJoin.me")
 	public String kko_joinProcess(MemberVO mvo) {
-		System.out.println("Ä«Ä«¿ÀÈ¸¿ø°¡ÀÔ" + mvo.getGrade());
+		System.out.println("íšŒì›ë¶„ë¥˜" + mvo.getGrade());
 		int res = memberSV.joinMember(mvo);
 		if(res == 1) {
 			return "loginForm";
@@ -166,8 +163,8 @@ public class HomeController {
 	
 	@RequestMapping(value = "/login.me")
 	public String userCheck(@RequestParam("email") String email, MemberVO vo, HttpSession session) throws Exception {
-		System.out.println("·Î±×ÀÎ ÀÌ¸ŞÀÏ "+vo.getEmail());
-		System.out.println("·Î±×ÀÎ ºñ¹Ğ¹øÈ£ "+vo.getPw());
+		System.out.println("ë¡œê·¸ì¸ ì•„ì´ë”” "+vo.getEmail());
+		System.out.println("ë¡œê·¸ì¸ ë¹„ë²ˆ"+vo.getPw());
 		
 		if(vo.getEmail().equals("admin")) {
 			session.setAttribute("id", vo.getEmail());
@@ -177,7 +174,7 @@ public class HomeController {
 		}
 		
 		MemberVO res = memberSV.selectMember(vo.getEmail());
-		if(res.getGrade().equals("Ä«Ä«¿À")) {
+		if(res.getGrade().equals("ì¹´ì¹´ì˜¤")) {
 			session.setAttribute("email", res.getEmail());
 			Biz_memberVO bo = memberSV.selectBizMember(vo.getEmail());
 			if(bo != null) {
@@ -194,7 +191,7 @@ public class HomeController {
 			System.out.println("session id :" +session.getAttribute("id"));
 			System.out.println("session email :" +session.getAttribute("email"));
 			
-			//»ç¾÷ÀÚÈ¸¿øÀÎÁö È®ÀÎ
+			//ì‚¬ì—…ìíšŒì›í™•ì¸
 			Biz_memberVO bo = memberSV.selectBizMember(vo.getEmail());
 			if(bo != null) {
 				if(bo.getStatus() == 0) {
@@ -214,8 +211,8 @@ public class HomeController {
 
 	@RequestMapping(value = "/myinfo_member.me")
 	public String myinfo_member(MemberVO vo, HttpSession session, Model model) throws Exception {
-		System.out.println("·Î±×ÀÎ ÀÌ¸ŞÀÏ "+vo.getEmail());
-		System.out.println("·Î±×ÀÎ ºñ¹Ğ¹øÈ£ "+vo.getPw());
+		System.out.println("myinfo id "+vo.getEmail());
+		System.out.println("myinfo pw"+vo.getPw());
 		
 		MemberVO res = memberSV.selectMember(vo.getEmail());
 				
@@ -239,7 +236,7 @@ public class HomeController {
 			memberSV.updateMember(vo);
 			result.put("res", "OK");
 		}catch(Exception e) {
-			System.out.println("update ¿¡·¯ : " + e.getMessage());
+			System.out.println("update member : " + e.getMessage());
 			result.put("res", "FAIL");
 			result.put("message", "Failure");
 		}
@@ -266,10 +263,9 @@ public class HomeController {
 		try {
 				String biz_com1 = memberSV.check_auth(bo);
 				String biz_com = bo.getBiz_com();
-				//ÀÔ·ÂÇÑ »ç¾÷Àå¸í°ú ·ÎÄÃµ¥ÀÌÅÍ»ó Çã°¡¹øÈ£·Î Á¶È¸ÇßÀ»¶§ È®ÀÎµÇ´Â »ç¾÷Àå¸í ÀÏÄ¡ÇÏ´ÂÁö È®ÀÎ
-				//ÀÔ·ÂµÈ Çã°¡¹øÈ£·Î ÀÎÁõµÈ db°¡ ÀÖ´ÂÁö È®ÀÎ
+				
 				if(biz_com1.equals(biz_com)) {
-					System.out.println("biz_com : "+ biz_com1 + "ÀÔ·ÂµÈ »ç¾÷Àå¸í :"+bo.getBiz_com());
+					System.out.println("biz_com : "+ biz_com1 + "ì…ë ¥í•œì‚¬ì—…ì¥ :"+bo.getBiz_com());
 					res = memberSV.selectBiz_no(bo.getBiz_no());
 					if(res == 0) {
 					result.put("res", "OK");
@@ -282,7 +278,7 @@ public class HomeController {
 				}
 								
 		}catch(Exception e) {
-			System.out.println("biz_check ¿¡·¯ : " + e.getMessage());
+			System.out.println("biz_check error : " + e.getMessage());
 			result.put("res", "FAIL");
 			result.put("message", "Failure");
 		}
@@ -302,13 +298,12 @@ public class HomeController {
 		MemberVO vo = memberSV.selectMember(biz.getBiz_email());
 		
 		String uploadPath = "C:\\Project\\upload\\";
-		//ÁöÁ¤ÇÑÁÖ¼Ò¿¡ ÆÄÀÏ ÀúÀå        
-		if(mf.getSize() != 0) {//Ã·ºÎµÈ ÆÄÀÏ ÀÖÀ»¶§
-        	// ÆÄÀÏ È®ÀåÀÚ¸¦ ÃßÃâÇÏ´Â °úÁ¤
+
+		if(mf.getSize() != 0) {
     		String originalFileExtension = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
     		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
             //mf.transferTo(new File(uploadPath+"/"+mf.getOriginalFilename()));     
-        	mf.transferTo(new File(uploadPath + mf.getOriginalFilename())); // ¿¹¿ÜÃ³¸® ±â´É ÇÊ¿äÇÔ. transferTo ½ÇÁúÀû ¾÷·Îµå(¼­¹ö·Î Àü´Ş)
+        	mf.transferTo(new File(uploadPath + mf.getOriginalFilename())); //  transferTo
         	biz.setBiz_img(mf.getOriginalFilename());
         	biz.setBiz_add(vo.getLocal());
         	biz.setBiz_name(vo.getName());
@@ -316,21 +311,20 @@ public class HomeController {
 
         	int result = memberSV.pre_insertBiz(biz);
         	int res = memberSV.pre_updateBiz(biz.getBiz_email());
-    		System.out.println("form µ¥ÀÌÅÍ È®ÀÎ : ÆÄÀÏ " + biz.getBiz_img() + "»ç¾÷ÀÚ¸í : " + biz.getBiz_com()+"Çã°¡¹øÈ£ : "+ biz.getBiz_no()+ "ÀÌ¸ŞÀÏ : "+ biz.getBiz_email());
     		
         	if(result == 1) {
         		return "myinfo_already";
         	}else {
         		return "myinfo_auth";
         	}
-		}else { //Ã·ºÎµÈ ÆÄÀÏÀÌ ¾øÀ»¶§
-			System.out.println("pre_auth : Ã·ºÎÆÄÀÏ¾øÀ½");  
+		}else { 
+			System.out.println("pre_auth error");  
 			
         	return "myinfo_auth";
 		}
 		
 		}catch(Exception e) {
-			System.out.println("pre_auth ¿¡·¯: ÆÄÀÏ¾øÀ½" + e.getMessage());
+			System.out.println("pre_auth error:" + e.getMessage());
 			return "myinfo_auth";
 		}
 	} 
@@ -338,17 +332,14 @@ public class HomeController {
 	public String cominfo_main(HttpSession session, Model model) {
 		String email = (String)session.getAttribute("email");
 		
-		//ÀÌ¿ë±Ç °¹¼ö °¡Á®¿À±â, ºĞ¾ç±Û °¡Á®¿À±â
 		MemberVO mvo = memberSV.selectMember(email);
 		Biz_memberVO vo = memberSV.selectBizMember(email);
 		System.out.println("vo.getfree_coupon :" + vo.getFree_coupon());
 		ArrayList<Adopt_BoardVO> bvo = memberSV.getMyAdopt(email);
-		System.out.println("ºĞ¾ç±Ûo¤»");
 		
 		ArrayList<Adopt_BoardVO> new_bvo = new ArrayList<Adopt_BoardVO>();
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		
-		//°Ô½Ã±Û¹øÈ£¿¡ ´ëÇÑ ´ñ±Û Ä«¿îÆ® 
 		for(Adopt_BoardVO bo : bvo) {
 			int res = memberSV.getMyAdoptReply(bo.getAdopt_no());
 			map.put(bo.getAdopt_no(), res);

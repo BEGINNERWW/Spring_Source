@@ -99,7 +99,7 @@ public class AdminController {
 	@ResponseBody
 	public ArrayList<MemberVO> search_member(@RequestBody Search_paramsVO svo) {
 		System.out.println("date:" + svo.getFromDate() + "to" + svo.getToDate());
-		System.out.println("�з�1:" + svo.getMember_grade() + "�з�2:" + svo.getMember_grade1() + svo.getMember_grade2()+svo.getMember_grade3());
+		System.out.println("분류1:" + svo.getMember_grade() + "분류2:" + svo.getMember_grade1() + svo.getMember_grade2()+svo.getMember_grade3());
 		System.out.println("keyword:"+svo.getKeyword());
 		ArrayList<MemberVO> mvo = adminSV.serach_member(svo);
 		
@@ -110,7 +110,7 @@ public class AdminController {
 	@ResponseBody
 	public Map<String,Object> member_detail(@RequestBody String Jemail) {
 		String email = Jemail.substring(Jemail.indexOf("\"")+1, Jemail.lastIndexOf("\""));
-		System.out.println("���޹��� email : "+ email);
+		System.out.println("전달받은email : "+ email);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		MemberVO mvo = memberSV.selectMember(email);
@@ -136,7 +136,7 @@ public class AdminController {
 	@ResponseBody
 	public Map<String, Integer> auth_confirm(@RequestBody String Jemail) {
 		String email = Jemail.substring(Jemail.indexOf("\"")+1, Jemail.lastIndexOf("\""));
-		System.out.println("���޹��� email : "+ email);
+		System.out.println("전달받은email : "+ email);
 		
 		Map<String,Integer> map = new HashMap<String, Integer>();
 		int mem_update = adminSV.update_confirm(email);
@@ -150,7 +150,7 @@ public class AdminController {
 	@ResponseBody
 	public Map<String, Integer> auth_return(@RequestBody String Jemail) {
 		String email = Jemail.substring(Jemail.indexOf("\"")+1, Jemail.lastIndexOf("\""));
-		System.out.println("���޹��� email : "+ email);
+		System.out.println("전달받은email : "+ email);
 		
 		Map<String,Integer> map = new HashMap<String, Integer>(); 
 		int res = adminSV.auth_return(email);
