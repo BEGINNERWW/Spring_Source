@@ -31,7 +31,7 @@ public class AdminController {
 	@RequestMapping(value = "/test.me")
 	public String test() {
 		
-		return "NewFile";
+		return "NewFile1";
 	}
 	
 	@RequestMapping(value = "/todo_select.do", produces="application/json; charset=UTF-8")
@@ -92,14 +92,14 @@ public class AdminController {
 	@RequestMapping(value = "/admin_main.me")
 	public String admin_main() {
 		
-		return "NewFile";
+		return "admin_member";
 	}
 	
 	@RequestMapping(value = "/search_member.do" , produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public ArrayList<MemberVO> search_member(@RequestBody Search_paramsVO svo) {
 		System.out.println("date:" + svo.getFromDate() + "to" + svo.getToDate());
-		System.out.println("ºÐ·ù1:" + svo.getMember_grade() + "ºÐ·ù2:" + svo.getMember_grade1() + svo.getMember_grade2()+svo.getMember_grade3());
+		System.out.println("ï¿½Ð·ï¿½1:" + svo.getMember_grade() + "ï¿½Ð·ï¿½2:" + svo.getMember_grade1() + svo.getMember_grade2()+svo.getMember_grade3());
 		System.out.println("keyword:"+svo.getKeyword());
 		ArrayList<MemberVO> mvo = adminSV.serach_member(svo);
 		
@@ -110,7 +110,7 @@ public class AdminController {
 	@ResponseBody
 	public Map<String,Object> member_detail(@RequestBody String Jemail) {
 		String email = Jemail.substring(Jemail.indexOf("\"")+1, Jemail.lastIndexOf("\""));
-		System.out.println("Àü´Þ¹ÞÀº email : "+ email);
+		System.out.println("ï¿½ï¿½ï¿½Þ¹ï¿½ï¿½ï¿½ email : "+ email);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		MemberVO mvo = memberSV.selectMember(email);
@@ -136,7 +136,7 @@ public class AdminController {
 	@ResponseBody
 	public Map<String, Integer> auth_confirm(@RequestBody String Jemail) {
 		String email = Jemail.substring(Jemail.indexOf("\"")+1, Jemail.lastIndexOf("\""));
-		System.out.println("Àü´Þ¹ÞÀº email : "+ email);
+		System.out.println("ï¿½ï¿½ï¿½Þ¹ï¿½ï¿½ï¿½ email : "+ email);
 		
 		Map<String,Integer> map = new HashMap<String, Integer>();
 		int mem_update = adminSV.update_confirm(email);
@@ -150,7 +150,7 @@ public class AdminController {
 	@ResponseBody
 	public Map<String, Integer> auth_return(@RequestBody String Jemail) {
 		String email = Jemail.substring(Jemail.indexOf("\"")+1, Jemail.lastIndexOf("\""));
-		System.out.println("Àü´Þ¹ÞÀº email : "+ email);
+		System.out.println("ï¿½ï¿½ï¿½Þ¹ï¿½ï¿½ï¿½ email : "+ email);
 		
 		Map<String,Integer> map = new HashMap<String, Integer>(); 
 		int res = adminSV.auth_return(email);

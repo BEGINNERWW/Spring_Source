@@ -40,9 +40,26 @@
 	<div class ="nav-menu">
 	<ul class = "sticky-wrapper">
 		<li><a href ="#">HOME</a></li>
-		<li><a href ="#">분양</a></li>
-		<li><a href ="#">보호소</a></li>
-		<li><a href ="#">커뮤니티</a></li>
+		<li class = "dropdown"><a href ="#">분양</a>
+			<ul class ="dropdown-menu">
+				<li><a href="#">가정분양</a></li>
+				<li><a href="#">책임분양</a></li>
+				<li><a href="#">업체분양</a></li>
+			</ul>
+		</li>	
+		<li class = "dropdown"><a href ="#">보호소</a>
+			<ul class ="dropdown-menu">
+				<li><a href="#">보호소</a></li>
+				<li><a href="#">파양</a></li>
+				<li><a href="#">실종</a></li>
+			</ul>
+		</li>	
+		<li class = "dropdown"><a href ="#">커뮤니티</a>
+			<ul class ="dropdown-menu">
+				<li><a href="#">자유게시판</a></li>
+				<li><a href="#">책임분양인증</a></li>
+			</ul>
+		</li>
 	</ul>
 	<div class= "search-wrapper">
       <input class="search-box input" type="text" placeholder="Search">

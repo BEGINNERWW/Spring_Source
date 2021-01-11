@@ -99,7 +99,22 @@ a{
 	position: fixed;
     top: 0px;
 }
-
+/* dropdown */
+.dropdown-menu{
+	display: none;
+   	justify-content : flex-start;
+	position: absolute;
+	list-style : none;
+    visibility: visible;
+    background-color: #9494b8;
+	width: 100%;
+	top : 55px;
+	padding: 5px;
+}
+.dropdown-menu li{
+	margin-right : 40px;
+}
+.dropdown:hover .dropdown-menu { display: flex; visibility: visible;}
 /* search-wrapper */
 .search-wrapper {
   margin-right : 400px;

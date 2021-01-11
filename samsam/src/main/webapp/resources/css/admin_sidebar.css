@@ -40,6 +40,7 @@ body::-webkit-scrollbar { display:none; }
 a{
 	display : block;
 	text-decoration : none;
+	color : black;
 }
 span {
 	display:
