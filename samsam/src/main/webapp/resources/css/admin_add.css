@@ -1,5 +1,5 @@
 @charset "UTF-8";
-
+/*update*/
 .content{
     margin-top : 40px;
     margin-left : 50px;
@@ -95,7 +95,6 @@ a[href="javascript:void(0);"]{
 	height : 50px;
 	background-color : #FFF;
 	border-top: 1px solid #eeeeee;
-	border-bottom: 1px solid #eeeeee;
     border-collapse: collapse;
     font-size : 0.9em;
 }
@@ -109,6 +108,21 @@ input {
     display: block;
     width:250px;
     height : 40px;
+}
+.tb-bottom{
+	text-align : right;
+}
+.before-btn, .after-btn{
+	margin: 10px;
+    width:60px;
+    height : 30px;
+    background-color: #eeeeee;
+    color : black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    border-radius : 5px; 
 }
 /* 검색결과 테이블 끝 */
 
@@ -162,7 +176,7 @@ input {
 	font-size : 0.9em;
 }
 
-.modal tr,td {
+.modal tr, .modal td {
 	border-bottom : 1px solid #eeeeee;
 	height : 45px;
 	text-align : center;

@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
 	$("#check").click(function(event) { //정적데이터는 이벤트 처리를 바로 가능하나 동적이면 on을 사용하여 처리
@@ -54,6 +53,11 @@ $(document).ready(function() {
 						$('#result').html($('#result').html()+'<tr><td><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'">' + item.grade+'</td></a><td class="email"><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'">' + item.email +'</td></a><td><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'">' + item.nick +'</td></a><td><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'">' + item.local + '</td></a><td><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'">'
 								 + item.signdate + '</td></a><td><a href="javascript:void(0);" onclick="member_detail(this);" value = "'+ item.email+'">' + item.wcount +'</td></a></tr>')
 					});
+					
+					var app = "<tr><td class='tb-bottom' colspan = 6><input type='button' class ='before-btn' value = '이전'><input type='button' class = 'after-btn' value = '다음'></td></tr>"
+					$("#result").append(app);
+					$("#result").slice(10).hide();
+
 				},
 				error : function() {
 						alert("ajax 통신 실패!!!");
@@ -64,6 +68,27 @@ $(document).ready(function() {
 	});
 	
 }); //레디
+var count = 10;
+
+$(document).on("click", ".before-btn",function(event) {
+	if(count > 10){
+		count -= 10
+		$("#result").slice(0,count).show();
+	}
+	else{
+		swal("","첫 페이지 입니다.","info")
+	}
+});
+
+$(document).on("click", ".after-btn",function(event) {
+	count += 10
+	$("#result").slice(0,count).show();
+	if($("#result").length <= count){
+		console.log($("#result").length)
+		swal("","마지막 페이지 입니다.","info")
+	}
+});
+
 
 function member_detail(obj) {
 	

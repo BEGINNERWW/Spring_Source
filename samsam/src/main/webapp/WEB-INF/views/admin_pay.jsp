@@ -29,11 +29,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300&display=swap" rel="stylesheet">
 <!-- 어드민페이지 -->
 <link href="resources/css/admin_sidebar.css" rel="stylesheet">
+<link href="resources/css/admin_pay.css" rel="stylesheet">
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script src="resources/js/adminPage.js"></script>
+<!-- 스윗얼럿 -->
+<script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+var count = 20;
+
+$(document).on("click", ".before-btn",function(event) {
+	if(count > 20){
+		count -= 20
+		$(".payed").slice(0,count).show();
+	}
+	else{
+		swal("","첫 페이지 입니다.","info")
+	}
+});
+
+$(document).on("click", ".after-btn",function(event) {
+	count += 20
+	$(".payed").slice(0,count).show();
+	if($(".payed").length <= count){
+		console.log($("#result").length)
+		swal("","마지막 페이지 입니다.","info")
+	}
+});
+</script>
 </head>
 <body>
 <div class ="body_content">
@@ -71,19 +96,21 @@
 <div class = "main_content">
 <!-- 메인컨텐트 -->
 <div class="content">
-<table>
+<h3>이용권관리 > 이용권 결제내역</h3>
+<table class="paylist">
+<thead>
 <tr>
 <td>번호</td><td>아이디</td><td>결제상태</td><td>결제일</td>
 </tr>
+</thead>
 <%
 System.out.println("plist :" + plist);
 if(!plist.isEmpty()){
 	for(Payed_listVO pay : plist){
 		if(pay.getMerchant_uid() == null){
-%>
-<tr><td colspan = 4> 전체 조회결과, 결제내역이 존재하지 않습니다 </td></tr>
-<% } %>
-<tr>
+ } %>
+<tbody>
+<tr class = "payed">
 	<td><%=pay.getMerchant_uid() %></td>
 	<td><%=pay.getBiz_email() %></td>
 	<td><%=pay.getRefund() %></td>
@@ -92,6 +119,12 @@ if(!plist.isEmpty()){
 <% }} else{%>
 <tr><td colspan = "4"> 전체 조회결과, 결제내역이 존재하지 않습니다 </td></tr>
 <% } %>
+<tr><td class="tb-bottom" colspan = "4">
+	<input type='button' class ='before-btn' value = '이전'>
+	<input type='button' class = 'after-btn' value = '다음'>
+	</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div><!-- 메인컨텐트 -->
