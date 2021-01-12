@@ -19,6 +19,7 @@
 <!-- 어드민페이지 -->
 <link href="resources/css/admin_sidebar.css" rel="stylesheet" >
 <link href="resources/css/admin_add.css" rel="stylesheet" >
+<link href="resources/css/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
 
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
@@ -27,10 +28,18 @@
 <!-- js -->
 <script type="text/javascript" src="resources/js/adminPage.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/admin_member.js" charset="UTF-8"></script>
-
+<script type="text/javascript" src="resources/js/datepicker.js" charset="UTF-8"></script> <!-- Air datepicker js -->
+<script type="text/javascript" src="resources/js/datepicker.ko.js" charset="UTF-8"></script> <!-- Air datepicker js -->
 <!-- 모달 플러그인 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script>
+    $("#fromDate").datepicker({
+    });
+    
+    $("#toDate").datepicker({
+    }); 
+</script>
 </head>
 <body>
 <div class ="body_content">
@@ -72,7 +81,7 @@
 <div class="search">
 	<div class = "condition">
 	<div class="date">
-	일자&nbsp;&nbsp; <input id="fromDate" type="text"> - 	<input id="toDate" type="text">
+	일자&nbsp;&nbsp; <input id="fromDate" type="text">&nbsp; - &nbsp; <input id="toDate" type="text">
 	</div>
 	<div class="member">
 	분류

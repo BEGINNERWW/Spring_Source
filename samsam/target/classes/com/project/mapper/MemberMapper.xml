@@ -130,7 +130,7 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 	select grade, email, nick, local, signdate, wcount from member_list 
 	where 1 = 1
 		<if test ="fromDate != null and fromDate != '' and toDate != null and toDate !=''">
-			and signdate between TO_DATE(#{fromDate},'YYYYMMDD') and TO_DATE(#{toDate},'YYYYMMDD')+0.9999
+			and signdate between TO_DATE(#{fromDate},'YYYY-MM-DD') and TO_DATE(#{toDate},'YYYY-MM-DD')+0.9999
 		</if>
 		<if test = "(member_grade != null and member_grade != '') or (member_grade1 != null and member_grade1 !='' )or (member_grade2 != null and member_grade2 !='' )or (member_grade3 != null and member_grade3 !='')">
 			AND grade in(#{member_grade}, #{member_grade1}, #{member_grade2}, #{member_grade3})
