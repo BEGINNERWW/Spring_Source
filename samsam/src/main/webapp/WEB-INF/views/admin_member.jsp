@@ -30,6 +30,8 @@
 <script type="text/javascript" src="resources/js/admin_member.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/datepicker.js" charset="UTF-8"></script> <!-- Air datepicker js -->
 <script type="text/javascript" src="resources/js/datepicker.ko.js" charset="UTF-8"></script> <!-- Air datepicker js -->
+<!-- 스윗얼럿 -->
+<script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- 모달 플러그인 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
@@ -39,6 +41,27 @@
     
     $("#toDate").datepicker({
     }); 
+
+var count = 20;
+
+$(document).on("click", ".before-btn",function(event) {
+	if(count > 20){
+		count -= 20
+		$(".payed").slice(0,count).show();
+	}
+	else{
+		swal("","첫 페이지 입니다.","info")
+	}
+});
+
+$(document).on("click", ".after-btn",function(event) {
+	count += 20
+	$(".payed").slice(0,count).show();
+	if($(".payed").length <= count){
+		console.log($("#result").length)
+		swal("","마지막 페이지 입니다.","info")
+	}
+});
 </script>
 </head>
 <body>
