@@ -11,8 +11,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>분양게시판</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="resources/img/title.png" rel="shortcut icon" type="image/x-icon">
+<title>삼삼하개</title>
 
 <!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -24,7 +25,9 @@
 
 <!-- 부트스트랩 4.0 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+<!-- 제이쿼리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<link href="resources/css/my_check.css" rel="stylesheet">
 <style>
 /* 공통으로 사용하는 CSS */
 @charset "utf-8";
@@ -35,8 +38,8 @@
 html{
 	margin:0 auto;
 	width : 100%;
-	height: 100%;
-    overflow: hidden;
+	height: 200%;
+    overflow: auto;
 }
 a:hover {
     color: #0056b3;
@@ -44,10 +47,9 @@ a:hover {
 }
 body {
 	margin: 0;
-	height: 100vh;
+	height: 200%;
     min-height : 600px;
     box-sizing : content-box;
-   
 	line-height: 1.7;
     color: gray;
    	font-family: 'Noto Sans KR', sans-serif;
@@ -63,6 +65,9 @@ a{
 
 body {
 	text-align: -webkit-center;
+	display : flex;
+	flex-direction : column;
+	justify-content : space-between;
 }
 
 .body_content{
@@ -82,15 +87,27 @@ body {
     flex-direction: column;
     border-bottom: 1px solid #efefef;
     padding-bottom: 20px;
-}
-.inout_gocen{
-	position: fixed; 
-	top : 20px;
-	right : 390px;
+    background-color : #fff;
+    position : fixed;
+   	z-index : 10000;
+    top : 0;
+    left : 0;
+    right : 0;
 }
 
+.inout_gocen{
+	position : inline;
+	display : flex;
+	justify-content : flex-end;
+	margin-top : 20px;
+	margin-right : 340px;
+	background-color : #fff;
+}
+.fixinner{
+	position: fixed; 
+}
 .header-top {
-	margin-top : 40px;
+	margin-top : -10px;
 	display : flex;
 	justify-content : flex-start;
 	margin-right: auto;
@@ -165,17 +182,20 @@ li.dropdown {
 	position: absolute;
 	list-style : none;
     visibility: visible;
-    background-color: rgb(0,0,0,0);
-	width: 350px;
-	top : 48px;
-	padding: 5px;
+    background-color: #fff;
+	width: 1200px;
+	top : 52px;
+	margin-left : -30px;
+	padding-left: 20px;
 	border: none;
 }
 .dropdown-menu li{
 	margin-right : 40px;
 }
-.dropdown:hover .dropdown-menu { display: flex; visibility: visible;}
-
+.dropdown:hover .dropdown-menu { 
+	display: flex; 
+	visibility: visible; 
+}
 
 /* search-wrapper */
 .search-wrapper {
@@ -215,12 +235,12 @@ li.dropdown {
 }
 
 
+
 /* footer */
 #footer{
 	margin : -15px auto;
 	width: 100%;
   	bottom : 44px;
-	position: sticky;
 }
 p{
 	text-align : center;
@@ -267,7 +287,6 @@ p{
 	margin: 0 auto;
 	position: relative;
 	top: 50px;
-	
 }
 /* side menu 틀*/
 .sidemenu-section {
@@ -280,6 +299,8 @@ p{
     border-right: 1px solid #efefef;
     padding: 0px 0px 0 0;
     margin-left: 0;
+    margin-top : 210px;
+    position : fixed;
 }
 
 /* 내용 틀*/
@@ -290,7 +311,7 @@ p{
     left: 200px;
     text-align: left;
     font-size: 14px;
-    margin-top: 3px;
+    margin-top: 213px;
     color: black;
     margin-left: 50px;
 }
@@ -323,30 +344,30 @@ li.list-group-item.click > a {
 <header id = "header">
 
 	<div class ="inout_gocen">
-			<input type="button" class= "header_btn" id="login" value="로그인">
-			<input type="button" class= "header_btn" id="logout" value="로그아웃">
-			<input type="button" class= "header_btn" id="signin" value="회원가입">
-			<input type="button" class= "header_btn" id="mypage" value="마이페이지">
-			<input type="button" class= "header_btn" id="gocen" value="고객센터">
+			<input type="button" class= "header_btn" id="login" value="로그인" onclick ="location.href='loginForm.me'">
+			<input type="button" class= "header_btn" id="logout" value="로그아웃" onclick ="location.href='home.me'">
+			<input type="button" class= "header_btn" id="signin" value="회원가입" onclick ="location.href='joinform.me'">
+			<input type="button" class= "header_btn" id="mypage" value="마이페이지" onclick ="location.href='myfree_auth.me'">
+			<input type="button" class= "header_btn" id="gocen" value="고객센터" onclick ="location.href='customer_service.me'">
 		</div>
 	
 	<div class="nav-menu">
 				<ul class="sticky-wrapper">
 					<li class="dropdown"><a href="main.me">HOME</a></li>
 					<li class="dropdown"><a href="board.me">분양</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu board">
 							<li><a href="#">&nbsp;&nbsp;가정분양</a></li>
 							<li><a href="#">책임분양</a></li>
 							<li><a href="#">업체분양</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="care.me">보호소</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu care">
 							<li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;보호소</a></li>
 							<li><a href="#">파양</a></li>
 							<li><a href="#">실종</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="community.me">커뮤니티</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu comm">
 							<li><a href="#">&nbsp;자유게시판</a></li>
 							<li><a href="#">책임분양인증</a></li>
 						</ul></li>
@@ -364,6 +385,7 @@ li.list-group-item.click > a {
       <button class="search-box btn" type="button"><i class="fas fa-search"></i></button>
 	</div>
 	</div><!-- nav-menu -->
+	<div class ="blank"></div>
 </header>
 		
 		<div class="main-content">
@@ -372,15 +394,37 @@ li.list-group-item.click > a {
 			<!-- 왼쪽. 서브메뉴가 들어갈 부분 -->
 			<div class="sidemenu-section">
 			<ul class="list-group list-group-flush">
-				<li class="list-group-item click"><a href="/">가정분양</a></li>
-				<li class="list-group-item"><a href="/">책임분양</a></li>
-				<li class="list-group-item"><a href="/">업체분양</a></li>
+				<li class="list-group-item"><a href="myinfo_check.me">회원정보</a></li>
+				<li class="list-group-item click"><a href="#">작성글관리</a></li>
+				<li class="list-group-item"><a href="myfree_auth.me">책임분양관리</a></li>
+				<li class="list-group-item"><a href="myinfo_auth.me">판매허가번호인증</a></li>
 			</ul>
 			</div>
 			
 			<!-- 오른쪽. 내용이 들어갈 부분 -->
 			<div class="content-section">
 				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				<h2>가정분양</h2>
+				
 			</div>
 			
 			
@@ -411,26 +455,35 @@ li.list-group-item.click > a {
 </footer>
 
 
-<!-- 제이쿼리 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script>
 $(document).ready(function(){
-	$('#login').on('click', function(e){
-	      $('#logout').show();
+	console.log("<%= email %>")
+	var session = '<%= email %>'
+	console.log(session);
+	if(session != null || session != ''){
+		  $('#logout').show();
 		  $('#mypage').show();
 		  $('#login').hide();
 		  $('#signin').hide();
-	  });
-	}) //헤더 상단 로그인 체인지
-
-	$(document).ready(function(){
-	$('#logout').on('click', function(e){
+	} //헤더 상단 로그인상태 일때
+	else{
 	       $('#logout').hide();
 		   $('#mypage').hide();
 		   $('#login').show();
 		   $('#signin').show();
-		});
-	}) //헤더 상단 로그아웃 체인지
+	}; //헤더 상단 로그아웃상태 일때 
+}); 
+
+$(window).scroll(function(){ 
+    var height = $(document).scrollTop(); //실시간으로 스크롤의 높이를 측정
+    if(height > 190){ 
+      $('#header').addClass('fixinner'); 
+
+    }else if(height == 0){ 
+      $('#header').removeClass('fixinner'); 
+    } 
+  });
+ 
 </script>
 
 <!-- 부트스트랩 4.0 js -->

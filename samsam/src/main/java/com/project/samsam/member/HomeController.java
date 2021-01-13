@@ -223,7 +223,7 @@ public class HomeController {
 			model.addAttribute("MemberVO", res);
 			return "myinfo_member";
 		}else {
-			return "loginForm";
+			return "myinfo_check";
 		}
 	}	
 	
