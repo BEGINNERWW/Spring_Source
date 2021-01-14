@@ -32,7 +32,7 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>pw_find.me</welcome-file>
+		<welcome-file>test.me</welcome-file>
 	</welcome-file-list>
 
 	<!-- Korean Filter -->

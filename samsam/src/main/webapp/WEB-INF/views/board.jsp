@@ -1,19 +1,20 @@
-<%@ page language = "java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-	String email = (String) session.getAttribute("email");
+	String email = (String)session.getAttribute("email");
 	//email.toUpperCase();
+
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="resources/img/title.png" rel="shortcut icon" type="image/x-icon">
-<title>삼삼하개</title>
+<meta charset="utf-8">
+<title>마이페이지 책임분양 관리</title>
 
 <!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -25,9 +26,11 @@
 
 <!-- 부트스트랩 4.0 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<link href="resources/css/my_check.css" rel="stylesheet">
+
+
 <style>
 /* 공통으로 사용하는 CSS */
 @charset "utf-8";
@@ -254,12 +257,13 @@ li.dropdown > a {
 
 /* footer */
 #footer {
-    margin: 0 auto;
+    margin: 0;
     width: fit-content;
-    bottom: 20px;
-    position: relative;
+    bottom: 55px;
+    position: absolute;
+    left: 50%;
+    margin-left: -336px;
 }
-
 p{
    text-align : center;
 }
@@ -328,8 +332,8 @@ p{
 .content-section {
     width: 1001px;
     height: max-content;
-    position: relative;
-    left: 100px;
+    position: absolute;
+    left: 199px;
     text-align: left;
     font-size: 14px;
     margin-top: 0px;
@@ -339,10 +343,10 @@ p{
     border-left-color: darkblue;
     border-left: 1px solid #efefef;
     padding-left: 50px;
-    padding-right: 0;
     min-height: 940px;
     padding-top: 200px;
 }
+
 
 /* 각각의 페이지에서 사용할 CSS */
 .list-group {
@@ -367,6 +371,12 @@ li.list-group-item.click > a {
 	text-decoration : none;
 	}
 
+/* 프로필 사진  */
+.profile {
+    text-align: center;
+}
+
+
 
 </style>
 
@@ -376,12 +386,13 @@ li.list-group-item.click > a {
 <header id = "header">
 
 	<div class ="inout_gocen">
-			<input type="button" class= "header_btn" id="login" value="로그인" onclick ="location.href='loginForm.me'">
-			<input type="button" class= "header_btn" id="logout" value="로그아웃" onclick ="location.href='home.me'">
-			<input type="button" class= "header_btn" id="signin" value="회원가입" onclick ="location.href='joinform.me'">
-			<input type="button" class= "header_btn" id="mypage" value="마이페이지" onclick ="location.href='myfree_auth.me'">
-			<input type="button" class= "header_btn" id="gocen" value="고객센터" onclick ="location.href='customer_service.me'">
+			<a href="loginForm.me"><input type="button" class= "header_btn" id="login" value="로그인"></a>
+			<a href="home.me"><input type="button" class= "header_btn" id="logout" value="로그아웃"></a>
+			<a href="joinForm.me"><input type="button" class= "header_btn" id="signin" value="회원가입"></a>
+			<a href="myfree_auth.me"><input type="button" class= "header_btn" id="mypage" value="마이페이지"></a>
+			<a href="customer_service.me"><input type="button" class= "header_btn" id="gocen" value="고객센터"></a>
 		</div>
+	
 	
 	<div class="nav-menu">
 				<ul class="sticky-wrapper">
@@ -399,12 +410,12 @@ li.list-group-item.click > a {
 							<li><a href="#">실종</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="community.me">커뮤니티</a>
-						<ul class="dropdown-menu comm">
+						<ul class="dropdown-menu commu">
 							<li><a href="#">&nbsp;자유게시판</a></li>
 							<li><a href="#">책임분양인증</a></li>
 						</ul></li>
 				</ul>
-	
+				
 	<div class="header-top">
 		<div class="mainlogo">
 		<a href="#">
@@ -412,12 +423,14 @@ li.list-group-item.click > a {
 		</a>
 		</div>
 	</div>
+	
+	
 	<div class= "search-wrapper">
       <input class="search-box input" type="text" placeholder="Search">
       <button class="search-box btn" type="button"><i class="fas fa-search"></i></button>
 	</div>
+	
 	</div><!-- nav-menu -->
-	<div class ="blank"></div>
 </header>
 		
 		<div class="main-content">
@@ -425,46 +438,33 @@ li.list-group-item.click > a {
 			
 			<!-- 왼쪽. 서브메뉴가 들어갈 부분 -->
 			<div class="sidemenu-section">
+			
 			<ul class="list-group list-group-flush">
-				<li class="list-group-item"><a href="myinfo_check.me">회원정보</a></li>
-				<li class="list-group-item click"><a href="#">작성글관리</a></li>
-				<li class="list-group-item"><a href="myfree_auth.me">책임분양관리</a></li>
-				<li class="list-group-item"><a href="myinfo_auth.me">판매허가번호인증</a></li>
+				<li class="list-group-item"><a href="/">회원정보</a></li>
+				<li class="list-group-item"><a href="/">작성글관리</a></li>
+				<li class="list-group-item click"><a href="/">책임분양관리</a></li>
+				<li class="list-group-item"><a href="/">판매허가번호인증</a></li>
 			</ul>
 			</div>
 			
 			<!-- 오른쪽. 내용이 들어갈 부분 -->
 			<div class="content-section">
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
-				<h2>가정분양</h2>
 				
-			</div>
+				
+			<div>내용 들어갈 부분</div>	
+				
+				
+				
+				
+				
 			
-			
-		</div>
 		<footer id="footer">
-		<p>Copyright ©2021 All rights reserved | This template is made with <i class="fas fa-heart"></i> by SamSam
-		</footer>
-		</div>
+			<div>Copyright ©2021 All rights reserved | This template is made with <i class="fas fa-heart"></i> by SamSam</div>
+		</footer>	
+			
+		  </div> <!-- content-section -->
+		</div> <!-- content-wrap -->
+	</div> <!-- main-content -->
 
 
 	<!-- 카카오톡 채널 상담 -->
@@ -482,37 +482,32 @@ li.list-group-item.click > a {
 	</div>
 	
 </div><!-- 바디컨텐트 -->
+	
+		
+
+
+
 
 <script>
 $(document).ready(function(){
-	console.log("<%= email %>")
-	var session = '<%= email %>'
-	console.log(session);
-	if(session != null || session != ''){
-		  $('#logout').show();
-		  $('#mypage').show();
-		  $('#login').hide();
-		  $('#signin').hide();
-	} //헤더 상단 로그인상태 일때
-	else{
-	       $('#logout').hide();
-		   $('#mypage').hide();
-		   $('#login').show();
-		   $('#signin').show();
-	}; //헤더 상단 로그아웃상태 일때 
+   console.log("<%= email %>")
+   var session = '<%= email %>'
+   console.log(session);
+   if(session != null || session != ''){
+        $('#logout').show();
+        $('#mypage').show();
+        $('#login').hide();
+        $('#signin').hide();
+   } //헤더 상단 로그인상태 일때
+   else{
+          $('#logout').hide();
+         $('#mypage').hide();
+         $('#login').show();
+         $('#signin').show();
+   }; //헤더 상단 로그아웃상태 일때 
 }); 
-
-$(window).scroll(function(){ 
-    var height = $(document).scrollTop(); //실시간으로 스크롤의 높이를 측정
-    if(height > 190){ 
-      $('#header').addClass('fixinner'); 
-
-    }else if(height == 0){ 
-      $('#header').removeClass('fixinner'); 
-    } 
-  });
- 
 </script>
+
 
 <!-- 부트스트랩 4.0 js -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -535,5 +530,8 @@ $(window).scroll(function(){
   //]]>
 </script>
 
+
+
+	
 </body>
 </html>

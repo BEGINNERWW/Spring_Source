@@ -1,0 +1,77 @@
+@charset "utf-8";
+
+.font{
+	text-algin : left;
+	margin-left : 20px; 
+	margin-bottom : 15px;
+}
+h6{
+	margin-left: 155px;
+	font-size : 0.8em;
+}
+.content {
+	width: 550px;
+	display: flex;
+	flex-direction: column;
+	justify-content : flex-start;
+}
+.font{
+	text-algin : left;
+	margin-left : 20px; 
+	margin-bottom : 15px;
+}
+#check {
+	width: 264px;
+	height: 48px;
+	margin : 20px;
+	border: 1px solid skyblue;
+	background-color: rgba(0, 0, 0, 0);
+	color: skyblue;
+	padding: 5px;
+	margin-left : 37px;
+	border-radius: 5px;
+	align-self: center;
+}
+
+#check:hover {
+	color: white;
+	background-color: skyblue;
+}
+
+input {
+	font-family: 'Noto Sans KR', sans-serif;
+	outline: 0;
+	display: block;
+	width : 500px;
+	height: 40px;
+	font-size: 1em;
+	border : 1px solid #efefef;
+	border-radius : 5px;
+}
+
+.textbox {
+	display: flex;
+	flex-direction : column;
+	align-items : left;
+	margin-left:80px;
+	padding: 20px 8px 4px 8px;
+	width: 500px;
+	font-size : 1em;
+	position: relative;
+	align-self: center;
+}
+
+.textbox > label{
+	text-align : left;
+}
+.textbox > input{
+	margin-left : auto;
+	padding-left : 10px;
+}
+.textbox input:focus {
+	border-bottom: solid 2px #bdbdbd;
+}
+#same{
+	margin-left : 220px;
+	
+}

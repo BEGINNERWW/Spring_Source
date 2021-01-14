@@ -1,0 +1,158 @@
+@charset "utf-8";
+
+.font{
+	text-algin : left;
+	margin-left : 20px; 
+	margin-bottom : 15px;
+}
+
+.content {
+	width: 550px;
+	display: flex;
+	flex-direction: column;
+	padding-left : 47px;
+}
+
+.textbox {
+    display: flex;
+    max-height: 60px;
+    padding: 20px 8px 4px 8px;
+    width: 450px;
+    height: 60px;
+    font-size: 1em;
+    position: relative;
+    align-self: center;
+}
+
+.textbox > input {
+    font-family: 'Noto Sans KR', sans-serif;
+	outline: 0;
+	border : 1px solid #efefef;
+	border-radius : 5px;
+	display: block;
+	width: 250px;
+	height: 40px;
+	font-size: 1em;
+	margin-left: auto;
+    padding-left: 10px;
+}
+
+#biz_com{
+	margin-right : 56px;
+}
+.auth {
+	width: 264px;
+	height: 48px;
+	margin : 20px;
+	border: 1px solid skyblue;
+	background-color: rgba(0, 0, 0, 0);
+	color: skyblue;
+	padding: 5px;
+	border-radius: 5px;
+	align-self: center;
+}
+
+.auth:hover {
+	color: white;
+	background-color: skyblue;
+}
+
+.textbox input:focus {
+	border-bottom: solid 2px #bdbdbd;
+}
+
+.textbox {
+	display: flex;
+	align-items: center;
+}
+
+.textbox input[type="button"] {
+	display: inline-block;
+	padding: .5em .75em;
+	width: 57px;
+	height: 41px;
+	margin: 0px;
+	color: #999;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+/*라벨디자인 첨부 */
+.textbox label[for="ex_filename"]{ 
+	display: inline-block;
+	padding: .5em .75em;
+	color: #999;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	width: 57px;
+    height: 41px;
+    margin : 0;
+    text-align: center;
+}
+/*파일필드 숨기기*/
+.textbox input[type="file"] { 
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.textbox[name="button_1"] label[for="biz_img"] {
+	display: inline-block;
+	padding: .5em .15em;
+	width: 50px;
+	height: 28px;
+	color: #999;
+	font-size: inherit;
+	text-align: center;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+/* named upload */
+.textbox .upload-name {
+	display: inline-block;
+	padding: .5em .15em; /* label의 패딩값과 일치 */
+	font-size: inherit;
+	font-family: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #f5f5f5;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	appearance: none;
+}
+.textbox.bs3-primary label {
+  color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
+h6 {
+	padding-left: 125px;
+	font-size : 0.8em;
+}
+.error{
+font-size: 0.8em;
+color : red;
+padding-left: 110px;
+
+}

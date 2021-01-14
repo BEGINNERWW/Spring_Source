@@ -39,12 +39,13 @@
 							if (result.res == "OK") {
 								//데이터 성공일때 이벤트 작성
 								swal("","회원정보가 수정되었습니다.","success");
+
 							} else {
 								console.log("업데이트 실패!!");
 							}
 					},
 					error : function() {
-						swal("","ajax 통신 실패!!!","error");
+							alert("ajax 통신 실패!!!");
 					}
 			});
 			//기본 이벤트 제거
