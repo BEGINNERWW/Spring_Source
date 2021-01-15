@@ -31,7 +31,7 @@ public class AdminController {
 	@RequestMapping(value = "/test.me")
 	public String test() {
 		
-		return "myinfo_auth";
+		return "pw_auth";
 	}
 	
 	@RequestMapping(value = "/todo_select.do", produces="application/json; charset=UTF-8")

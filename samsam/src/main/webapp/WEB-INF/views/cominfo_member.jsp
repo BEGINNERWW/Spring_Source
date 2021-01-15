@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 <!-- 부트스트랩 4.0 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link href="resources/css/com_member.css" rel="stylesheet">
+<link href="resources/css/my_member.css" rel="stylesheet">
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="text/javascript" src="resources/js/cominfo_member.js" charset="UTF-8"></script> 
@@ -45,6 +45,10 @@
 * {
    margin:0;
    padding: 0;
+}
+h6{
+	margin-left: 155px;
+	font-size : 0.8em;
 }
 html{
    margin:0 auto;
@@ -436,15 +440,15 @@ li.list-group-item.click > a {
 			<!-- 왼쪽. 서브메뉴가 들어갈 부분 -->
 			<div class="sidemenu-section">
 			<ul class="list-group list-group-flush">
-				<li class="list-group-item"><a href="cominfo_member.me">회원정보</a></li>
-				<li class="list-group-item click"><a href="cominfo_list.me">작성글관리</a></li>
-				<li class="list-group-item"><a href="cominfo_main.me">분양관리</a></li>
+				<li class="list-group-item click"><a href="cominfo_member.me">회원정보</a></li>
+				<li class="list-group-item"><a href="cominfo_list.me">작성글관리</a></li>
+				<li class="list-group-item"><a href="cominfo_main.do">분양관리</a></li>
 			</ul>
 			</div>
 			
 			<!-- 오른쪽. 내용이 들어갈 부분 -->
 			<div class="content-section">
-				<h5 class ="font"> 판매허가번호인증 > 판매허가정보입력</h5>
+				<h5 class ="font"> 사업자회원정보 > 회원정보수정</h5>
 				<br>
 	<form class = "content">
 		<div class="textbox">
@@ -454,8 +458,9 @@ li.list-group-item.click > a {
 			<label>비밀번호</label><input id="pw" name="pw" type="password"  autofocus>
 		</div>
 		<div class="textbox">
-			<label>비밀번호확인</label><input id="pw2" type="password" onchange="isSame();"> <span id=same></span>
+			<label>비밀번호확인</label><input id="pw2" type="password" onchange="isSame();"> 
 		</div>
+		<span id=same></span>
 		<div class="textbox">
 			<label>이름</label><input id="name" type="text" value="<%=vo.getName() %>" readonly>
 		</div>
@@ -463,10 +468,10 @@ li.list-group-item.click > a {
 			<label>닉네임</label><input id="nick" name="nick" type="text" value="<%=vo.getNick() %>">
 		</div>
 		<div class="textbox">
-			<label>휴대폰번호</label><input id="phone" name="phone" type="text" value=<%=vo.getPhone()%>>
+			<label>휴대폰번호</label><input id="phone" name="phone" type="text" value="<%=vo.getPhone()%>">
 		</div>
 		<div class="textbox">
-			<label>지역</label><input id="local" name="local" type="text" value=<%=vo.getLocal()%>>
+			<label>지역</label><input id="local" name="local" type="text" value="<%=vo.getLocal()%>">
 		</div>
 		<div class="textbox">	
 			<label>사업장명</label><input id = "biz_com" type="text" value ="<%=bvo.getBiz_com() %>" readonly>

@@ -1,48 +1,70 @@
 @charset "utf-8";
 
-.font{
-	text-algin : left;
-	margin-left : 20px; 
-	margin-bottom : 15px;
-}
-h6{
-	margin-left: 155px;
-	font-size : 0.8em;
-}
 .content {
 	width: 550px;
 	display: flex;
 	flex-direction: column;
-	justify-content : flex-start;
 }
 .font{
 	text-algin : left;
 	margin-left : 20px; 
 	margin-bottom : 15px;
 }
-#check {
+#check1, #check2 {
 	width: 264px;
 	height: 48px;
 	margin : 20px;
-	border: 1px solid skyblue;
 	background-color: rgba(0, 0, 0, 0);
-	color: skyblue;
 	padding: 5px;
-	margin-left : 37px;
 	border-radius: 5px;
 	align-self: center;
 }
-
-#check:hover {
-	color: white;
-	background-color: skyblue;
+#check1 {
+	border: 1px solid #00BCD4;
+	color: #00BCD4;
 }
-
+#check1:hover{
+	color: white;
+	background-color: #00BCD4;
+}
+#check2 {
+	border: 1px solid #E91E63;
+	color: #E91E63;
+}
+#check2:hover {
+	color: white;
+	background-color: #E91E63;
+}
+.btns{
+	display : flex;
+	justify-content : space-around;
+	width : 500px;
+	margin-left : 20px;
+	margin-bottom: 15px;
+}
+.pay{
+	width : 500px;
+	margin : 20px;
+	text-align : center;
+	border: 1px solid #eeeeee;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+.pay_detail {
+	background-color : #f7f7f7;
+}
+.pay > tbody > tr > td{
+	padding : 5px;
+	height : 50px;
+	border-bottom: 1px solid #eeeeee;
+	border-collapse: collapse;
+	font-size : 0.9em;
+}
 input {
 	font-family: 'Noto Sans KR', sans-serif;
 	outline: 0;
 	display: block;
-	width : 500px;
+	width : 250px;
 	height: 40px;
 	font-size: 1em;
 	border : 1px solid #efefef;
@@ -52,7 +74,7 @@ input {
 .textbox {
 	display: flex;
 	flex-direction : column;
-	align-items : left;
+  	align-items : left;
 	margin-left:80px;
 	padding: 20px 8px 4px 8px;
 	width: 500px;

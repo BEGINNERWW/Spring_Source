@@ -102,8 +102,8 @@ public class HomeController {
 	@RequestMapping(value = "/pw_set.me", method = RequestMethod.POST)
 	public String pw_set(@RequestParam(value="email_injeung") String email_injeung,
 			@RequestParam(value = "num") String num) throws IOException{
-		
-		if(email_injeung.equals(num)) {
+		System.out.println("num :"+num);
+		if(num != null && num != "" && email_injeung.equals(num)) {
 			return "pw_new";
 		}
 		else {
@@ -235,6 +235,7 @@ public class HomeController {
 		try {
 			memberSV.updateMember(vo);
 			result.put("res", "OK");
+			System.out.println("업뎃완룡");
 		}catch(Exception e) {
 			System.out.println("update member : " + e.getMessage());
 			result.put("res", "FAIL");

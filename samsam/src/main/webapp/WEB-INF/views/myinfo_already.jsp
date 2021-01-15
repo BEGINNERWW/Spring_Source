@@ -6,6 +6,12 @@
 <%
 	String email = (String) session.getAttribute("email");
 	//email.toUpperCase();
+	if (session.getAttribute("email") == null){
+	out.println("<script>");
+	out.println("location.href='loginForm.me'");
+	out.println("</script>");
+}
+
 %>
 
 <!DOCTYPE html>
