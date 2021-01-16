@@ -49,7 +49,6 @@ public interface MemberMapper {
 	public int delete_todo(Todo_listVO todo);
 	public ArrayList<Todo_listVO> select_todo();
 	
-	//회원가입
 	public int joinMember(MemberVO mvo);
 
 

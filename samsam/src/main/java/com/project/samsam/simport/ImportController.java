@@ -29,7 +29,7 @@ public class ImportController {
 			System.out.println("paycoupon: " + bvo.getPay_coupon());
 			res = paySV.updateBiz_pay(bvo);
 			if(res == 1)
-				System.out.println("biz_member pay coupon 업데이트 완료");
+				System.out.println("biz_member pay coupon");
 		}
 		
 		return res;

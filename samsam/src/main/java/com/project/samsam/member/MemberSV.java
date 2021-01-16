@@ -20,6 +20,5 @@ public interface MemberSV {
 	public ArrayList<BoardlistVO> getWriteList(String email);
 	public ArrayList<CommentListVO> getWriteComment(String email);
 	
-	//회원가입
 	public int joinMember(MemberVO mvo);
 }

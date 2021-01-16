@@ -166,6 +166,8 @@ public class HomeController {
 		System.out.println("로그인 아이디 "+vo.getEmail());
 		System.out.println("로그인 비번"+vo.getPw());
 		
+		MemberVO res = memberSV.selectMember(vo.getEmail());
+
 		if(vo.getEmail().equals("admin")) {
 			session.setAttribute("id", vo.getEmail());
 			session.setAttribute("email", vo.getEmail());
@@ -173,7 +175,6 @@ public class HomeController {
 			return "redirect:/admin_main.me";
 		}
 		
-		MemberVO res = memberSV.selectMember(vo.getEmail());
 		if(res.getGrade().equals("카카오")) {
 			session.setAttribute("email", res.getEmail());
 			Biz_memberVO bo = memberSV.selectBizMember(vo.getEmail());

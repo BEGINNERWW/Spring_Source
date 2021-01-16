@@ -17,7 +17,7 @@ public class MemberSVImp implements MemberSV {
 	public MemberSVImp(SqlSession sqlSession) {
 	     this.mapper = sqlSession.getMapper(MemberMapper.class);
 	}
-	//회원가입
+	
 	@Override
 	public int joinMember(MemberVO mvo) {
 		int res = mapper.joinMember(mvo);
@@ -30,7 +30,6 @@ public class MemberSVImp implements MemberSV {
 		System.out.println(email);
 		MemberVO bo = mapper.selectMember(email);
 		if(bo != null) {
-		System.out.println("셀렉멤버 : " + bo.getPhone());
 		StringBuffer str = new StringBuffer(bo.getPhone());
 		str.insert(0, "0");
 				
@@ -40,7 +39,6 @@ public class MemberSVImp implements MemberSV {
 		}
 		bo.setPhone(phone);
 		
-		System.out.println("세팅 폰 : " + bo.getPhone());
 		}
 		System.out.println(bo);
 		return bo;
@@ -111,7 +109,7 @@ public class MemberSVImp implements MemberSV {
 	@Override
 	public int selectBiz_no(String biz_no) {
 		int res = mapper.selectBiz_no(biz_no);
-		System.out.println("selectBiz_no : 성공" + res);
+		System.out.println("selectBiz_no : " + res);
 		
 		return res;
 	}
@@ -132,7 +130,6 @@ public class MemberSVImp implements MemberSV {
 	public ArrayList<BoardlistVO> getWriteList(String email) {
 		ArrayList<BoardlistVO> list = mapper.getWriteList(email);
 		if(list!=null) {
-		System.out.println("조회 끝 게시글");
 		}
 		return list;
 	}
@@ -140,7 +137,6 @@ public class MemberSVImp implements MemberSV {
 	public ArrayList<CommentListVO> getWriteComment(String email) {
 		ArrayList<CommentListVO> list = mapper.getWriteComment(email);
 		if(list!=null) {
-			System.out.println("조회 끝 댓글");
 			}
 		return list;
 	}
