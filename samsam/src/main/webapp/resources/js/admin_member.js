@@ -69,24 +69,28 @@ $(document).ready(function() {
 	
 }); //레디
 var count = 10;
-
+var page = 0;
 $(document).on("click", ".before-btn",function(event) {
 	if(count > 10){
 		count -= 10
-		$("#result").slice(0,count).show();
+		page -= 1
+		$("#result").slice(page*10,count).show();
 	}
 	else{
 		swal("","첫 페이지 입니다.","info")
 	}
+	event.preventDefault();
 });
 
 $(document).on("click", ".after-btn",function(event) {
 	count += 10
-	$("#result").slice(0,count).show();
+	page += 1
+	$("#result").slice(page*10,count).show();
 	if($("#result").length <= count){
 		console.log($("#result").length)
 		swal("","마지막 페이지 입니다.","info")
 	}
+	event.preventDefault();
 });
 
 

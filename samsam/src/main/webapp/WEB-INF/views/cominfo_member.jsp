@@ -47,7 +47,7 @@
    padding: 0;
 }
 h6{
-	margin-left: 155px;
+	margin-left: 240px;
 	font-size : 0.8em;
 }
 html{
