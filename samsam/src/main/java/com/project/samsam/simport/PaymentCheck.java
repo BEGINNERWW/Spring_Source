@@ -27,25 +27,22 @@ public class PaymentCheck {
 	//  public static final String KEY ="4743165764154638";
 	public static final String KEY ="4743165764154638";
 	//  public static final String SECRET = "Ypj2qqpTdQhkwP38ieJHV3BF9L3XXcZWCjY2JoWXfehL3kUlzD3uHE9QqdOoqNk27j5RH2OWg5IjqCFZ";
-	// 아임포트 인증(토큰)을 받아주는 함수
 	public static final String SECRET = "Ypj2qqpTdQhkwP38ieJHV3BF9L3XXcZWCjY2JoWXfehL3kUlzD3uHE9QqdOoqNk27j5RH2OWg5IjqCFZ";
 	
-	//  접근을 위한 access token 생성 후 반환
 	public String getImportToken() {
 		String result = "";
-		HttpClient client = HttpClientBuilder.create().build();//클라이언트 생성
-		HttpPost post = new HttpPost(IMPORT_TOKEN_URL); //post메소드 url생성
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(IMPORT_TOKEN_URL); 
 		Map<String,String> m = new HashMap<String,String>();
 		m.put("imp_key", KEY);
 		m.put("imp_secret", SECRET);
 		try {
-			//URLEncodedFormEntity 객체는 콘텐츠 유형을 "x-www-form-urlencoded"로 설정함
 			post.setEntity(new UrlEncodedFormEntity(convertParameter(m)));
-			HttpResponse res = client.execute(post); //클라이언트로 결과 전송
+			HttpResponse res = client.execute(post); 
 			ObjectMapper mapper = new ObjectMapper();
 			String body = EntityUtils.toString(res.getEntity());
 			System.out.println("body=" + body);
-			JsonNode rootNode = mapper.readTree(body); //json 형식으로 변환
+			JsonNode rootNode = mapper.readTree(body); 
 			System.out.println("rootNode = " +rootNode);
 			JsonNode resNode = rootNode.get("response");
 			System.out.println("resNode="+resNode);
@@ -56,7 +53,6 @@ public class PaymentCheck {
 			e.printStackTrace();
 		} return result;
 	}
-	//Map을 사용해서 Http 요청 파라미터를 만들어 주는 함수
 	private List<NameValuePair> convertParameter(Map<String,String> paramMap){
 		List<NameValuePair> paramList = new ArrayList<NameValuePair>();
 		Set<Entry<String,String>> entries = paramMap.entrySet();
@@ -67,7 +63,6 @@ public class PaymentCheck {
 		return paramList;
 	}
 	
-	//결제취소
 	public int cancelPayment(String token, String mid) {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(IMPORT_CANCLE_URL);
@@ -88,9 +83,9 @@ public class PaymentCheck {
 		}
 		
 		if(asd.equals("null")) {
-			System.out.println("환불실패"); return -1;
+			System.out.println("fail"); return -1;
 		}else{
-			System.out.println("환불성공"); return 1;
+			System.out.println("success"); return 1;
 		}
 	}
 }

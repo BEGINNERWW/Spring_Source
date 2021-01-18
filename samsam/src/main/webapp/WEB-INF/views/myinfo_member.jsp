@@ -396,19 +396,19 @@ li.list-group-item.click > a {
 				<ul class="sticky-wrapper">
 					<li class="dropdown"><a href="main.me">HOME</a></li>
 					<li class="dropdown"><a href="board.me">분양</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu board">
 							<li><a href="#">&nbsp;&nbsp;가정분양</a></li>
 							<li><a href="#">책임분양</a></li>
 							<li><a href="#">업체분양</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="care.me">보호소</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu care">
 							<li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;보호소</a></li>
 							<li><a href="#">파양</a></li>
 							<li><a href="#">실종</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="community.me">커뮤니티</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu commu">
 							<li><a href="#">&nbsp;자유게시판</a></li>
 							<li><a href="#">책임분양인증</a></li>
 						</ul></li>

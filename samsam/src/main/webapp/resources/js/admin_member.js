@@ -143,7 +143,7 @@ function member_detail(obj) {
 				fieldsetDisable();
 			}
 			
-			if(map.Boardlist != null && map.Commentlist != ""){
+			if(map.Boardlist != null && map.Boardlist != ""){
 			$.each(map.Boardlist, function(index, item){
 				console.log("map.Boardlist : " + map.Boardlist);
 				var date = item.write_date.substr(0,10)

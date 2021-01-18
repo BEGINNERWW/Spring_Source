@@ -393,7 +393,7 @@ li.list-group-item.click > a {
 							<li><a href="#">실종</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="community.me">커뮤니티</a>
-						<ul class="dropdown-menu comm">
+						<ul class="dropdown-menu commu">
 							<li><a href="#">&nbsp;자유게시판</a></li>
 							<li><a href="#">책임분양인증</a></li>
 						</ul></li>
