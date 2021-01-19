@@ -1,15 +1,17 @@
 package com.project.samsam.admin;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.samsam.member.Biz_memberVO;
@@ -28,10 +30,10 @@ public class AdminController {
 	private MemberSV memberSV;
 	
 	//TEST PAGE
-	@RequestMapping(value = "/test.me")
+	@RequestMapping(value = "/home.me")
 	public String test() {
 		
-		return "cominfo_write";
+		return "main";
 	}
 	
 	@RequestMapping(value = "/todo_select.do", produces="application/json; charset=UTF-8")
@@ -166,5 +168,15 @@ public class AdminController {
 		model.addAttribute("Pay_list", plist);
 		
 		return "admin_pay";
+	}
+	
+	@RequestMapping(value = "/logout.me")
+	public String logout(HttpSession session)throws IOException {
+		System.out.println("logout");
+		System.out.println("세션 : "+ (String)session.getAttribute("email"));
+		session.removeAttribute("email");
+		System.out.println("세션삭제후 : "+ (String)session.getAttribute("email"));
+			        
+		return "redirect:/home.me";
 	}
 }
