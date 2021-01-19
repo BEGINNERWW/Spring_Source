@@ -41,27 +41,6 @@
     
     $("#toDate").datepicker({
     }); 
-
-var count = 20;
-
-$(document).on("click", ".before-btn",function(event) {
-	if(count > 20){
-		count -= 20
-		$(".payed").slice(0,count).show();
-	}
-	else{
-		swal("","첫 페이지 입니다.","info")
-	}
-});
-
-$(document).on("click", ".after-btn",function(event) {
-	count += 20
-	$(".payed").slice(0,count).show();
-	if($(".payed").length <= count){
-		console.log($("#result").length)
-		swal("","마지막 페이지 입니다.","info")
-	}
-});
 </script>
 </head>
 <body>
@@ -100,6 +79,7 @@ $(document).on("click", ".after-btn",function(event) {
 <div class = "main_content">
 <!-- 메인컨텐트 -->
 <div class="content">
+<h3>회원관리 > 회원정보조회</h3>
 <form id="content" name="content" action="search_member.do" method="post">
 <div class="search">
 	<div class = "condition">

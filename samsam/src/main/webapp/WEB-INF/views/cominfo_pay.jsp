@@ -44,6 +44,8 @@
 <!-- 아임포트 -->
 <script src ="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
 <link href="resources/css/com_pay.css" rel="stylesheet">
+<!-- 스윗얼럿 -->
+<script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 /* 공통으로 사용하는 CSS */
 @charset "utf-8";
@@ -453,7 +455,7 @@ li.list-group-item.click > a {
 				<br>
 	<form class = "content">
 		<div class="textbox">
-		<h3>이용권</h3>		
+		<h5>이용권</h5>		
 		<table class = pay border="1">
 			<tr><td rowspan="2" class="pay_detail">이용권</td><td>월 기본 제공 </td><td><%=bvo.getFree_coupon() %>/5</td></tr>
 			<tr><td>남은 구매 이용권 횟수</td><td id = "pay_coupon"><%=bvo.getPay_coupon() %> </td></tr>
@@ -463,9 +465,9 @@ li.list-group-item.click > a {
 		<input type="button" id="check1" value="구매">
 		<input type="button" id="check2" value="환불">
 		</div>
-		<h3>분양글</h3>
+		<h5>분양글</h5>
 		<table class = pay border="1">
-			<tr><td>글번호</td><td>제목</td><td>작성일</td><td>조회수</td></tr>
+			<tr><th>글번호</th><th>제목</th><th>작성일</th><th>조회수</th></tr>
 			<!-- 반복문 -->
 		<%
 			if(adopt_list != null){
@@ -473,7 +475,7 @@ li.list-group-item.click > a {
 					for ( Integer key : map.keySet() ) {
 						if(key == adopt_board.getAdopt_no()){
 		%>
-			<tr>
+			<tr class="adopt">
 				<td><%= adopt_board.getAdopt_no() %></td>
 				<td><%=adopt_board.getAdopt_title() %>  (<%=map.get(key) %>)</td>
 				<fmt:formatDate var="formatDate" value="<%=adopt_board.getAdopt_date()%>" pattern="yyyy-MM-dd"/>
@@ -481,7 +483,14 @@ li.list-group-item.click > a {
 				<td><%=adopt_board.getAdopt_readcount() %></td>
 			</tr>
 		<% }}}} %>
-		</table><br>
+		</table>
+		<table>
+		<tr><td class="tb-bottom" colspan = "4">
+				<input type='button' class ='before-btn' value = '이전'>
+				<input type='button' class = 'after-btn' value = '다음'>
+				</td>
+			</tr>
+		</table>
 		</div>
 	</form>
 				
@@ -657,8 +666,36 @@ $(document).ready(function(){
 				console.log("환불 실패 : 남은 결제권 환불 불가");
 			}
 		}); //check2 클릭
-		
+
+		$(".adopt").slice(10).hide();
+
 	}); //doc.ready
+var count = 10;
+var page = 0;
+
+$(document).on("click", ".before-btn",function(event) {
+	if(count > 10){
+		count -= 10
+		page -= 1
+		$(".adopt").slice(page*10,count).show();
+	}
+	else{
+		swal("","첫 페이지 입니다.","info")
+	}
+	event.preventDefault();
+});
+
+$(document).on("click", ".after-btn",function(event) {
+	count += 10
+	page += 1
+	$(".adopt").slice(page*10,count).show();
+	if($(".adopt").length <= count){
+		console.log($(".adopt").length)
+		swal("","마지막 페이지 입니다.","info")
+	}
+	event.preventDefault();
+});
+	
 </script>
 </body>
 </html>

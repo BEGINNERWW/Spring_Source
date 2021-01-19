@@ -8,9 +8,10 @@
 
 .content {
 	width: 550px;
-	display: flex;
-	flex-direction: column;
-	padding-left : 47px;
+    margin-top: 80px;
+    margin-left: 90px;
+    display: flex;
+    flex-direction: column;
 }
 
 .textbox {
@@ -147,7 +148,7 @@
 	border-color: #2e6da4;
 }
 h6 {
-	padding-left: 125px;
+	padding-left: 155px;
 	font-size : 0.8em;
 }
 .error{

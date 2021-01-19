@@ -418,7 +418,7 @@ li.list-group-item.click > a {
 	
 	<div class="header-top">
 		<div class="mainlogo">
-		<a href="#">
+		<a href="home.me">
 		<img src = "resources/img/mainlogo.png" class = "img-circle">
 		</a>
 		</div>
@@ -447,7 +447,7 @@ li.list-group-item.click > a {
 			<!-- 오른쪽. 내용이 들어갈 부분 -->
 			<div class="content-section">
 				<h5 class ="font"> 판매허가번호인증 > 판매허가정보입력</h5>
-		<br>		
+				
 	<form class="content" name="content" action="pre_auth.me" method="post" enctype="multipart/form-data">
 		<div class="textbox">
 			<label>사업장명</label><input id="biz_com" name="biz_com" type="text">

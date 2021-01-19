@@ -35,15 +35,18 @@
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script src="resources/js/adminPage.js"></script>
+<!-- chart.js -->
+<script src ="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 <!-- 스윗얼럿 -->
 <script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 var count = 20;
-
+var page =0;
 $(document).on("click", ".before-btn",function(event) {
 	if(count > 20){
 		count -= 20
-		$(".payed").slice(0,count).show();
+		page -= 1
+		$(".payed").slice(page * 20,count).show();
 	}
 	else{
 		swal("","첫 페이지 입니다.","info")
@@ -52,12 +55,62 @@ $(document).on("click", ".before-btn",function(event) {
 
 $(document).on("click", ".after-btn",function(event) {
 	count += 20
-	$(".payed").slice(0,count).show();
+	page += 1
+	$(".payed").slice(page * 20,count).show();
 	if($(".payed").length <= count){
-		console.log($("#result").length)
+		console.log($(".payed").length)
 		swal("","마지막 페이지 입니다.","info")
 	}
 });
+
+$(document).ready(function(){
+	getTimeStamp();
+	
+	jQuery.ajax({ // $.ajax 와 동일한 표현
+		url : '/samsam/storereport.do',
+		type : 'POST',
+		dataType : 'json', //서버에서 보내줄 데이터 타입
+		contentType : 'application/json;charset=utf-8',
+		success : function(map) {
+			console.log(map);
+			if(map.todolist != null){
+			$.each(map.todolist, function(index, item){
+			//Task에 입력 값 넣기
+			   var task = $("<div class='task'></div>").text(item.to_do);
+			//삭제버튼
+			   var del = "<i class='fas fa-trash-alt'></i>"
+			//체크 버튼
+			   var check = "<i class='fas fa-check'></i>"
+			      
+			      //Task에 삭제 & 체크 버튼 추가하기
+			      task.append(del,check)
+			if(item.status == "MustDo"){  
+			      //할일 목록에 추가
+			      $(".notdone").append(task); 
+			}else if(item.status =="Done"){
+				  $(".done").append(task); 
+			}
+			})//each
+			}//if
+		},
+		error : function() {
+			console.log("todo select ajax실패!!!");
+		}
+	});	
+
+})//ready
+
+function getTimeStamp() {
+
+    var d = new Date();
+    console.log(d.getFullYear())
+    console.log(d.getMonth()+1)
+    console.log(d.getDate())
+    var s = d.getFullYear() + '-' +
+        	(d.getMonth() + 1) + '-' +
+            d.getDate();
+	$('.today').html(s);	
+}
 </script>
 </head>
 <body>
@@ -97,6 +150,10 @@ $(document).on("click", ".after-btn",function(event) {
 <!-- 메인컨텐트 -->
 <div class="content">
 <h3>이용권관리 > 이용권 결제내역</h3>
+<div class ="chartjs">
+	<div class = "today"></div>
+	<table class = "storecount"></table>
+</div>
 <table class="paylist">
 <thead>
 <tr>

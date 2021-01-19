@@ -31,9 +31,14 @@ public class AdminController {
 	
 	//TEST PAGE
 	@RequestMapping(value = "/home.me")
-	public String test() {
+	public String home() {
 		
 		return "main";
+	}
+	@RequestMapping(value = "/test.me")
+	public String test() {
+		
+		return "loginForm";
 	}
 	
 	@RequestMapping(value = "/todo_select.do", produces="application/json; charset=UTF-8")
@@ -170,6 +175,14 @@ public class AdminController {
 		return "admin_pay";
 	}
 	
+	@RequestMapping(value = "/storereport.do")
+	public String storereport(Model model) {
+		int storecount = adminSV.storecount();
+		int standbycount = adminSV.standbycount();
+		
+		
+		return "admin_pay";
+	}
 	@RequestMapping(value = "/logout.me")
 	public String logout(HttpSession session)throws IOException {
 		System.out.println("logout");

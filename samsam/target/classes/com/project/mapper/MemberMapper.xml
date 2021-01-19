@@ -160,6 +160,19 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 	select merchant_uid, biz_email, refund, pay_date from payed_list order by pay_date
 </select>
 
+<!-- 인증대기업체 숫자 | 총 분양업체 숫자 -->
+<select id="storecount" resultType = "int">
+	select count(*) from biz_member where status = '0'
+</select>
+<select id="standbycount" resultType = "int">
+	select count(*) from biz_member where status = '1'
+</select>
+
+<!-- chartjs 차트 2 ) 최근한달 구매내역 (환불/재구매/유지) - 도넛 -->
+<select id="standbycount" resultType = "int">
+	select refund, count(*) from payed_list where sysdate >= trunc(add_months(sysdate,-1)) group by refund
+</select>
+	
 <!-- 투두리스트 추가 -->
 <insert id ="insert_todo" parameterType="Todo_listVO">
  	insert into todo_list (to_do_no, to_do)
