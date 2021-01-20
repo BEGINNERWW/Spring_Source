@@ -16,16 +16,16 @@
 #check{
 	width : 264px;
 	height : 48px;
-	border : 1px solid skyblue;
-	background-color : rgba(0,0,0,0);
-	color : skyblue;
+	border : 1px solid #4a89dc;
+	background-color : #4a89dc;
+	color : #fff;
 	padding : 5px;
 	border-radius : 5px;
 	align-self : center;
 }
 #check:hover{
-	color : white;
-	background-color:skyblue;
+	color : #4a89dc;
+	background-color : #fff;
 }
 input {
   	font-family: 'Noto Sans KR', sans-serif;

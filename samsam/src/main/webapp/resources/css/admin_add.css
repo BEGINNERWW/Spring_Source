@@ -130,9 +130,7 @@ input {
 /* 검색결과 테이블 끝 */
 
 /* 회원상세 모달 */
-.modal{
-	max-width : 600px;
-}
+
 .modal a{
 	display : block;
 	text-decoration : none;
@@ -173,7 +171,7 @@ input {
 }
 /* 사업자 인증 정보 */
 .modal .auth_detail-table{
-	width : 420px;
+	width : 600px;
 	margin : 0 auto;
 	border-collapse: collapse;
 	font-size : 0.9em;
@@ -256,7 +254,7 @@ input {
 	border-top : 1px solid #eeeeee;
 }
 .modal .table, .modal .b-table, .modal .w-table, .modal .c-table {
-	width : 420px;
+	width : 600px;
 	margin : 0 auto;
 	border-collapse: collapse;
 	font-size : 0.9em;

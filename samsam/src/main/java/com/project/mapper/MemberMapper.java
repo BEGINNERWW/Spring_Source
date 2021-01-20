@@ -1,6 +1,7 @@
 package com.project.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.project.samsam.admin.Search_paramsVO;
 import com.project.samsam.admin.Todo_listVO;
@@ -42,9 +43,11 @@ public interface MemberMapper {
 	public int 	update_confirm(String email);
 	public int 	auth_return(String email);
 	public ArrayList<Payed_listVO> 	getPay_list();
+	//chartjs
 	public int 	storecount();
 	public int 	standbycount();
-	
+	public HashMap<Object,Object> payedMonth();
+
 	//todolist
 	public int insert_todo(Todo_listVO todo);
 	public int update_todo(Todo_listVO todo);
