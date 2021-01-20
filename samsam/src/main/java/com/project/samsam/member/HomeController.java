@@ -34,6 +34,12 @@ public class HomeController {
 	private MemberSV memberSV;
 	@Autowired
 	JavaMailSender mailSender; 
+	
+	@RequestMapping(value = "/home.me", method = RequestMethod.GET)
+	public String home() {
+
+		return "main";
+	}
 
 	@RequestMapping(value = "/pw_find.me", method = RequestMethod.GET)
 	public String pw_find() {

@@ -116,7 +116,8 @@ if(!plist.isEmpty()){
 	<td><%=pay.getMerchant_uid() %></td>
 	<td><%=pay.getBiz_email() %></td>
 	<td><%=pay.getRefund() %></td>
-	<td><%=pay.getPay_date() %></td>
+	<fmt:formatDate var="formatDate" value="<%=pay.getPay_date()%>" pattern="yyyy-MM-dd HH:mm:ss"/>
+    <td>${formatDate}</td>
 </tr>
 <% }} else{%>
 <tr><td colspan = "4"> 전체 조회결과, 결제내역이 존재하지 않습니다 </td></tr>

@@ -12,9 +12,24 @@
 	}
 	
 		$(document).ready(function() {
+			function btn_disable(){
+				var check_btn = document.getElementById('check');
+				if($('#pw').val() == "" || $('#pw2').val() == ""){
+					check_btn.disabled = true;
+				}else if($('#same').val() == "비밀번호가  일치하지 않습니다"){
+					check_btn.disabled = true;
+				}
+				else{
+					check_btn.disabled = false;
+				}
+			}
+			btn_disable();
 
+			$('#pw2').keyup(function () {
+				btn_disable();
+			});
 		$("#check").click(function(event) { //정적데이터는 이벤트 처리를 바로 가능하나 동적이면 on을 사용하여 처리
-			if($('#pw').val().length >= 6 || $('#pw').val().length <=15){
+			if($('#pw').val().length >= 6 && $('#pw').val().length <=15){
 				console.log("pw 길이 " + $('#pw').val().length)
 			if($('#pw').val() == $('#pw2').val()){
 				console.log("true")

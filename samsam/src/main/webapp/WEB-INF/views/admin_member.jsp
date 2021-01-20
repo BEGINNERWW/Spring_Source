@@ -42,6 +42,11 @@
     $("#toDate").datepicker({
     }); 
 </script>
+<style>
+.modal{
+max-width: 700px;
+}
+</style>
 </head>
 <body>
 <div class ="body_content">
