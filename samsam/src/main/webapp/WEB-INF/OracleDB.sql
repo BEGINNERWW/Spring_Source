@@ -248,3 +248,10 @@ CREATE TABLE todo_list (
 CREATE SEQUENCE todo_SEQ
 INCREMENT BY 1 
 START WITH 1 ;
+
+
+create table threeboard(
+	write_date	varchar2(50) 	not null,
+	write_count	number,
+	board 		varchar2(30)
+);

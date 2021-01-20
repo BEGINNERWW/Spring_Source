@@ -1,0 +1,233 @@
+회원정보 member_list
+
+CREATE TABLE member_list (
+	email	varchar2(50)		NOT NULL primary key,
+	pw	varchar2(20)		NULL,
+	name	varchar2(20)		NULL,
+	nick	varchar2(50)		NULL,
+	phone	varchar2(20)		NULL,
+	local	varchar2(20)		NULL,
+	grade	varchar2(10)		default '일반',
+	authkey   varchar2(20)		null,
+	status     varchar2(10)		null,
+	wcount   number			default 0,
+	signdate date			not null
+);
+
+사업자회원 biz_member
+
+CREATE TABLE biz_member (
+  	biz_email	varchar2(50)		NOT NULL,
+	biz_no	varchar2(30)		not null primary key,
+	biz_com	varchar2(30)		NULL,
+	biz_name varchar2(9)		NULL,
+	biz_add	varchar2(50)		NULL,
+	biz_img	varchar2(2000)		NULL,
+	free_coupon	number		default 5,
+	pay_coupon	number		NULL,
+	status		varchar2(10)	default 1
+);
+
+이용권 결제내역 payed_list
+
+CREATE TABLE payed_list (
+	imp_uid	varchar2(50)		NOT NULL PRIMARY KEY,
+	merchant_uid	varchar2(50)	NULL,
+	biz_email	 	varchar2(50)	NULL,
+	pay_date 	date		NULL,
+	amount		varchar2(20)	NULL,
+	card_no		varchar2(50)	NULL,
+	refund		varchar2(10)	default 'payed'
+);
+
+투두리스트 todo_list
+
+CREATE TABLE todo_list (
+	to_do_no varchar2(50)		NOT NULL primary key,
+	to_do 	varchar2(200)		not null,
+	status 	varchar2(15)		DEFAULT 'MustDo'
+);
+
+CREATE SEQUENCE todo_SEQ
+INCREMENT BY 1 
+START WITH 1 ;
+
+책임인증글 free_auth
+
+CREATE TABLE free_auth (
+	fadoc_no	number		NOT NULL,
+	fadoc_r_email	varchar2(50)		NOT NULL,
+	fadoc_confirm_no	varchar2(40)	NOT NULL,
+	fadoc_s_email	varchar2(50)		NOT NULL,
+	fadoc_subject	varchar2(150)		NULL,
+	fadoc_content	varchar2(2000)		NULL,
+	fadoc_date	date		NULL,
+	fadoc_readcount	number		NULL,
+	fadoc_check	varchar2(20)		NULL
+);
+
+책임분양확정현황 free_doc_confirm
+
+CREATE TABLE free_doc_confirm (
+	confirm_no	varchar2(40)		NOT NULL,
+	confirm_fdoc_no	number		NOT NULL,
+	confirm_fdoc_s_email	varchar2(50)		NOT NULL,
+	confirm_fdoc_r_email	varchar2(50)		NULL,
+	confirm_fdoc_code	varchar2(20)		NULL,
+            confirm_fdoc_expiry	number		NULL,
+	confirm_fdoc_price	varchar2(20)		NULL,
+	confirm_s_date	date		NULL,
+	confirm_e_date	date		NULL,
+	confirm_account	varchar2(50)		NULL,
+	confirm_fdoc_kindof	varchar2(20)		NULL,
+	confirm_fdoc_img varchar2(200)	NULL
+);
+
+커뮤니티 community / 댓글 doc_comment
+
+CREATE TABLE community (
+   doc_no   number   NOT NULL,
+   doc_email   varchar2(50)   NOT NULL,
+   doc_nick   varchar2(20)   NULL,
+   doc_subject   varchar2(150)   NULL,
+   doc_content   varchar2(3000)   NULL,
+   doc_date   date   NULL,
+   doc_readcount   number   NULL,
+   doc_comment   number   NULL
+);
+
+create table doc_comment(
+doc_no number primary key,
+doc_doc_no number,
+doc_email varchar2(50),
+doc_nick varchar2(50),
+doc_date date,
+doc_content varchar2(1000),
+doc_secret number,
+doc_rev number,
+doc_deq number 
+);
+
+책임분양등록 free_doc / 책임분양댓글 fdoc_refly
+
+CREATE TABLE free_doc (
+   doc_no   number      NOT NULL primary key,
+   doc_email varchar2(50) not null,
+   doc_nick   varchar2(50)      NOT NULL,
+   doc_subject   varchar2(150)      NULL,
+   doc_content   clob  NULL,
+   doc_date   date      NULL,
+   doc_readcount   number      NULL,
+   doc_expiry   number      NULL,
+   doc_code   varchar2(20)      NULL,
+   doc_price   number NULL,
+   doc_big   varchar2(20)      NULL,
+   doc_kindof   varchar2(40)      NULL,
+   doc_thumbnail varchar2(200) NULL,
+   doc_loc varchar2(20) NULL,
+   doc_comment number null
+);
+
+CREATE TABLE fdoc_refly (
+   doc_cno   number   NOT NULL,
+   doc_no   number   NOT NULL,
+   doc_cnick   varchar2(50)   NULL,
+   doc_cdate   date   NULL,
+   doc_ccontent   varchar2(2000)   NULL,
+    doc_csecret number,
+    doc_ref number,
+    doc_lev number,
+    doc_seq number
+);
+
+가정분양게시판 adopt_home / 가정분양 댓글 adopt_home_reply
+
+CREATE TABLE adopt_home (
+	doc_no	number NOT NULL,
+	doc_cemail varchar(40) NULL,
+	doc_nick varchar2(20) NULL,
+	doc_loc varchar2(10) NULL,
+	doc_date date NULL,
+	doc_readcount number NULL,
+	doc_img varchar2(100) NULL,
+	doc_phone number NULL,
+	doc_subject varchar2(20) NULL,
+	doc_price varchar2(20) NULL,
+	doc_content varchar2(2000) NULL,
+	big_name	varchar2(20) NULL,
+	kindof	varchar2(20) NULL,
+	doc_thumbnail varchar2(1000) NULL
+);
+
+CREATE TABLE adopt_home_reply (
+	doc_cno number NOT NULL,
+	doc_no	number NOT NULL,
+	doc_cemail varchar2(50) NULL,
+	doc_cnick varchar2(20) NULL,
+	doc_cdate date NULL,
+	doc_ccontent varchar2(20) NULL,
+	doc_csecret number NULL,
+	doc_ref number NULL,
+	doc_lev number NULL,
+	doc_seq number NULL
+);
+
+파양게시판 payang / 파양 댓글 PAYANG_REPLY
+
+CREATE TABLE PAYANG 
+(
+  doc_NO NUMBER NOT NULL 
+, doc_EMAIL VARCHAR2(50) NOT NULL 
+, doc_NICK VARCHAR2(20) NOT NULL 
+, doc_NAME VARCHAR2(20) 
+, doc_GENDER VARCHAR2(20) 
+, doc_BIG_NAME VARCHAR2(20) 
+, doc_KIND VARCHAR2(20) 
+, doc_AGE NUMBER 
+, doc_SIDO VARCHAR2(20) NOT NULL 
+, doc_SIGUNGU VARCHAR2(20) 
+, doc_ADDRESS VARCHAR2(20) 
+, doc_SUBJECT VARCHAR2(20) NOT NULL 
+, doc_CONTENT VARCHAR2(20) 
+, doc_DATE DATE DEFAULT sysdate NOT NULL 
+, doc_UPD_DATE DATE DEFAULT sysdate 
+, CONSTRAINT PAYANG_PK PRIMARY KEY 
+  ( P_NO )
+  ENABLE );
+
+CREATE TABLE PAYANG_REPLY 
+(
+  doc_CNO NUMBER NOT NULL 
+, doc_NO NUMBER NOT NULL 
+, doc_EMAIL VARCHAR2(50) NOT NULL 
+, doc_NICK VARCHAR2(20) 
+, doc_CONTENT VARCHAR2(20) 
+, doc_SECRET CHAR(2) DEFAULT 'N'
+, doc_DATE DATE 
+, doc_UPD_DATE DATE 
+, CONSTRAINT PAYANG_REPLY_PK PRIMARY KEY 
+  ( P_CNO )
+ENABLE );
+ALTER TABLE PAYANG_REPLY ADD CONSTRAINT PAYANG_REPLY_FK1 FOREIGN KEY
+( P_NO)
+REFERENCES PAYANG
+(  P_NO )
+ON DELETE CASCADE ENABLE;
+
+게시판들 신고 warning
+
+CREATE TABLE warning (
+   w_no   number   NOT NULL,
+   w_email varchar2(50) NOT NULL,
+   w_co_no   number   NOT NULL,
+   w_doc_no   number   NOT NULL,
+   w_nick   varchar2(50)   NULL,
+   w_date   date   NULL,
+   w_status   varchar2(20)   NULL,
+   w_reason   varchar2(100)   NULL,
+   w_category varchar2(20) NULL,
+   w_note varchar2(500) null
+);
+
+insert into member_list values('admin','123123','킹죠','갓죠',01077777777,'서울','관리자',null,1,null,'2021-01-01');
+commit;
