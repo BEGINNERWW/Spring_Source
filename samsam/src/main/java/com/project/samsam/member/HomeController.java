@@ -46,7 +46,17 @@ public class HomeController {
 
 		return "pw_find";
 	}
-
+	@RequestMapping(value = "/mypage.me")
+	public String mypage(HttpSession session) {
+		String biz_email = (String)session.getAttribute("email");
+		
+		if(memberSV.selectBizMember(biz_email) == null) {
+			System.out.println("bizcheck selectBizmemeber : " + null);
+			return "myinfo_member";
+		}else {
+			return "cominfo_pay";
+		}
+}
 	@RequestMapping(value = "/pw_auth.me")
 	public ModelAndView pw_auth(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String email = (String)request.getParameter("email");

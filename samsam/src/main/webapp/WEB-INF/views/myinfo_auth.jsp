@@ -418,7 +418,7 @@ li.list-group-item.click > a {
 	
 	<div class="header-top">
 		<div class="mainlogo">
-		<a href="#">
+		<a href="home.me">
 		<img src = "resources/img/mainlogo.png" class = "img-circle">
 		</a>
 		</div>

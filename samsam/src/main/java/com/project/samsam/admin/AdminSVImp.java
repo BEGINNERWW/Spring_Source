@@ -80,5 +80,16 @@ public class AdminSVImp implements AdminSV {
 				
 		return todolist;
 	}
-	
+	@Override
+	public int 	storecount() {
+		int res= mapper.storecount();
+		
+		return res;	
+	}
+	@Override
+	public int 	standbycount() {
+		int res= mapper.standbycount();
+		
+		return res;	
+	};
 }

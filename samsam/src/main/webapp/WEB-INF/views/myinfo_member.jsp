@@ -386,9 +386,9 @@ li.list-group-item.click > a {
 
 	<div class ="inout_gocen">
 			<input type="button" class= "header_btn" id="login" value="로그인" onclick ="location.href='loginForm.me'">
-			<input type="button" class= "header_btn" id="logout" value="로그아웃" onclick ="location.href='home.me'">
+			<input type="button" class= "header_btn" id="logout" value="로그아웃" onclick ="location.href='logout.me'">
 			<input type="button" class= "header_btn" id="signin" value="회원가입" onclick ="location.href='joinform.me'">
-			<input type="button" class= "header_btn" id="mypage" value="마이페이지" onclick ="location.href='myfree_auth.me'">
+			<input type="button" class= "header_btn" id="mypage" value="마이페이지" onclick ="location.href='mypage.me'">
 			<input type="button" class= "header_btn" id="gocen" value="고객센터" onclick ="location.href='customer_service.me'">
 		</div>
 	
@@ -416,7 +416,7 @@ li.list-group-item.click > a {
 	
 	<div class="header-top">
 		<div class="mainlogo">
-		<a href="#">
+		<a href="home.me">
 		<img src = "resources/img/mainlogo.png" class = "img-circle">
 		</a>
 		</div>
@@ -505,22 +505,23 @@ li.list-group-item.click > a {
 <!-- 제이쿼리 -->
 <script>
 $(document).ready(function(){
-	console.log("<%= email %>")
-	var session = '<%= email %>'
-	console.log(session);
-	if(session != null || session != ''){
-		  $('#logout').show();
-		  $('#mypage').show();
-		  $('#login').hide();
-		  $('#signin').hide();
-	} //헤더 상단 로그인상태 일때
-	else{
-	       $('#logout').hide();
-		   $('#mypage').hide();
-		   $('#login').show();
-		   $('#signin').show();
-	}; //헤더 상단 로그아웃상태 일때 
-}); 
+    console.log("<%= email %>") 
+    var session = '<%= email %>'
+    console.log(session);
+    if(session == "null" ){
+        $('#logout').hide();
+          $('#mypage').hide();
+          $('#login').show();
+          $('#signin').show();
+        
+     } //헤더 상단 로그인상태 일때
+     else{
+       $('#logout').show();
+         $('#mypage').show();
+         $('#login').hide();
+         $('#signin').hide();
+     }; //헤더 상단 로그아웃상태 일때 
+  });
 </script>
 
 <!-- 부트스트랩 4.0 js -->

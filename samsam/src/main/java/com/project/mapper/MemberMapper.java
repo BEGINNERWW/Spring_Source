@@ -42,6 +42,8 @@ public interface MemberMapper {
 	public int 	update_confirm(String email);
 	public int 	auth_return(String email);
 	public ArrayList<Payed_listVO> 	getPay_list();
+	public int 	storecount();
+	public int 	standbycount();
 	
 	//todolist
 	public int insert_todo(Todo_listVO todo);
