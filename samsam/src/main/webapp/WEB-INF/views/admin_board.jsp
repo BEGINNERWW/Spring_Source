@@ -52,10 +52,9 @@ HashMap<Object, Object> map = (HashMap<Object, Object>)request.getAttribute("map
 <!-- 스윗얼럿 -->
 <script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
-a{
-    margin-top: 12px;
-    padding-right: 10px;
-    padding-left: 10px;
+
+ul{
+	list-style: none;
 }
 </style>
 <script>
@@ -154,12 +153,12 @@ $(document).ready(function(){
 									if(b%2 == 0){
 										page += 1	
 										console.log("page수 :" + page)
-										$('.pagenum').html($('.pagenum').html()+'<a href="javascript:void(0);" onclick="page_detail(this);" value = "'+ page +'">'+ page + '</a>')
+										$('.pagenum').html($('.pagenum').html()+'<a class ="pageA" href="javascript:void(0);" onclick="page_detail(this);" value = "'+ page +'">'+ page + '</a>')
 									}else if(b <= 2){
 										page += 1	
 										console.log("page값 :" + $('.pagenum').val())
 
-										$('.pagenum').html($('.pagenum').html()+'<a href="javascript:void(0);" onclick="page_detail(this);" value = "'+ page +'">'+ page + '</a>')
+										$('.pagenum').html($('.pagenum').html()+'<a class ="pageA" href="javascript:void(0);" onclick="page_detail(this);" value = "'+ page +'">'+ page + '</a>')
 									}
 								}
 								sessionStorage.setItem("pagenum", 1);
@@ -223,12 +222,12 @@ $(document).ready(function(){
 						if(b%2 == 0){
 							page += 1	
 							console.log("page수 :" + page)
-							$('.pagenum').html($('.pagenum').html()+'<a href="javascript:void(0);" onclick="page_detail(this);" value = "'+ page +'">'+ page + '</a>')
+							$('.pagenum').html($('.pagenum').html()+'<a class ="pageA" href="javascript:void(0);" onclick="page_detail(this);" value = "'+ page +'">'+ page + '</a>')
 						}else if(b <= 2){
 							page += 1	
 							console.log("page값 :" + $('.pagenum').val())
 
-							$('.pagenum').html($('.pagenum').html()+'<a href="javascript:void(0);" onclick="page_detail(this);" value = "'+ page +'">'+ page + '</a>')
+							$('.pagenum').html($('.pagenum').html()+'<a class ="pageA" href="javascript:void(0);" onclick="page_detail(this);" value = "'+ page +'">'+ page + '</a>')
 						}
 					}
 					sessionStorage.setItem("pagenum", 1);

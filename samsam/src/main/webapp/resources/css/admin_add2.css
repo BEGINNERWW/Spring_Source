@@ -124,6 +124,11 @@ a[href="javascript:void(0);"]{
 .pagenum{
 	display : flex;
 }
+.pageA{
+	margin-top :12px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
 input {
     outline: 0;
     border: 1px solid #eeeeee;
