@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.JJBoardMapper">
+	
+	<!-- 홈 검색 리스트 -->
+		<select id="getSearch_free_List" parameterType="String" resultType="JJBoardVO">
+		select fdoc_no as num ,nick,subject,c_date,readcount
+		from free_doc where subject like '%'||#{keyword}||'%' or c_content like '%'||#{keyword}||'%'
+		order by c_date desc
+		
+		</select>
+	
+ 		<select id="getSearch_commu_List" parameterType="String" resultType="JJBoardVO">
+  		select num,nick,subject,c_date,readcount
+		from community where subject like '%' || #{keyword}|| '%' or c_content like '%' ||#{keyword} || '%'
+		order by c_date desc
+		</select>
+		
+		<select id="getSearch_adopt_List" parameterType="String" resultType="JJBoardVO">	
+		select num,nick,subject,c_date,readcount
+		from adopt_list where subject like '%' ||#{keyword}|| '%' or c_content like '%' ||#{keyword}|| '%'
+		order by c_date desc
+		</select>
+		
+	
+		
+
+
+	<select id="getSDetail"  parameterType="int" resultType="JJBoardVO">
+		 select num,subject,c_content, nick,c_date
+		from (
+		select
+		num,subject,c_content, nick,c_date
+		from doc_c where num like '%' || #{b_no}|| '%'
+		
+		union all
+		
+		select
+		num,subject,c_content, nick,c_date
+		from adopt_list where num like '%' || #{b_no}|| '%'
+		
+		union all
+		
+		select
+		care_no as num,care_kind as subject,care_comp as nick,care_date as c_date,care_etc as c_date
+		from care_pet where care_no like '%' || #{b_no}|| '%'
+		)
+
+	</select>
+<!--  홈페이지 검색 SQL 끝 -->
+<!--  수정필요
+	<selet id="getmyBList" parameterType="String" resultType="BoardVO2">
+		 select b_no,b_subject,b_date
+		from (
+		select
+		b_no,b_subject,b_date
+		from doc_c where b_subject like '%' || #{keyword}|| '%' or b_content like '%' ||#{keyword} || '%'
+		
+		union all
+		
+		select
+		b_no,b_subject,b_date
+		from doc_b where b_subject like '%'||#{keyword}||'%' or b_content like '%'||#{keyword}||'%'
+		
+		union all
+		
+		select
+		b_no,b_subject,b_date
+		from doc_bh where b_subject like '%'||#{keyword}||'%' or b_content like '%'||#{keyword}||'%'
+		)order by b_date desc
+		
+	</selet>
+ -->
+
+	
+	
+	<select id="getListCount" resultType="int">
+		select count(*) from smemberboard2
+	</select>
+	<!-- CDATA는 태그안에서 전부 문자열로 치환 -->
+	<!-- <나 (와 같은 기호를 관호인지 아니면 비교연산지인지 확인이 안되고 특수문자 사용하는데 제한됨 -->
+	
+	<select id="getBoardList" parameterType="HashMap"	resultType="JJBoardVO">
+		<![CDATA[
+		select num,id,subject,content,re_ref,re_lev,re_seq,readcount,boarddate
+		 from (select rownum rnum,num,id,subject,content,re_ref,re_lev,re_seq,readcount,boarddate 
+		 from (select * from smemberboard2 order by re_ref desc,re_seq asc))
+			where rnum>=#{startrow} and rnum<=#{endrow} 
+		]]>
+	</select>
+	
+	<select id="getDetail"  parameterType="int" resultType="JJBoardVO">
+		select * from doc_c where b_no = #{num}
+	</select>
+	
+	<!-- VER 1 -->
+	<insert id="boardInsert" parameterType="JJBoardVO">
+  <!-- <selectKey>는 insert구문에만 사용가능 -->
+  <!-- order 값은 "BEFORE|AFTER" 대문자 사용할것 -->
+  <!-- KeyProperty = "num"에서 num은 컬럼 명이다. -->
+  <selectKey keyProperty="num" order="BEFORE" resultType="int">
+    select nvl(max(num),0)+1 from smemberboard2
+  </selectKey>
+  insert into smemberboard2 values 
+  (#{num},#{id},#{subject},#{content},#{org_file},#{up_file},#{num},#{re_lev},#{re_seq},#{readcount},sysdate)
+</insert>
+	<!-- num  은 인서트에서 2개의 넘에 사용된다/ 넘의 타입은 인트-->
+	
+	
+	<!-- VER 2 -->
+	<!-- 특정컬럼의 값이 null인지 아닌지 체크하는 방법 -->
+	<!--  if test="num==''">에서 num==''는num이 null인지 검사 -->
+	<!-- 
+	<insert id ="boardInsert" parameterType="BoardVO" >
+		<if test="num==''">
+			insert into smemberboard2 values (1,#{id},#{subject},#{content},#{org_file},#{up_file},#{re_ref },#{ re_lev},#{ re_req},#{ readcount},sysdate)
+			 </if>
+		<if test="num!=''">
+			insert into smemberboard2 values(
+			(select max(num)+1 as num from smemberboard2),#{id},#{subject},#{content},#{org_file},#{up_file},#{re_ref },#{ re_lev},#{ re_req},#{ readcount},sysdate)
+			</if>
+	</insert>
+	 -->
+	 
+	 <!-- VER 3 -->
+	 <!-- 
+	<insert id ="boardInsert" parameterType="BoardVO" >
+		<selectKey keyProperty="num" order="BEFORE" resultType="int">
+			<if test="num==''">select 1 from dual</if>
+			<if test="num !=''">select max(num)+1 from smemberboard2</if>
+		</selectKey>	
+			insert into smemberboard2 values (#{num},#{id},#{subject},#{content},#{org_file},#{up_file},#{re_ref },#{ re_lev},#{ re_req},#{readcount}, sysdate)
+		<if test="num!=''">
+			insert into smemberboard2 values(
+			(select max(num)+1 as num from smemberboard2),#{id},#{subject},#{content},#{org_file},#{up_file},#{re_ref },#{ re_lev},#{ re_req},#{ readcount},sysdate)
+			</if>
+	</insert>
+	 -->
+	 
+	<update id="boardReplyupdate" parameterType="JJBoardVO" >
+		update smemberboard2 set re_seq= re_seq+1 where re_ref =#{re_ref} and re_seq=#{re_seq}
+	</update>
+	
+	<insert id="boardReply" parameterType="JJBoardVO">
+		 <!--  <selectKey>는 insert구문에만 사용 가능-->
+		 <!--  order같은 "BEFORE|AFTER" 대문자 사용할것-->
+		<!--  keyProperty="num"에서 numm은 컬럼 명이다-->
+		<selectKey keyProperty="num" order="BEFORE" resultType="int">
+			select nvl(max(num),0)+1 from smemberboard2
+		</selectKey>
+			
+			insert into smemberboard2 values(num,id,subject,content,re_ref,re_lev,
+			re_seq,readcount,boarddate)
+			values (#{num},#{id},#{subject},#{content},#{re_ref},#{re_lev},
+			#{re_seq},#{readcount},sysdate)
+	</insert>
+	<update id="boardModify" parameterType="JJBoardVO">
+		update smemberboard2 set subject=#{subject},content=#{content}
+		where num=#{num}
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+	delete from smemberboard2 where num =#{num}
+	</delete>
+	
+	<update id="setReadCountUpdate" parameterType="int">
+	update smemberboard2 set readcount=readcount+1 where num=#{num}
+	</update>
+	<select id ="isBoardWriter" parameterType="HashMap" resultType="int">
+	select count(*) from smemberboard2 where num=#{num} and id=#{id}
+	</select>
+	
+
+</mapper>

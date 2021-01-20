@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	 
+	<mapper namespace="com.project.mapper.JJAdminBoardMapper">
+	
+	<select id="findList" parameterType = "JJABoardVO" resultType="JJABoardVOto">
+      select doc_no,doc_email,doc_nick, doc_subject, doc_content, doc_date,doc_readcount
+    from ${category} where 1=1
+    <if test ='startDate != null and startDate != ""'>
+     AND doc_date between TO_DATE(#{startDate},'YYYY-MM-DD') AND TO_DATE(#{endDate},'YYYY-MM-DD')
+    </if>
+    <if test ='keyword != null and keyword != ""'>
+    AND doc_subject like '%' || #{keyword}|| '%' OR doc_content like '%' || #{keyword} || '%'
+    </if>
+    order by doc_date desc
+    </select>
+    <!-- 어드민 게시글 리스트 -->
+	
+	<select id="find_w_List" parameterType = "JJABoardVO" resultType="JJABoardVOto">
+      select c.doc_no,c.doc_email,c.doc_nick, c.doc_subject, c.doc_content,c.doc_date,c.doc_readcount,w.*
+      from ${category} c, ${kind} w
+      where c.doc_no =w.w_doc_no
+      <if test ="keyword != null and keyword != ''">
+      and c.doc_subject like '%' || #{keyword}|| '%' or c.doc_content like '%' || #{keyword}|| '%'
+      </if>
+      <if test ="startDate != null and startDate != '' and endDate != null and endDate !=''">
+      and (w.w_date between #{startDate} and #{endDate} )
+      </if>
+      order by w.w_status asc,w.w_date desc
+    </select>
+    <!-- 어드민 게시글신고 리스트 -->
+		
+		<select id="ad_member" parameterType="JJADModalVO"
+		resultType="MemberVO">
+		select m.email, m.nick, m.local, m.grade from member_list m
+		where m.email
+		in (select o.doc_email from ${category} o where o.doc_no= #{number})
+	</select>
+	<select id="ad_board" parameterType="JJADModalVO"
+		resultType="JJABoardVOto">
+		select * from ${category} where doc_no =#{number}
+	</select>
+	<select id="ad_cList" parameterType="JJADModalVO"
+		resultType="JJCommentVO">
+		select doc_cno,doc_cnick,doc_ccontent,doc_cdate,doc_csecret from doc_comment 
+		where doc_no in(select doc_no from doc_comment where doc_no=#{number})
+	</select>
+	<select id="ad_cccount" parameterType="JJADModalVO"
+		resultType="JJCommentVO">
+		select count(doc_cno) as co_count from doc_comment where doc_no
+		in(select doc_no from doc_comment where doc_no= #{number})
+	</select>
+
+	<select id="w_coList" parameterType="JJADModalVO"
+		resultType="JJWarningVO">
+		select w_no,w_email,w_co_no, w_doc_no,w_date,w_status,w_reason
+		from warning where w_co_no
+		in (select c.doc_no from community c where c.doc_no=#{number})
+	</select>
+	<select id="w_docList" parameterType="JJADModalVO"
+		resultType="JJWarningVO">
+		select w_no,w_email,w_co_no, w_doc_no,w_date,w_status,w_reason
+		from warning where w_doc_no
+		in (select w_doc_no from warning where w_doc_no=#{number})
+	</select>
+	<select id="ad_wcount" parameterType="JJADModalVO"
+		resultType="JJWarningVO">
+		select count(w_no) as w_count from warning where w_doc_no
+		in(select w_doc_no from warning where w_doc_no= #{number})
+	</select>
+
+	<!-- 어드민 게시글 디테일 뷰 끝 -->
+	
+	<select id="wvo" resultType="JJWarningVO" parameterType="JJADModalVO">
+		select * from warning where w_no= #{number}
+	</select>
+	
+	<select id="covo" resultType="JJCommentVO" parameterType="JJADModalVO">
+				select * from c_comment where co_no 
+				in(select w_co_no from warning where w_no = #{number})
+		
+	</select>
+	<!-- 어드민 게시글 디테일 뷰  MODAL 끝 -->
+	
+	<update id="update_status" parameterType="JJWarningVO" >
+		update warning 
+		<set>
+			<if test="w_status == '숨김'"> w_status =#{w_status},</if>
+			<if test="w_status == '유지'"> w_status =#{w_status},</if>
+			<if test="w_note != null"> w_note =#{w_note},</if>
+		</set>
+		where w_no=#{w_no}
+	</update>
+	<!--  어드민 게시글 디테일 뷰  MODAL 상태처리 끝
+	 -->
+		
+	
+	</mapper>	

@@ -1,0 +1,162 @@
+@charset "UTF-8";
+h3{
+	margin-left : 15px;	
+}
+/*update*/
+.content{
+    margin-top : 40px;
+    margin-left : 100px;
+    width : 90%;
+    height : 100%;
+    display : flex;
+    flex-direction: column;
+    justify-content : flex-start;
+}
+
+/* 검색필터 */
+#content{
+	width : 100%;
+	margin : 20px;
+	border: 1px solid #eeeeee;
+	border-radius : 5px;
+	display : flex;
+	justify-content : space-around;
+}
+.condition{
+	display : flex;
+	flex-direction: column;
+    justify-content : space-around;
+    margin : 10px;
+}
+.search{
+	margin-left : 10px;
+	margin-right : 10px;
+	display : flex;
+	justify-content : space-between;
+	align-items : center;
+}
+.date, .member, .keyword{
+	margin : 5px auto 5px 10px;
+	padding-right : 20px;
+	width : 100%;
+	display : flex;
+	justify-content : space-between;
+	align-items : center;
+}
+select{
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	outline: 0;
+	border: 1px solid #eeeeee;
+	padding: 0.6em 1.4em 0.5em 0.8em;
+ 	margin: 0;
+    border-radius : 5px;
+}
+#fromDate, #toDate{
+	width : 180px;
+}
+#keyword{
+	width : 393px;
+}
+.label{
+	padding : 5px;
+	display : flex;
+	align-items:center;
+}
+input[type="radio"]{
+	width : 20px;
+	height : 20px;
+}
+#find_data{
+	width : 80px;
+	height : 50px;
+	margin-left : 35px;
+	border : 1px solid #00BCD4;
+	background-color : rgba(0,0,0,0);
+	color : #00BCD4;
+	border-radius : 5px;
+	align-self : right;
+	font-size : 1em;
+	font-weight : 500;
+}
+#find_data:hover{
+	color : white;
+	background-color: #00BCD4;
+}
+button{
+	border : 1px solid #eeeeee;
+	border-radius : 3px;
+}
+button:hover{
+	background-color : #d9d9d9;
+	
+}
+
+/* 검색결과 테이블 */
+
+a[href="javascript:void(0);"]{
+	color : black;
+}
+#result-table{
+	width : 100%;
+	margin : 20px;
+	text-align : center;
+	border-top: 1px solid #eeeeee;
+    border-collapse: collapse;
+}
+#result-table > thead > tr > td{
+	padding : 5px;
+	height : 40px;
+	background-color : #f7f7f7;
+	border-bottom: 1px solid #eeeeee;
+	border-collapse: collapse;
+}
+#output > tr > td{
+	padding : 5px;
+	height : 40px;
+	background-color : #FFF;
+	border-bottom: 1px solid #eeeeee;
+    border-collapse: collapse;
+    font-size : 0.9em;
+}
+/* 페이징 처리 */
+.pagenum{
+	display : flex;
+}
+input {
+    outline: 0;
+    border: 1px solid #eeeeee;
+    border-radius : 5px;
+    display: block;
+    width:250px;
+    height : 40px;
+}
+.member input{
+	outline: 0;
+    border: 1px solid #eeeeee;
+    border-radius : 5px;
+    margin-top:10px;
+    margin-bottom:10px;
+    height : 40px;
+    display: flex;
+    flex-direction:row;
+}
+.tb-bottom{
+	display : flex;
+	margin : 0 auto;
+}
+.before-btn, .after-btn{
+	margin: 10px;
+    width:60px;
+    height : 30px;
+    background-color: #eeeeee;
+    color : black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    border-radius : 5px; 
+}
+
+/* 검색결과 테이블 끝 */

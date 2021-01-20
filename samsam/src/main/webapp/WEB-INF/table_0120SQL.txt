@@ -97,15 +97,15 @@ CREATE TABLE community (
 );
 
 create table doc_comment(
-doc_no number primary key,
-doc_doc_no number,
-doc_email varchar2(50),
-doc_nick varchar2(50),
-doc_date date,
-doc_content varchar2(1000),
-doc_secret number,
-doc_rev number,
-doc_deq number 
+   doc_cno   number   NOT NULL,
+   doc_no   number   NOT NULL,
+   doc_cnick   varchar2(50)   NULL,
+   doc_cdate   date   NULL,
+   doc_ccontent   varchar2(2000)   NULL,
+    doc_csecret number,
+    doc_ref number,
+    doc_lev number,
+    doc_seq number
 );
 
 책임분양등록 free_doc / 책임분양댓글 fdoc_refly
@@ -144,7 +144,7 @@ CREATE TABLE fdoc_refly (
 
 CREATE TABLE adopt_home (
 	doc_no	number NOT NULL,
-	doc_cemail varchar(40) NULL,
+	doc_email varchar(40) NULL,
 	doc_nick varchar2(20) NULL,
 	doc_loc varchar2(10) NULL,
 	doc_date date NULL,
