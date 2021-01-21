@@ -36,7 +36,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script src="resources/js/adminPage.js"></script>
 <!-- chart.js -->
-<script src ="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <!-- 스윗얼럿 -->
 <script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
@@ -62,10 +62,19 @@ $(document).on("click", ".after-btn",function(event) {
 		swal("","마지막 페이지 입니다.","info")
 	}
 });
+var chart1Labels = [];
+var chart1adopt = [];
+var chart1home = [];
+var chart1free = [];
+var chart2Labels = [];
+var chart2data = [];
+var chart2tooltip = [];
+var chart3Labels = [];
+var chart3data = [];
 
 $(document).ready(function(){
 	getTimeStamp();
-	
+
 	jQuery.ajax({ // $.ajax 와 동일한 표현
 		url : '/samsam/storereport.do',
 		type : 'POST',
@@ -73,32 +82,128 @@ $(document).ready(function(){
 		contentType : 'application/json;charset=utf-8',
 		success : function(map) {
 			console.log(map);
-			if(map.todolist != null){
-			$.each(map.todolist, function(index, item){
-			//Task에 입력 값 넣기
-			   var task = $("<div class='task'></div>").text(item.to_do);
-			//삭제버튼
-			   var del = "<i class='fas fa-trash-alt'></i>"
-			//체크 버튼
-			   var check = "<i class='fas fa-check'></i>"
-			      
-			      //Task에 삭제 & 체크 버튼 추가하기
-			      task.append(del,check)
-			if(item.status == "MustDo"){  
-			      //할일 목록에 추가
-			      $(".notdone").append(task); 
-			}else if(item.status =="Done"){
-				  $(".done").append(task); 
-			}
-			})//each
+			if(map.storecount != null || map.standbycount != null){
+			 	var count = "<tr><td>총 가입업체 수</td><td>" + map.storecount+"</td></tr>"
+			 		count += "<tr><td>인증대기업체 수</td><td>" + map.standbycount+"</td></tr>"
+		
+				   $('.storecount').append(count);  
 			}//if
+			if(map.chart1 != null && map.chart1 != ""){
+				console.log("chart1")
+				console.log(map.chart1)
+			$.each(map.chart1, function(index, item){
+				if(chart1Labels.length != 0){
+					for(var i =0; i<=chart1Labels.length; i++){
+						if(chart1Labels[i] != item.write_date){
+							chart1Labels.push(item.write_date);
+						}
+					}
+				}
+				if(item.board == "분양"){
+					chart1adopt.push(item.write_count);
+				}
+				if(item.board == "가정"){
+					chart1home.push(item.write_count);
+				}
+				if(item.board == "책임"){
+					chart1free.push(item.write_count);
+				}
+			});
+			}//map.chart1
+			console.log("chart2")
+			console.log(map.adopt)
+			console.log(map.home)
+			console.log(map.free)
+
+			if(map.adopt != null && map.adopt != ""){
+				chart2Labels.push("분양")
+				chart2data.push(map.adopt.alocal_count)
+				console.log(map.adopt.alocal_count)
+				chart2tooltip.push(map.adopt.local)
+			}
+			if(map.home != null && map.home != ""){
+				chart2Labels.push("가정")
+				chart2data.push(map.home.hlocal_count)
+				chart2tooltip.push(map.home.local)
+			}
+			if(map.free != null && map.free != ""){
+				chart2Labels.push("책임")
+				chart2data.push(map.free.flocal_count)
+				chart2tooltip.push(map.free.local)
+			}//map.chart2
+			console.log("chart3")
+			console.log(map.chart3)
+			if(map.chart3 != null && map.chart3 != ""){
+				$.each(map.chart3, function(index, item){
+					var repayCount = null;
+					if(map.chart3.refund != null && map.chart3.refund !=""){
+						chart3Lables.push(map.chart3.refund)
+						chart3data.push(map.chart3.count)	
+					}else{
+						repayCount += map.chart3.biz_count
+					}
+					chart3Labels.push("Buy again")
+					chart3data.push(repayCount)
+				});
+			}
+			barChart();
+			console.log("create Chart");
 		},
 		error : function() {
-			console.log("todo select ajax실패!!!");
+			console.log("업체카운팅 and chart ajax실패!!!");
 		}
 	});	
 
 })//ready
+
+function barChart(){
+	console.log("barchart")
+	console.log(chart2data)
+var ctx = $('#barchart').get(0).getContext('2d');
+var bardata =
+{
+    labels: chart2Labels,
+    datasets:
+        [{
+        	label: chart2tooltip,
+            backgroundColor: [ 
+            	'rgba(255, 99, 132, 0.5)', 
+            	'rgba(54, 162, 235, 0.5)', 
+            	'rgba(255, 206, 86, 0.5)'
+            ], 
+            borderColor: [
+            	'rgba(255, 99, 132, 1.5)',
+            	'rgba(54, 162, 235, 1.5)', 
+            	'rgba(255, 206, 86, 1.5)'
+            ],
+            data: chart2data
+        }]
+};
+var baroptions = { 
+		title: { 
+			display: true, 
+			text: '최근 1주 간 게시글 지역 탑 3', 
+			fontSize: 18, 
+			fontColor: 'rgba(46, 49, 49, 1)' 
+		},
+		animation: false,
+		tooltips: {
+		      callbacks: {
+		        label: function(tooltipItem, data) {
+		          var label = data.datasets[tooltipItem.index];
+		          return label;
+		        }
+		      }
+		    }
+		};
+		
+var barChart = new Chart(ctx,{          
+	type: 'bar',
+	data: bardata,
+	options: baroptions
+});
+}//bar chart
+
 
 function getTimeStamp() {
 
@@ -150,9 +255,12 @@ function getTimeStamp() {
 <!-- 메인컨텐트 -->
 <div class="content">
 <h3>이용권관리 > 이용권 결제내역</h3>
+<div class = "today"></div>
 <div class ="chartjs">
-	<div class = "today"></div>
 	<table class = "storecount"></table>
+	<div class ="linechart"><canvas id="linechart" height="180" width="180"></canvas></div>
+	<div class ="barchart"><canvas id="barchart" height="180" width="180"></canvas></div>
+	<div class ="donutchart"><canvas id="donutchart" height="180" width="180"></canvas></div>
 </div>
 <table class="paylist">
 <thead>

@@ -12,9 +12,22 @@ public interface AdminSV {
 	public int 	auth_return(String email);
 	public ArrayList<Payed_listVO> 	getPay_list();
 	
+	//chartjs
 	public int 	storecount();
 	public int 	standbycount();
-
+	//1
+	public int 	countAdopt();
+	public int 	countHome();
+	public int 	countFree();
+	public ArrayList<TboardVO> getThreeCount();
+	//2
+	public ChartjsVO weeklyLocala();
+	public ChartjsVO weeklyLocalh();
+	public ChartjsVO weeklyLocalf();
+	//3
+	public ArrayList<ChartjsVO> payedMonth();
+	public ArrayList<ChartjsVO> repayedMonth();
+	
 	//todolist
 	public int insert_todo(Todo_listVO todo);
 	public int update_todo(Todo_listVO todo);

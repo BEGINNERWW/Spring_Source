@@ -73,7 +73,7 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 
 <!-- 사업자회원 내가 작성한 분양글 -->
 <select id="getMyAdopt" parameterType="String" resultType="Adopt_BoardVO">
-	select adopt_no, adopt_title, adopt_date, adopt_readcount from adopt_list where adopt_email = #{adopt_email} order by adopt_no desc
+	select adopt_no, adopt_title, doc_date, adopt_readcount from adopt_list where adopt_email = #{adopt_email} order by adopt_no desc
 </select>
 
 <!-- 사업자회원 내가 작성한 글에 달린 댓글수 -->
@@ -171,50 +171,58 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 <!-- chartjs 차트 1 ) 일간분양게시현황(업체/가정/책임) - 라인차트(툴팁 - 탑 3 작성자, 작성글갯수 요건 생각좀) -->
 <insert id="countAdopt"><!-- 업체 --> 
 	<selectKey keyProperty="count" resultType="int" order="BEFORE">
-		select count(*) from adopt_list where doc_date = trunc(SYSDATE -1 ,'yyyy-mm-dd')
+		select count(*) from adopt_list where doc_date = TO_CHAR(SYSDATE -1 ,'yyyy-mm-dd')
 	</selectKey>
-		insert into threeboard(date, count, board) values(SYSDATE -1, #{count}, '분양')
+		insert into threeboard(write_date, write_count, board) values(SYSDATE -1, #{count}, '분양')
 </insert>
 
 <insert id="countHome"><!-- 가정 -->
 	<selectKey keyProperty="count" resultType="int" order="BEFORE">
-		select count(*) from adopt_home where doc_date = trunc(SYSDATE -1 ,'yyyy-mm-dd')
+		select count(*) from adopt_home where doc_date = TO_CHAR(SYSDATE -1 ,'yyyy-mm-dd')
 	</selectKey>
-		insert into threeboard(date, count, board) values(SYSDATE -1, #{count}, '가정')
+		insert into threeboard(write_date, write_count, board) values(SYSDATE -1, #{count}, '가정')
 </insert>
 
 <insert id="countFree"><!-- 책임 -->
 	<selectKey keyProperty="count" resultType="int" order="BEFORE">
-		select count(*) from free_doc where doc_date = trunc(SYSDATE -1 ,'yyyy-mm-dd')
+		select count(*) from free_doc where doc_date = TO_CHAR(SYSDATE -1 ,'yyyy-mm-dd')
 	</selectKey>
-		insert into threeboard(date, count, board) values(SYSDATE -1, #{count}, '책임')
+		insert into threeboard(write_date, write_count, board) values(SYSDATE -1, #{count}, '책임')
 </insert>
 
+<select id="getThreeCount" resultType = "TboardVO"><!-- 업체 -->
+	select * from threeboard where write_date >= TO_CHAR(sysdate -7, 'yyyy-mm-dd')
+</select>
+
 <!-- chartjs 차트 2 ) 최근 1주간 게시글 지역 탑 3 - 바 -->
-<select id="weeklyLocala" resultType = "chartjsVO"><!-- 업체 -->
-	select m.local, count(m.local) as alocal_count from member_list m, adopt_list a 
-	where a.doc_date >= trunc(sysdate -7, 'yyyy-mm-dd') group by m.local
+<select id="weeklyLocala" resultType = "ChartjsVO"><!-- 업체 -->
+	select m.local, count(m.local) as alocal_count from member_list m,
+	(select * from adopt_list where doc_date >= TO_CHAR(sysdate -7, 'yyyy-mm-dd')) a
+	where m.email = a.doc_email group by m.local
 </select>
 
-<select id="weeklyLocalh" resultType = "chartjsVO"><!-- 가정 -->
-	select m.local, count(m.local) as hlocal_count from member_list m, adopt_home a 
-	where a.doc_date >= trunc(sysdate -7, 'yyyy-mm-dd') group by m.local
+<select id="weeklyLocalh" resultType = "ChartjsVO"><!-- 가정 -->
+	select m.local, count(m.local) as hlocal_count from member_list m,
+	(select * from adopt_home where doc_date >= TO_CHAR(sysdate -7, 'yyyy-mm-dd')) a
+	where m.email = a.doc_email group by m.local
 </select>
 
-<select id="weeklyLocalf" resultType = "chartjsVO"><!-- 책임 -->
-	select m.local, count(m.local) as flocal_count from member_list m, free_doc a 
-	where a.doc_date >= trunc(sysdate -7, 'yyyy-mm-dd') group by m.local
+<select id="weeklyLocalf" resultType = "ChartjsVO"><!-- 책임 -->
+	select m.local, count(m.local) as flocal_count from member_list m,
+	(select * from free_doc where doc_date >= TO_CHAR(sysdate -7, 'yyyy-mm-dd')) a
+	where m.email = a.doc_email group by m.local
 </select>
 
 <!-- chartjs 차트 3 ) 최근한달 구매내역 (환불/구매) - 도넛 -->
-<select id="payedMonth" resultType = "chartjsVO">
-	select refund, count(*) from payed_list where sysdate >= trunc(add_months(sysdate,-1)) group by refund
+<select id="payedMonth" resultType = "ChartjsVO">
+	select refund, count(*) from payed_list where sysdate >= TO_CHAR(add_months(sysdate,-1)) group by refund
 </select>
 
-<select id="repayedMonth" resultType = "chartjsVO"> <!-- 재구매 -->
-	select biz_email, count(biz_email) as biz_count from (select * from payed_list where refund ='payed')
-	group by biz_email;
+<select id="repayedMonth" resultType = "ChartjsVO"> <!-- 재구매 -->
+	select biz_email, count(biz_email) as biz_count from (select * from payed_list where refund ='payed' and sysdate >= TO_CHAR(add_months(sysdate,-1)))
+	group by biz_email having count(biz_email) >= 2 
 </select>
+
 
 <!-- 투두리스트 추가 -->
 <insert id ="insert_todo" parameterType="Todo_listVO">

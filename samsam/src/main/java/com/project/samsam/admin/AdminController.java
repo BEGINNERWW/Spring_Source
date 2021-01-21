@@ -20,10 +20,14 @@ import com.project.samsam.member.CommentListVO;
 import com.project.samsam.member.MemberSV;
 import com.project.samsam.member.MemberVO;
 import com.project.samsam.simport.Payed_listVO;
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 
 @Controller
 public class AdminController {
-	
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+
+
 	@Autowired
 	private AdminSV adminSV;
 	@Autowired
@@ -40,7 +44,15 @@ public class AdminController {
 		
 		return "admin_board";
 	}
-	
+	@RequestMapping(value = "/logout.me")
+	public String logout(HttpSession session)throws IOException {
+		System.out.println("logout");
+		System.out.println("세션 : "+ (String)session.getAttribute("email"));
+		session.removeAttribute("email");
+		System.out.println("세션삭제후 : "+ (String)session.getAttribute("email"));
+			        
+		return "redirect:/home.me";
+	}
 	@RequestMapping(value = "/todo_select.do", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public Map<String, Object> todo_select() {
@@ -176,20 +188,32 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/storereport.do")
-	public String storereport(Model model) {
+	@ResponseBody
+	public Map<String, Object> storereport(Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		ArrayList<ChartjsVO> ncvo = new ArrayList<ChartjsVO>();
+		
 		int storecount = adminSV.storecount();
 		int standbycount = adminSV.standbycount();
-		
-		
-		return "admin_pay";
+		//chart1
+		ArrayList<TboardVO> chart1 = adminSV.getThreeCount();
+		//chart2
+		ChartjsVO adopt = adminSV.weeklyLocala();
+		ChartjsVO home = adminSV.weeklyLocalh();
+		ChartjsVO free = adminSV.weeklyLocalf();
+		//chart3
+		ArrayList<ChartjsVO> chart3 = adminSV.payedMonth();
+				  			 chart3 = adminSV.repayedMonth();
+					  
+		map.put("storecount", storecount);
+		map.put("standbycount", standbycount);
+		map.put("chart1", chart1);
+		map.put("adopt", adopt);
+		map.put("home", home);
+		map.put("free", free);
+		map.put("chart3", chart3);
+
+		return map;
 	}
-	@RequestMapping(value = "/logout.me")
-	public String logout(HttpSession session)throws IOException {
-		System.out.println("logout");
-		System.out.println("세션 : "+ (String)session.getAttribute("email"));
-		session.removeAttribute("email");
-		System.out.println("세션삭제후 : "+ (String)session.getAttribute("email"));
-			        
-		return "redirect:/home.me";
-	}
+	
 }

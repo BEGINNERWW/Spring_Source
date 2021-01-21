@@ -58,3 +58,12 @@ input {
     font-size: 15px;
     border-radius : 5px; 
 }
+/* chartjs */
+.chartjs{
+	display : flex;
+	jutify-content : space-between;
+}
+.linechart, .barchart, .donutchart{
+	width : 200px;
+	height : 200px;
+}
