@@ -2,6 +2,7 @@ package com.project.samsam.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -198,21 +199,23 @@ public class AdminController {
 		//chart1
 		ArrayList<TboardVO> chart1 = adminSV.getThreeCount();
 		//chart2
-		ChartjsVO adopt = adminSV.weeklyLocala();
-		ChartjsVO home = adminSV.weeklyLocalh();
-		ChartjsVO free = adminSV.weeklyLocalf();
+		
+		ArrayList<ChartjsVO> adopt = adminSV.weeklyLocala();
+		ArrayList<ChartjsVO> home = adminSV.weeklyLocalh();
+		ArrayList<ChartjsVO> free = adminSV.weeklyLocalf();
 		//chart3
-		ArrayList<ChartjsVO> chart3 = adminSV.payedMonth();
-				  			 chart3 = adminSV.repayedMonth();
-					  
+		ArrayList<ChartjsVO> chart3pay = adminSV.payedMonth();
+		ArrayList<ChartjsVO> chart3repay = adminSV.repayedMonth();
+		
 		map.put("storecount", storecount);
 		map.put("standbycount", standbycount);
 		map.put("chart1", chart1);
 		map.put("adopt", adopt);
 		map.put("home", home);
 		map.put("free", free);
-		map.put("chart3", chart3);
-
+		map.put("chart3pay", chart3pay);
+		map.put("chart3repay", chart3repay);
+		
 		return map;
 	}
 	

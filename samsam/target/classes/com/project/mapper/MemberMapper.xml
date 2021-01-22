@@ -73,26 +73,26 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 
 <!-- 사업자회원 내가 작성한 분양글 -->
 <select id="getMyAdopt" parameterType="String" resultType="Adopt_BoardVO">
-	select adopt_no, adopt_title, doc_date, adopt_readcount from adopt_list where adopt_email = #{adopt_email} order by adopt_no desc
+	select doc_no, doc_subject, doc_date, doc_readcount from adopt_list where doc_email = #{doc_email} order by doc_no desc
 </select>
 
 <!-- 사업자회원 내가 작성한 글에 달린 댓글수 -->
 <select id="getMyAdoptReply" parameterType="int" resultType="int">
-	select count(*) from adopt_reply where adopt_no = #{adopt_no}
+	select count(*) from adopt_reply where doc_no = #{doc_no}
 </select>
 
 <!-- 내 작성글 리스트 -->
 <select id="getWriteList" parameterType="String" resultType="BoardlistVO">
-	select adopt_no as num, adopt_title as subject, adopt_date as write_date from adopt_list where adopt_email = #{email}
+	select doc_no as num, doc_subject as subject, doc_date as write_date from adopt_list where doc_email = #{email}
 	union all
-	select fdoc_no as num, fdoc_subject as subject, fdoc_date as write_date from free_doc where fdoc_email = #{email}
+	select doc_no as num, doc_subject as subject, doc_date as write_date from free_doc where doc_email = #{email}
 </select>
 
 <!-- 내 댓글 리스트 -->
 <select id="getWriteComment" parameterType="String" resultType="CommentListVO">
-	select adopt_ccontent as content, adopt_cdate as write_date from adopt_reply where adopt_cemail = #{email}
+	select doc_ccontent as content, doc_cdate as write_date from adopt_reply where doc_cemail = #{email}
 	union all
-	select fdoc_ccontent as content, fdoc_cdate as write_date from fdoc_reply where fdoc_cemail = #{email}
+	select doc_ccontent as content, doc_cdate as write_date from fdoc_reply where doc_cemail = #{email}
 </select>
 
 <!-- 이용권 결제내역 추가 -->
@@ -196,26 +196,32 @@ biz_email / biz_no / biz_com/ biz_name / biz_add / biz_img / free_coupon/ pay_co
 
 <!-- chartjs 차트 2 ) 최근 1주간 게시글 지역 탑 3 - 바 -->
 <select id="weeklyLocala" resultType = "ChartjsVO"><!-- 업체 -->
-	select m.local, count(m.local) as alocal_count from member_list m,
+	select rownum, local, alocal_count from 
+    (select m.local, count(m.local) as alocal_count from member_list m,
 	(select * from adopt_list where doc_date >= TO_CHAR(sysdate -7, 'yyyy-mm-dd')) a
-	where m.email = a.doc_email group by m.local
+	where m.email = a.doc_email group by m.local order by alocal_count desc)
+    where rownum between 1 and 3
 </select>
 
 <select id="weeklyLocalh" resultType = "ChartjsVO"><!-- 가정 -->
-	select m.local, count(m.local) as hlocal_count from member_list m,
+	select rownum, local, hlocal_count from 
+	(select m.local, count(m.local) as hlocal_count from member_list m,
 	(select * from adopt_home where doc_date >= TO_CHAR(sysdate -7, 'yyyy-mm-dd')) a
-	where m.email = a.doc_email group by m.local
+	where m.email = a.doc_email group by m.local order by hlocal_count desc)
+	where rownum between 1 and 3
 </select>
 
 <select id="weeklyLocalf" resultType = "ChartjsVO"><!-- 책임 -->
-	select m.local, count(m.local) as flocal_count from member_list m,
+	select rownum, local, flocal_count from 
+	(select m.local, count(m.local) as flocal_count from member_list m,
 	(select * from free_doc where doc_date >= TO_CHAR(sysdate -7, 'yyyy-mm-dd')) a
-	where m.email = a.doc_email group by m.local
+	where m.email = a.doc_email group by m.local order by flocal_count desc)
+	where rownum between 1 and 3
 </select>
 
 <!-- chartjs 차트 3 ) 최근한달 구매내역 (환불/구매) - 도넛 -->
 <select id="payedMonth" resultType = "ChartjsVO">
-	select refund, count(*) from payed_list where sysdate >= TO_CHAR(add_months(sysdate,-1)) group by refund
+	select refund, count(*) as count from payed_list where sysdate >= TO_CHAR(add_months(sysdate,-1)) group by refund
 </select>
 
 <select id="repayedMonth" resultType = "ChartjsVO"> <!-- 재구매 -->

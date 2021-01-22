@@ -52,9 +52,9 @@ public interface MemberMapper {
 	public int 	countHome();
 	public int 	countFree();
 	public ArrayList<TboardVO> getThreeCount();
-	public ChartjsVO weeklyLocala();
-	public ChartjsVO weeklyLocalh();
-	public ChartjsVO weeklyLocalf();
+	public ArrayList<ChartjsVO> weeklyLocala();
+	public ArrayList<ChartjsVO> weeklyLocalh();
+	public ArrayList<ChartjsVO> weeklyLocalf();
 
 	public ArrayList<ChartjsVO> payedMonth();
 	public ArrayList<ChartjsVO> repayedMonth();

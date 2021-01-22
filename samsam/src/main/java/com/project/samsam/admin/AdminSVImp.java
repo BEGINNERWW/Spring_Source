@@ -118,20 +118,20 @@ public class AdminSVImp implements AdminSV {
 	};
 
 	@Override
-	public ChartjsVO 	weeklyLocala() {
-		ChartjsVO res= mapper.weeklyLocala();
+	public ArrayList<ChartjsVO> 	weeklyLocala() {
+		ArrayList<ChartjsVO> res= mapper.weeklyLocala();
 		
 		return res;	
 	};
 	@Override
-	public ChartjsVO 	weeklyLocalh() {
-		ChartjsVO res= mapper.weeklyLocalh();
+	public ArrayList<ChartjsVO> 	weeklyLocalh() {
+		ArrayList<ChartjsVO> res= mapper.weeklyLocalh();
 		
 		return res;	
 	};
 	@Override
-	public ChartjsVO 	weeklyLocalf() {
-		ChartjsVO res = mapper.weeklyLocalf();
+	public ArrayList<ChartjsVO> 	weeklyLocalf() {
+		ArrayList<ChartjsVO> res = mapper.weeklyLocalf();
 		
 		return res;	
 	};
