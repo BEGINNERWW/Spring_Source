@@ -3,78 +3,78 @@ package com.project.samsam.member;
 import java.util.Date;
 
 public class Adopt_BoardVO {
-	private int adopt_no;
-	private String adopt_nick;
-	private String adopt_email;
-	private Date adopt_date;
-	private int adopt_readcount;
-	private String adopt_img;
-	private String adopt_phone;
-	private String adopt_price;
-	private String adopt_title;
-	private String adopt_content;
+	private int doc_no;
+	private String doc_nick;
+	private String doc_email;
+	private Date doc_date;
+	private int doc_readcount;
+	private String doc_img;
+	private String doc_phone;
+	private String doc_price;
+	private String doc_subject;
+	private String doc_content;
 	private String big_name;
 	private String kindof;
 	
-	public int getAdopt_no() {
-		return adopt_no;
+	public int getDoc_no() {
+		return doc_no;
 	}
-	public void setAdopt_no(int adopt_no) {
-		this.adopt_no = adopt_no;
+	public void setDoc_no(int doc_no) {
+		this.doc_no = doc_no;
 	}
-	public String getAdopt_nick() {
-		return adopt_nick;
+	public String getDoc_nick() {
+		return doc_nick;
 	}
-	public void setAdopt_nick(String adopt_nick) {
-		this.adopt_nick = adopt_nick;
+	public void setDoc_nick(String doc_nick) {
+		this.doc_nick = doc_nick;
 	}
-	public String getAdopt_email() {
-		return adopt_email;
+	public String getDoc_email() {
+		return doc_email;
 	}
-	public void setAdopt_email(String adopt_email) {
-		this.adopt_email = adopt_email;
+	public void setDoc_email(String doc_email) {
+		this.doc_email = doc_email;
 	}
-	public Date getAdopt_date() {
-		return adopt_date;
+	public Date getDoc_date() {
+		return doc_date;
 	}
-	public void setAdopt_date(Date adopt_date) {
-		this.adopt_date = adopt_date;
+	public void setDoc_date(Date doc_date) {
+		this.doc_date = doc_date;
 	}
-	public int getAdopt_readcount() {
-		return adopt_readcount;
+	public int getDoc_readcount() {
+		return doc_readcount;
 	}
-	public void setAdopt_readcount(int adopt_readcount) {
-		this.adopt_readcount = adopt_readcount;
+	public void setDoc_readcount(int doc_readcount) {
+		this.doc_readcount = doc_readcount;
 	}
-	public String getAdopt_img() {
-		return adopt_img;
+	public String getDoc_img() {
+		return doc_img;
 	}
-	public void setAdopt_img(String adopt_img) {
-		this.adopt_img = adopt_img;
+	public void setDoc_img(String doc_img) {
+		this.doc_img = doc_img;
 	}
-	public String getAdopt_phone() {
-		return adopt_phone;
+	public String getDoc_phone() {
+		return doc_phone;
 	}
-	public void setAdopt_phone(String adopt_phone) {
-		this.adopt_phone = adopt_phone;
+	public void setDoc_phone(String doc_phone) {
+		this.doc_phone = doc_phone;
 	}
-	public String getAdopt_price() {
-		return adopt_price;
+	public String getDoc_price() {
+		return doc_price;
 	}
-	public void setAdopt_price(String adopt_price) {
-		this.adopt_price = adopt_price;
+	public void setDoc_price(String doc_price) {
+		this.doc_price = doc_price;
 	}
-	public String getAdopt_title() {
-		return adopt_title;
+	public String getDoc_subject() {
+		return doc_subject;
 	}
-	public void setAdopt_title(String adopt_title) {
-		this.adopt_title = adopt_title;
+	public void setDoc_subject(String doc_subject) {
+		this.doc_subject = doc_subject;
 	}
-	public String getAdopt_content() {
-		return adopt_content;
+	public String getDoc_content() {
+		return doc_content;
 	}
-	public void setAdopt_content(String adopt_content) {
-		this.adopt_content = adopt_content;
+	public void setDoc_content(String doc_content) {
+		this.doc_content = doc_content;
 	}
 	public String getBig_name() {
 		return big_name;
@@ -88,5 +88,7 @@ public class Adopt_BoardVO {
 	public void setKindof(String kindof) {
 		this.kindof = kindof;
 	}
+	
+	
 
 }

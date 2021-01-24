@@ -1,6 +1,6 @@
 package com.project.samsam.admin;
 
-public class chartjsVO {
+public class ChartjsVO {
 
 	private String refund;
 	private String count;

@@ -251,7 +251,7 @@ START WITH 1 ;
 
 
 create table threeboard(
-	write_date	varchar2(50) 	not null,
+	write_date	date 	not null,
 	write_count	number,
 	board 		varchar2(30)
 );

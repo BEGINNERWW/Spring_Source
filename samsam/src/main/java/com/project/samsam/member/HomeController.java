@@ -359,8 +359,8 @@ public class HomeController {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		
 		for(Adopt_BoardVO bo : bvo) {
-			int res = memberSV.getMyAdoptReply(bo.getAdopt_no());
-			map.put(bo.getAdopt_no(), res);
+			int res = memberSV.getMyAdoptReply(bo.getDoc_no());
+			map.put(bo.getDoc_no(), res);
 			new_bvo.add(bo);
 			}
 		model.addAttribute("MemberVO", mvo);

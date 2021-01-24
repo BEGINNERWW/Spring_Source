@@ -20,14 +20,14 @@ h3{
 }
 .paylist > thead > tr > td{
 	padding : 5px;
-	height : 50px;
+	height : 45px;
 	background-color : #f7f7f7;
 	border-bottom: 1px solid #eeeeee;
 	border-collapse: collapse;
 }
 .paylist > tbody > tr > td{
 	padding : 5px;
-	height : 50px;
+	height : 45px;
 	background-color : #FFF;
 	border-top: 1px solid #eeeeee;
     border-collapse: collapse;
@@ -57,4 +57,30 @@ input {
     display: inline-block;
     font-size: 15px;
     border-radius : 5px; 
+}
+/* chartjs */
+.today{
+	margin-top : 23px;
+	margin-left: 20px;
+	font-size : 18px;
+	font-weight : bold;
+}
+.chartjs{
+	margin-left : 40px;
+	display : flex;
+	jutify-content : space-between;
+}
+.storecount{
+	margin : 20px;
+	width : 150px;
+}
+.storecount > tr > td{
+	height : 40px;
+	border-bottom : 1px solid #eeeeee;
+	border-collapse: collapse;
+}
+.linechart, .barchart, .donutchart{
+	margin : 20px;
+	width : 270px;
+	height : 270px;
 }
