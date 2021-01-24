@@ -65,8 +65,56 @@ public class JJBoardController {
 		catch(Exception e) {
 			System.out.println("search error(free) : " + e.getMessage());
 		}
+		List<JJBoardVO> h_list = boardService.getSearch_adopt_home(keyword);
+		try {
+			if(h_list != null) {
+				model.addAttribute("adopt_home",h_list); 
+			}
+			else{
+				System.out.println("adopt_home");
+			}
+		}
+		catch(Exception e) {
+			System.out.println("search error(home) : " + e.getMessage());
+		}
+		List<JJBoardVO> fa_list = boardService.getSearch_free_auth(keyword);
+		try {
+			if(fa_list != null) {
+				model.addAttribute("free_auth",fa_list); 
+			}
+			else{
+				System.out.println("free_auth");
+			}
+		}
+		catch(Exception e) {
+			System.out.println("search error(free_auth) : " + e.getMessage());
+		}
+		List<JJBoardVO> m_list = boardService.getSearch_missing(keyword);
+		try {
+			if(m_list != null) {
+				model.addAttribute("missing",m_list); 
+			}
+			else{
+				System.out.println("missing");
+			}
+		}
+		catch(Exception e) {
+			System.out.println("search error(missing) : " + e.getMessage());
+		}
+		List<JJBoardVO> p_list = boardService.getSearch_payang(keyword);
+		try {
+			if(p_list != null) {
+				model.addAttribute("payang",p_list); 
+			}
+			else{
+				System.out.println("payang");
+			}
+		}
+		catch(Exception e) {
+			System.out.println("search error(payang) : " + e.getMessage());
+		}
 		
-           return "jj/ho_search_list";
+           return "search_list";
         
 	}
 	
@@ -80,11 +128,10 @@ public class JJBoardController {
 		}catch(Exception e) {
 			e.getMessage();
 		}
-		return "jj/ho_search_view";
+		return "ho_search_view";
 	}
 	//홈페이지 원본 글이동   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>a href 이동을 위한 메소드 수정필요
-	
-////////////////////////////	
+
 	//관리자 페이지 컨트롤러
 	
 	@RequestMapping("/adminboard.do")

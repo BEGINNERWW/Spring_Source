@@ -38,8 +38,30 @@ public class JJBoardServiceImpl implements JJBoardService {
 		return f_list;
 		
 	  }
-	  
-
+	@Override  
+	public List<JJBoardVO> getSearch_free_auth(String keyword){
+		JJBoardMapper boardMapper = sqlSession.getMapper(JJBoardMapper.class);
+		List<JJBoardVO> a_list = boardMapper.getSearch_free_auth(keyword);
+		return a_list;
+	}
+	@Override
+	public List<JJBoardVO> getSearch_adopt_home(String keyword){
+		JJBoardMapper boardMapper = sqlSession.getMapper(JJBoardMapper.class);
+		List<JJBoardVO> a_list = boardMapper.getSearch_adopt_home(keyword);
+		return a_list;
+	}
+	@Override
+	public List<JJBoardVO> getSearch_payang(String keyword){
+		JJBoardMapper boardMapper = sqlSession.getMapper(JJBoardMapper.class);
+		List<JJBoardVO> a_list = boardMapper.getSearch_payang(keyword);
+		return a_list;
+	}
+	@Override
+	public List<JJBoardVO> getSearch_missing(String keyword){
+		JJBoardMapper boardMapper = sqlSession.getMapper(JJBoardMapper.class);
+		List<JJBoardVO> a_list = boardMapper.getSearch_missing(keyword);
+		return a_list;
+	}
 	@Override
 	public JJBoardVO getSDetail(int num) {
 		JJBoardMapper boardMapper = sqlSession.getMapper(JJBoardMapper.class);

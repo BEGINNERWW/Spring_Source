@@ -5,26 +5,50 @@
 	
 	<!-- 홈 검색 리스트 -->
 		<select id="getSearch_free_List" parameterType="String" resultType="JJBoardVO">
-		select fdoc_no as num ,nick,subject,c_date,readcount
-		from free_doc where subject like '%'||#{keyword}||'%' or c_content like '%'||#{keyword}||'%'
-		order by c_date desc
-		
+		 select doc_no as num, doc_nick as nick, doc_subject as subject, doc_date as c_date,doc_readcount as readcount 
+  		  from  free_doc
+  		  where doc_subject like '%' || #{keyword}|| '%' or doc_content like '%' ||#{keyword} || '%'
+    	  order by doc_date desc
+		</select>
+		<select id="getSearch_free_auth" parameterType="String" resultType="JJBoardVO">
+		 select fadoc_no as num, fadoc_r_nick as nick, fadoc_subject as subject, fadoc_date as c_date,fadoc_readcount as readcount 
+  		  from  free_auth
+  		  where fadoc_subject like '%' || #{keyword}|| '%' or fadoc_content like '%' ||#{keyword} || '%'
+    	  order by fadoc_date desc
 		</select>
 	
  		<select id="getSearch_commu_List" parameterType="String" resultType="JJBoardVO">
-  		select num,nick,subject,c_date,readcount
-		from community where subject like '%' || #{keyword}|| '%' or c_content like '%' ||#{keyword} || '%'
-		order by c_date desc
+  		  select doc_no as num, doc_nick as nick, doc_subject as subject, doc_date as c_date,doc_readcount as readcount 
+  		  from community 
+  		  where doc_subject like '%' || #{keyword}|| '%' or doc_content like '%' ||#{keyword} || '%'
+    	  order by doc_date desc
 		</select>
 		
 		<select id="getSearch_adopt_List" parameterType="String" resultType="JJBoardVO">	
-		select num,nick,subject,c_date,readcount
-		from adopt_list where subject like '%' ||#{keyword}|| '%' or c_content like '%' ||#{keyword}|| '%'
-		order by c_date desc
+		  select doc_no as num, doc_nick as nick, doc_subject as subject, doc_date as c_date,doc_readcount as readcount 
+  		  from adopt_list 
+  		  where doc_subject like '%' || #{keyword}|| '%' or doc_content like '%' ||#{keyword} || '%'
+    	  order by doc_date desc
+		</select>
+		<select id="getSearch_adopt_home" parameterType="String" resultType="JJBoardVO">	
+		  select doc_no as num, doc_nick as nick, doc_subject as subject, doc_date as c_date,doc_readcount as readcount 
+  		  from adopt_home
+  		  where doc_subject like '%' || #{keyword}|| '%' or doc_content like '%' ||#{keyword} || '%'
+    	  order by doc_date desc
 		</select>
 		
-	
-		
+		<select id="getSearch_payang" parameterType="String" resultType="JJBoardVO">	
+		  select doc_no as num, doc_nick as nick, doc_subject as subject, doc_date as c_date,doc_readcount as readcount 
+  		  from payang
+  		  where doc_subject like '%' || #{keyword}|| '%' or doc_content like '%' ||#{keyword} || '%'
+    	  order by doc_date desc
+		</select>
+		<select id="getSearch_missing" parameterType="String" resultType="JJBoardVO">	
+		  select doc_no as num, doc_nick as nick, doc_subject as subject, doc_date as c_date,doc_readcount as readcount 
+  		  from missing
+  		  where doc_subject like '%' || #{keyword}|| '%' or doc_content like '%' ||#{keyword} || '%'
+    	  order by doc_date desc
+		</select>
 
 
 	<select id="getSDetail"  parameterType="int" resultType="JJBoardVO">

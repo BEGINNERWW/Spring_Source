@@ -1,0 +1,135 @@
+@charset "utf-8";
+
+.content {
+	width: 1000px;
+	display: flex;
+	flex-direction: column;
+}
+h5{
+	text-algin : left;
+	margin-left : 20px; 
+	margin-bottom : 35px;
+}
+#check1, #check2, #check3, #check4, #check5, #check6, #check7 {
+	width: 264px;
+	height: 48px;
+	margin : 0 auto;
+	background-color: rgba(0, 0, 0, 0);
+	border: 1px solid skyblue;
+	color: skyblue;
+	padding: 5px;
+	border-radius: 5px;
+	align-self: center;
+}
+#check1:hover, #check2:hover, #check3:hover {
+	color: white;
+	background-color: skyblue;
+}
+table{
+	width : 700px;
+	margin : 20px;
+	margin-bottom: 30px;
+	text-align : center;
+	border-top: 1px solid #eeeeee;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+table > thead > th > th {
+	background-color : #f7f7f7;
+}
+table > tbody > tr > td{
+	padding : 5px;
+	height : 50px;
+	border-bottom: 1px solid #eeeeee;
+	border-collapse: collapse;
+	font-size : 0.9em;
+}
+input {
+	font-family: 'Noto Sans KR', sans-serif;
+	outline: 0;
+	display: block;
+	width : 250px;
+	height: 40px;
+	font-size: 1em;
+	border : 1px solid #efefef;
+	border-radius : 5px;
+}
+#same{
+	margin-left : 220px;
+}
+.error1, .error2, .error3, .error4, .error5, .error6, .error7{
+	font-size: 0.9em;
+	color : red;
+    padding-left: 295px;
+    margin-top: 10px;
+	text-align : left;
+}
+
+<!-- 게시판 선택 -->
+
+#ud_tab {
+    max-width: 600px;
+    width: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    height: 300px;
+}
+
+#ud_tab input[type="radio"] {
+    display: none;
+}
+#ud_tab label {
+    display: block;
+    float: left;
+    width: 130px;
+    color: #000000;
+    font-size: 17px;
+    margin-top : 80px;
+    padding: 1%;
+    font-weight: normal;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    background: #ffffff;
+}
+#ud_tab .ud_content {
+    background: #fff;
+    width: 90%;
+    display: none;
+    padding: 3%;
+    float: left;
+}
+
+#ud_tab [id^="tab"]:checked + label {
+	border-bottom :  3px solid  skyblue;
+    background:  #ffffff;
+    color:  #000000;
+}
+#ud_tab [id^="tab"] + label{
+	border-bottom :  1px solid  #eeeeee;
+    background:  #ffffff;
+    color:  #000000;
+}
+#tab1:checked ~ #ud_tab-content1,
+#tab2:checked ~ #ud_tab-content2,
+#tab3:checked ~ #ud_tab-content3,
+#tab4:checked ~ #ud_tab-content4,
+#tab5:checked ~ #ud_tab-content5,
+#tab6:checked ~ #ud_tab-content6,
+#tab7:checked ~ #ud_tab-content7{
+    display: block;
+}
+
+ table {
+    width: 100%;
+    border-top: 1px solid #c2c2d6;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #c2c2d6;
+    padding: 10px;
+    height : 50px;
+  }

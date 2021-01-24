@@ -315,7 +315,19 @@ p{
 
 
 </style>
-
+<script>
+    $('.search-box btn').click(function(){
+      
+    });
+    $('#keyword').keypress(function(event){
+      if(event.which == 13){
+        $('.search-box btn').click();
+        return false;
+      }
+    });
+      
+  
+  </script>
 </head>
 <body>
 <div class ="body_content">
@@ -359,10 +371,12 @@ p{
       </div>
    </div>
             <div class="search-wrapper">
-               <input class="search-box input" type="text" placeholder="Search">
-               <button class="search-box btn" type="button">
+            <form action="home_search.me" method="post" name="home_search">
+               <input class="search-box input"  id="keyword" name="keyword" type="text" placeholder="Search">
+               <button class="search-box btn" type="submit">
                   <i class="fas fa-search"></i>
                </button>
+            </form>
             </div>
          </div>
          <!-- nav-menu -->

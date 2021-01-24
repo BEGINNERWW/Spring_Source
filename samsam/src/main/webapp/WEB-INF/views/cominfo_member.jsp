@@ -390,12 +390,16 @@ li.list-group-item.click > a {
 <header id = "header">
 
 	<div class ="inout_gocen">
-			<input type="button" class= "header_btn" id="login" value="로그인" onclick ="location.href='loginForm.me'">
-			<input type="button" class= "header_btn" id="logout" value="로그아웃" onclick ="location.href='home.me'">
-			<input type="button" class= "header_btn" id="signin" value="회원가입" onclick ="location.href='joinform.me'">
-			<input type="button" class= "header_btn" id="mypage" value="마이페이지" onclick ="location.href='myfree_auth.me'">
-			<input type="button" class= "header_btn" id="gocen" value="고객센터" onclick ="location.href='customer_service.me'">
-		</div>
+         <%if(email != null){ %>
+         
+         <input  type="button" class= "header_btn"  value="로그아웃" onclick="location.href='logout.me'">
+         <input  type="button" class= "header_btn"  value="마이페이지" onclick="location.href='mypage.me'">
+         <%}else{ %>
+         <input  type="button" class= "header_btn" value="로그인" onclick="location.href='loginForm.me'">
+         <input  type="button" class= "header_btn" value="회원가입" onclick="location.href='joinform.me'">
+         <%} %>
+         <a href="customer_service.me"><input type="button" class= "header_btn" id="gocen" value="고객센터"></a>
+      </div>
 	
 	<div class="nav-menu">
 				<ul class="sticky-wrapper">
